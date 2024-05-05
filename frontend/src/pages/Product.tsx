@@ -1,3 +1,5 @@
+import ProductFeature from "../features/product";
+
 export default function Product() {
-  return <h1>Product</h1>;
+  return <ProductFeature />;
 }

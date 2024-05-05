@@ -19,11 +19,6 @@ export default function DrawerOverlay({
   return (
     <Drawer
       open={open}
-      PaperProps={{
-        sx: {
-          width: "100%",
-        },
-      }}
       anchor={anchor}
       transitionDuration={300}
       onClose={(_, reason) => onClose(reason)}

@@ -18,7 +18,10 @@ export default function Button({ children, to, type }: ButtonProps) {
 
   if (to) {
     return (
-      <Link to={to} className={`inline-flex items-center ${typeCss}`}>
+      <Link
+        to={to}
+        className={`inline-flex items-center justify-center text-center font-medium ${typeCss}`}
+      >
         {children}
       </Link>
     );

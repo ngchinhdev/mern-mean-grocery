@@ -1,31 +1,45 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
-import Header from "./Header";
-import MenuMobile from "./MenuMobile";
+import Header from "./header";
 import Footer from "./Footer";
 import Cart from "./cart";
+import FooterMobile from "./FooterMobile";
+import MenuMobile from "./menuMobile";
 
 export default function AppLayout() {
-  const [open, setOpen] = useState(false);
+  const [openCart, setOpenCart] = useState(false);
+  const [openMenuMobile, setOpenMenuMobile] = useState(false);
 
-  const handleClose = () => {
-    setOpen(false);
+  const handleCloseCart = () => {
+    setOpenCart(false);
   };
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpenCart = () => {
+    setOpenCart(true);
+  };
+
+  const handleCloseMenuMobile = () => {
+    setOpenMenuMobile(false);
+  };
+
+  const handleOpenCartMenuMobile = () => {
+    setOpenMenuMobile(true);
   };
 
   return (
     <>
-      <Header />
+      <Header onOpenCart={handleOpenCart} />
       <div>
         <Outlet />
       </div>
       <Footer />
-      <Cart open={open} onClose={handleClose} />
-      <MenuMobile onOpen={handleOpen} />
+      <Cart open={openCart} onClose={handleCloseCart} />
+      <MenuMobile open={openMenuMobile} onClose={handleCloseMenuMobile} />
+      <FooterMobile
+        onOpenCart={handleOpenCart}
+        onOpenMenuMobile={handleOpenCartMenuMobile}
+      />
     </>
   );
 }

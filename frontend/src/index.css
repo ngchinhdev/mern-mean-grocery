@@ -14,3 +14,13 @@ li {
 body {
     height: 10000px;
 } */
+
+.MuiPaper-root {
+    width: 100%;
+}
+
+@media (min-width: 480px) {
+    .MuiPaper-root {
+        width: 420px;
+    }
+}

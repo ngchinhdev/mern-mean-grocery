@@ -1,7 +1,9 @@
 const express = require('express');
 
 const helperMiddleware = require('../middlewares/helper.middleware');
+const uploadMiddleware = require('../middlewares/upload.middleware');
 const categoryController = require('../controllers/category.controller');
+const categoryValidator = require('../validations/category.validation');
 
 const router = express.Router();
 
@@ -19,12 +21,16 @@ router.get(
 
 router.post(
     '/add',
+    uploadMiddleware.single('image'),
+    categoryValidator.categoryPostValidator,
     categoryController.createCategory
 );
 
 router.put(
-    'update/:id',
+    '/update/:id',
     helperMiddleware.checkValidId,
+    uploadMiddleware.single('image'),
+    categoryValidator.categoryUpdateValidator,
     categoryController.updateCategory
 );
 

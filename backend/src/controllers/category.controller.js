@@ -1,5 +1,6 @@
 const CategoryModel = require('../models/category.model');
 const { createError } = require('../utils/helper.util');
+const { validationError } = require('../utils/validation.util');
 
 const getAllCategories = async (req, res, next) => {
     try {
@@ -53,6 +54,8 @@ const getCategoryById = async (req, res, next) => {
 
 const createCategory = async (req, res, next) => {
     try {
+        validationError(req, res);
+
         const newCategory = await CategoryModel.create(req.body);
 
         const { __v, isDeleted, ...resCategory } = newCategory._doc;

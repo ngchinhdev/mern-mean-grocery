@@ -1,8 +1,17 @@
 const { checkSchema } = require('express-validator');
-const { createError } = require('../utils/helper.util');
+const { createError, removeImage } = require('../utils/helper.util');
 const categoryModel = require('../models/category.model');
 
 const checkFileUploaded = async (_, { req }, isUpdate = false) => {
+    const oldCategory = await categoryModel.findOne({
+        _id: req.params.id,
+        isDeleted: false
+    });
+
+    if (!oldCategory) {
+        createError(404, 'Category not found.');
+    }
+
     if (!isUpdate) {
         if (!req.file) {
             createError(400, 'Image is required');
@@ -12,10 +21,10 @@ const checkFileUploaded = async (_, { req }, isUpdate = false) => {
     }
 
     if (!req.file) {
-        const oldCategory = await categoryModel.findOne({ _id: req.params.id, isDeleted: false });
-
         return oldCategory.image;
     }
+
+    removeImage(oldCategory.image, 'categories');
 
     return req.file.filename;
 };

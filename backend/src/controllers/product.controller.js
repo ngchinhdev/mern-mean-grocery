@@ -1,5 +1,6 @@
 const ProductModel = require('../models/product.model');
 const { createError } = require('../utils/helper.util');
+const { validationError } = require('../utils/validation.util');
 
 const getAllProducts = async (req, res, next) => {
     try {
@@ -83,6 +84,8 @@ const getProductById = async (req, res, next) => {
 
 const createProduct = async (req, res, next) => {
     try {
+        validationError(req, res);
+
         const newProduct = await ProductModel.create(req.body);
 
         const { __v, isDeleted, ...resProduct } = newProduct._doc;
@@ -98,6 +101,8 @@ const createProduct = async (req, res, next) => {
 
 const updateProduct = async (req, res, next) => {
     try {
+        validationError(req, res);
+
         const { id } = req.params;
 
         const updatedProduct = await ProductModel.findOneAndUpdate(

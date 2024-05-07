@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const createHttpError = require('http-errors');
 const nodemailer = require('nodemailer');
 
@@ -27,7 +30,38 @@ const sendEmail = async (email, subject, text) => {
     }
 };
 
+const removeImage = (pathImages, destination) => {
+    if (!pathImages) return;
+
+    console.log('pathImages:', pathImages);
+
+    if (Array.isArray(pathImages)) {
+        pathImages.forEach((image) => {
+            const pathImage = path.resolve(__dirname, `../../public/images/${destination}`) + '/' + image;
+            fs.unlink(pathImage, (err) => {
+                if (err) {
+                    console.error('Can not remove image:', err);
+                } else {
+                    console.log('Image is removed:', image);
+                }
+            });
+        });
+
+        return;
+    }
+
+    const pathImageRemove = path.resolve(__dirname, `../../public/images/${destination}`) + '/' + pathImages;
+    fs.unlink(pathImageRemove, (err) => {
+        if (err) {
+            console.error('Can not remove image:', err);
+        } else {
+            console.log('Image is removed:', pathImages);
+        }
+    });
+};
+
 module.exports = {
     createError,
-    sendEmail
+    sendEmail,
+    removeImage
 };

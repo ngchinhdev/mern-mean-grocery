@@ -2,6 +2,8 @@ const express = require('express');
 
 const productController = require('../controllers/product.controller');
 const helperMiddleware = require('../middlewares/helper.middleware');
+const productValidator = require('../validations/product.validation');
+const uploadMiddleware = require('../middlewares/upload.middleware');
 
 const router = express.Router();
 
@@ -26,12 +28,16 @@ router.get(
 
 router.post(
     '/add',
+    uploadMiddleware.array('images'),
+    productValidator.productPostValidator,
     productController.createProduct
 );
 
 router.put(
     '/update/:id',
     helperMiddleware.checkValidId,
+    uploadMiddleware.array('images'),
+    productValidator.productUpdateValidator,
     productController.updateProduct
 );
 

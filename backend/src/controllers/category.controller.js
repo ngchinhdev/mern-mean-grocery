@@ -71,6 +71,8 @@ const createCategory = async (req, res, next) => {
 
 const updateCategory = async (req, res, next) => {
     try {
+        validationError(req, res);
+
         const { id } = req.params;
 
         const updatedCategory = await CategoryModel.findByIdAndUpdate(

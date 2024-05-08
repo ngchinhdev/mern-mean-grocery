@@ -81,7 +81,7 @@ export default function HeroSection() {
                         <span>88%</span>
                       </span>
                       Off
-                      <span className="ms-2 inline-block inline-block rounded-full bg-primary-100 px-4 py-1 text-xs font-medium text-primary-600">
+                      <span className="ms-2 inline-block rounded-full bg-primary-100 px-4 py-1 text-xs font-medium text-primary-600">
                         Active
                       </span>
                     </h6>
@@ -142,7 +142,7 @@ export default function HeroSection() {
                         <span>88%</span>
                       </span>
                       Off
-                      <span className="ms-2 inline-block inline-block rounded-full bg-primary-100 px-4 py-1 text-xs font-medium text-primary-600">
+                      <span className="ms-2 inline-block rounded-full bg-primary-100 px-4 py-1 text-xs font-medium text-primary-600">
                         Active
                       </span>
                     </h6>

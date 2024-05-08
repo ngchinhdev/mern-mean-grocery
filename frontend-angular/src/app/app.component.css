@@ -1,3 +1,9 @@
 .ok {
     color: blue;
 }
+
+.mat-icon {
+    font-size: 1rem !important;
+    height: 1rem !important;
+    width: 1rem !important;
+}

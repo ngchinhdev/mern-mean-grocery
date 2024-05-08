@@ -25,30 +25,18 @@ export default function BottomHeader() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 rounded-md bg-white p-6 shadow-lg ring-1 ring-black/5">
+            <Menu.Items className="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 rounded-md bg-white p-5 shadow-lg ring-1 ring-black/5">
               <Menu.Item>
-                <Link to="/account-settings" className="flex items-center">
+                <Link
+                  to="/account-settings"
+                  className="flex items-center rounded-md px-2 py-3 hover:bg-gray-100 hover:text-primary-700"
+                >
                   <img
                     src="https://kachabazar-store-nine.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fahossain%2Fimage%2Fupload%2Fv1658340705%2Fcategory%2520icon%2Fcarp-fish_paxzrt.png&w=96&q=75"
                     alt=""
                     className="h-[20px] w-[20px]"
                   />
-                  <div className="ml-3 inline-flex w-full items-center justify-between text-sm font-medium hover:text-primary-700">
-                    Fish &amp; Meat
-                    <span className="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
-                      <MdKeyboardArrowRight className="text-xl" />
-                    </span>
-                  </div>
-                </Link>
-              </Menu.Item>
-              <Menu.Item>
-                <Link to="/account-settings" className="flex items-center">
-                  <img
-                    src="https://kachabazar-store-nine.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fahossain%2Fimage%2Fupload%2Fv1658340705%2Fcategory%2520icon%2Fcarp-fish_paxzrt.png&w=96&q=75"
-                    alt=""
-                    className="h-[20px] w-[20px]"
-                  />
-                  <div className="ml-3 inline-flex w-full items-center justify-between text-sm font-medium hover:text-primary-700">
+                  <div className="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">
                     Fish &amp; Meat
                     <span className="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
                       <MdKeyboardArrowRight className="text-xl" />

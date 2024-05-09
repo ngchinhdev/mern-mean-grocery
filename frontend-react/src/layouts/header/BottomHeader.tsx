@@ -1,13 +1,22 @@
+import { useQuery } from "@tanstack/react-query";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react/jsx-runtime";
 import { Link } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-import aFlag from "../../assets/americanflag.svg";
+import { getAllCategories } from "../../services/apiCategories";
+import { SERVER_IMAGES_CATEGORY_URL } from "../../constants/url";
+
 import vFlag from "../../assets/vietnamflag.png";
+import aFlag from "../../assets/americanflag.svg";
 
 export default function BottomHeader() {
+  const { data: categories } = useQuery({
+    queryKey: ["allCategories"],
+    queryFn: getAllCategories,
+  });
+
   return (
     <div className="text-md mx-auto hidden max-w-screen-2xl items-center justify-between border-b bg-white px-10 font-medium lg:flex">
       <div className="flex items-center gap-8">
@@ -25,26 +34,32 @@ export default function BottomHeader() {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 rounded-md bg-white p-5 shadow-lg ring-1 ring-black/5">
-              <Menu.Item>
-                <Link
-                  to="/account-settings"
-                  className="flex items-center rounded-md px-2 py-3 hover:bg-gray-100 hover:text-primary-700"
-                >
-                  <img
-                    src="https://kachabazar-store-nine.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fahossain%2Fimage%2Fupload%2Fv1658340705%2Fcategory%2520icon%2Fcarp-fish_paxzrt.png&w=96&q=75"
-                    alt=""
-                    className="h-[20px] w-[20px]"
-                  />
-                  <div className="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">
-                    Fish &amp; Meat
-                    <span className="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
-                      <MdKeyboardArrowRight className="text-xl" />
-                    </span>
-                  </div>
-                </Link>
-              </Menu.Item>
-            </Menu.Items>
+            {categories?.length ? (
+              <Menu.Items className="c-h-65vh gap- absolute left-0 z-20 mt-2 grid w-72 origin-top-right divide-gray-100 rounded-md bg-white p-5 shadow-lg ring-1 ring-black/5">
+                {categories?.map((category) => (
+                  <Menu.Item key={category._id}>
+                    <Link
+                      to={`/products/category/${category._id}`}
+                      className="flex items-center rounded-md px-2 py-3 hover:bg-gray-100 hover:text-primary-700"
+                    >
+                      <img
+                        src={`${SERVER_IMAGES_CATEGORY_URL}/${category.image}`}
+                        alt=""
+                        className="h-[20px] w-[20px]"
+                      />
+                      <div className="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">
+                        {category.name}
+                        <span className="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
+                          <MdKeyboardArrowRight className="text-xl" />
+                        </span>
+                      </div>
+                    </Link>
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            ) : (
+              <p>Categories not found.</p>
+            )}
           </Transition>
         </Menu>
         <div className="transition-all hover:text-primary-700">

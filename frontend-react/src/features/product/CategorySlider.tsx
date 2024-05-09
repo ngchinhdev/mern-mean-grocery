@@ -1,9 +1,19 @@
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import { useQuery } from "@tanstack/react-query";
+
+import { getAllCategories } from "../../services/apiCategories";
+
 import ButtonsSlider from "./ButtonsSlider";
+import { SERVER_IMAGES_CATEGORY_URL } from "../../constants/url";
 
 export default function CategorySlider() {
+  const { data: categories } = useQuery({
+    queryKey: ["allCategories"],
+    queryFn: getAllCategories,
+  });
+
   return (
     <div className="mx-auto max-w-screen-2xl">
       <Swiper
@@ -39,19 +49,19 @@ export default function CategorySlider() {
         }}
         modules={[Autoplay]}
       >
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((item) => (
-          <SwiperSlide className="relative">
+        {categories?.map((category) => (
+          <SwiperSlide key={category._id} className="relative">
             <Link
-              to={"/products"}
+              to={`/products/category/${category._id}`}
               className="flex cursor-pointer flex-col items-center rounded-lg bg-white p-3 text-center shadow-sm"
             >
               <img
-                src="https://kachabazar-store-nine.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fahossain%2Fimage%2Fupload%2Fv1658340705%2Fcategory%2520icon%2Fcarp-fish_paxzrt.png&w=96&q=75"
-                alt=""
+                src={`${SERVER_IMAGES_CATEGORY_URL}/${category.image}`}
+                alt={category.name}
                 className="h-[40px] w-[40px]"
               />
               <h3 className="mt-2 text-xs text-gray-600 group-hover:text-primary-600">
-                Fish &amp; Meat
+                {category.name}
               </h3>
             </Link>
           </SwiperSlide>

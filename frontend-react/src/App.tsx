@@ -1,4 +1,6 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 import AppLayout from "./layouts/AppLayout";
 import Home from "./pages/Home";
@@ -19,6 +21,12 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Product />,
+        children: [
+          {
+            path: "/products/category/:categoryId",
+            element: <Product />,
+          },
+        ],
       },
       {
         path: "/about",
@@ -36,6 +44,19 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000,
+    },
+  },
+});
+
 export default function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={true} />
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 }

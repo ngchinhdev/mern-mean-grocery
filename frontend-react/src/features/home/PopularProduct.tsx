@@ -1,6 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
+
+import { getAllProducts } from "../../services/apiProducts";
+
 import ProductList from "../../ui/ProductList";
 
 export default function PopularProduct() {
+  const { data: products } = useQuery({
+    queryKey: ["allProducts"],
+    queryFn: getAllProducts,
+  });
+
+  if (!products?.length) return <p>No products found.</p>;
+
   return (
     <section className="bg-gray-50 px-3 py-10 text-center sm:px-10 lg:py-16">
       <div className="mx-auto max-w-screen-2xl">
@@ -14,7 +25,7 @@ export default function PopularProduct() {
             shipping.
           </p>
         </div>
-        <ProductList />
+        <ProductList products={products} />
       </div>
     </section>
   );

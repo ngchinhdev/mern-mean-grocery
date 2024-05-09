@@ -1,6 +1,15 @@
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
+import { getAllCategories } from "../../services/apiCategories";
+import { SERVER_IMAGES_CATEGORY_URL } from "../../constants/url";
+
 export default function FeatureCategory() {
+  const { data: categories } = useQuery({
+    queryKey: ["allCategories"],
+    queryFn: getAllCategories,
+  });
+
   return (
     <section className="mt-5 bg-gray-100 px-3 py-10 text-center sm:px-10">
       <div className="mx-auto max-w-screen-2xl">
@@ -11,21 +20,23 @@ export default function FeatureCategory() {
           Choose your necessary products from this feature categories.
         </p>
         <ul className="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
-          <li>
-            <Link
-              to={"/products"}
-              className="flex h-full w-full transform cursor-pointer items-center border border-gray-100 bg-white p-6 shadow-sm transition duration-200 ease-linear group-hover:shadow-lg"
-            >
-              <img
-                src="https://kachabazar-store-nine.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fahossain%2Fimage%2Fupload%2Fv1658340705%2Fcategory%2520icon%2Fcarp-fish_paxzrt.png&w=96&q=75"
-                alt=""
-                className="h-[40px] w-[40px]"
-              />
-              <h3 className="line-clamp-1 ps-3 text-sm font-semibold leading-tight text-gray-600">
-                Fish & Meat
-              </h3>
-            </Link>
-          </li>
+          {categories?.map((category) => (
+            <li key={category._id}>
+              <Link
+                to={`/products/category/${category._id}`}
+                className="flex h-full w-full transform cursor-pointer items-center border border-gray-100 bg-white px-4 py-6 shadow-sm transition duration-200 ease-linear group-hover:shadow-lg"
+              >
+                <img
+                  src={`${SERVER_IMAGES_CATEGORY_URL}/${category.image}`}
+                  alt={category.name}
+                  className="h-[40px] w-[40px]"
+                />
+                <h3 className="line-clamp-1 ps-3 text-left text-sm font-semibold leading-tight text-gray-600">
+                  {category.name}
+                </h3>
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </section>

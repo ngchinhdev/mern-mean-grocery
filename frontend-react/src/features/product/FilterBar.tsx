@@ -1,8 +1,12 @@
-export default function FilterBar() {
+type FilterBarProps = {
+  itemLength?: number;
+};
+
+export default function FilterBar({ itemLength }: FilterBarProps) {
   return (
     <div className="mx-auto my-8 flex max-w-screen-2xl items-center justify-between rounded border border-gray-100 bg-orange-100 p-3">
       <h6 className="text-sm">
-        Total <span className="font-bold">9</span> items Found
+        Total <span className="font-bold">{itemLength || 0}</span> Items Found
       </h6>
       <span className="text-sm">
         <select className="block w-full cursor-pointer rounded border-0 bg-white p-1 pr-10 text-sm font-medium focus:ring-0">

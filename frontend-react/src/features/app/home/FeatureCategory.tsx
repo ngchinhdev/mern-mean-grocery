@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
-import { getAllCategories } from "../../services/apiCategories";
-import { SERVER_IMAGES_CATEGORY_URL } from "../../constants/url";
+import { getAllCategories } from "../../../services/apiCategories";
+import { SERVER_IMAGES_CATEGORY_URL } from "../../../constants/url";
 
 export default function FeatureCategory() {
   const { data: categories } = useQuery({

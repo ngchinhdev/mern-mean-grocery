@@ -1,4 +1,4 @@
-import HomeFeature from "../features/home";
+import HomeFeature from "../../features/app/home";
 
 export default function Home() {
   return <HomeFeature />;

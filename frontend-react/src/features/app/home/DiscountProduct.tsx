@@ -1,4 +1,4 @@
-import ProductList from "../../ui/ProductList";
+import ProductList from "../../../ui/ProductList";
 
 export default function DiscountProduct() {
   return (

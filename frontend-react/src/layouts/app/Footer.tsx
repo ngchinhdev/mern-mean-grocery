@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 
-import logoShop from "../assets/logo-shop.svg";
-import facebookLogo from "../assets/fb.svg";
-import instagramLogo from "../assets/ins.webp";
-import linkedinLogo from "../assets/lnk.png";
-import paymentMethods from "../assets/payment-logo_qhslgz.webp";
+import logoShop from "../../assets/logo-shop.svg";
+import facebookLogo from "../../assets/fb.svg";
+import instagramLogo from "../../assets/ins.webp";
+import linkedinLogo from "../../assets/lnk.png";
+import paymentMethods from "../../assets/payment-logo_qhslgz.webp";
 
 export default function Footer() {
   return (

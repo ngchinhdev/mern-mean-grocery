@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import logoShop from "../../assets/logo-shop.svg";
 import { IoMdClose } from "react-icons/io";
+
+import logoShop from "../../../assets/logo-shop.svg";
 
 interface MenuHeaderProps {
   onClose: () => void;

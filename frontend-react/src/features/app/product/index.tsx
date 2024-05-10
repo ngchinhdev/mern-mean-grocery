@@ -4,17 +4,17 @@ import { useParams } from "react-router-dom";
 import {
   getAllProducts,
   getProductsByCategoryId,
-} from "../../services/apiProducts";
+} from "../../../services/apiProducts";
 
-import bannerImg1 from "../../assets/cta-bg-1.webp";
-import bannerImg2 from "../../assets/cta-bg-2.webp";
-import bannerImg3 from "../../assets/cta-bg-3.webp";
+import bannerImg1 from "../../../assets/cta-bg-1.webp";
+import bannerImg2 from "../../../assets/cta-bg-2.webp";
+import bannerImg3 from "../../../assets/cta-bg-3.webp";
 
 import Banner from "./Banner";
 import CategorySlider from "./CategorySlider";
-import ProductList from "../../ui/ProductList";
+import ProductList from "../../../ui/ProductList";
 import FilterBar from "./FilterBar";
-import MoreInfo from "../../layouts/MoreInfo";
+import MoreInfo from "../../../layouts/app/MoreInfo";
 
 export default function ProductFeature() {
   const queryOptions = {

@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getAllProducts } from "../../services/apiProducts";
+import { getAllProducts } from "../../../services/apiProducts";
 
-import ProductList from "../../ui/ProductList";
+import ProductList from "../../../ui/ProductList";
 
 export default function PopularProduct() {
   const { data: products } = useQuery({

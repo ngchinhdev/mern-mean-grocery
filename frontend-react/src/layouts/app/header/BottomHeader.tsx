@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
-import { getAllCategories } from "../../services/apiCategories";
-import { SERVER_IMAGES_CATEGORY_URL } from "../../constants/url";
+import { getAllCategories } from "../../../services/apiCategories";
+import { SERVER_IMAGES_CATEGORY_URL } from "../../../constants/url";
 
-import vFlag from "../../assets/vietnamflag.png";
-import aFlag from "../../assets/americanflag.svg";
+import vFlag from "../../../assets/vietnamflag.png";
+import aFlag from "../../../assets/americanflag.svg";
 
 export default function BottomHeader() {
   const { data: categories } = useQuery({

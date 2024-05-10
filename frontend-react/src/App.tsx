@@ -2,12 +2,13 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-import AppLayout from "./layouts/AppLayout";
-import Home from "./pages/Home";
-import Product from "./pages/Product";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Cart from "./pages/Cart";
+import AppLayout from "./layouts/app/AppLayout";
+import Home from "./pages/app/Home";
+import Products from "./pages/app/Products";
+import About from "./pages/app/About";
+import Contact from "./pages/app/Contact";
+import Cart from "./pages/app/Cart";
+import AdminLayout from "./layouts/admin/AdminLayout";
 
 const router = createBrowserRouter([
   {
@@ -20,11 +21,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Product />,
+        element: <Products />,
         children: [
           {
             path: "/products/category/:categoryId",
-            element: <Product />,
+            element: <Products />,
           },
         ],
       },
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
         element: <Cart />,
       },
     ],
+  },
+  {
+    path: "/admin",
+    element: <AdminLayout />,
   },
 ]);
 

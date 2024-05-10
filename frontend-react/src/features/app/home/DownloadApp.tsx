@@ -1,6 +1,6 @@
-import Button from "../../ui/Button";
+import Button from "../../../ui/Button";
 
-import deliveryMan from "../../assets/delivery-boy.webp";
+import deliveryMan from "../../../assets/delivery-boy.webp";
 
 export default function DownloadApp() {
   return (

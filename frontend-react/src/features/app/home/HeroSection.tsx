@@ -4,8 +4,8 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 
-import Button from "../../ui/Button";
-import slide from "../../assets/slider-2_o6aezc.webp";
+import Button from "../../../ui/Button";
+import slide from "../../../assets/slider-2_o6aezc.webp";
 
 export default function HeroSection() {
   return (

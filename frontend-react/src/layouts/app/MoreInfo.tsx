@@ -1,7 +1,7 @@
-import appStoreImage from "../assets/app-store_cyyc0f.svg";
-import playStoreImage from "../assets/play-store_cavwua.svg";
-import moreIf1 from "../assets/moreif1.webp";
-import moreIf2 from "../assets/moreif2.webp";
+import appStoreImage from "../../assets/app-store_cyyc0f.svg";
+import playStoreImage from "../../assets/play-store_cavwua.svg";
+import moreIf1 from "../../assets/moreif1.webp";
+import moreIf2 from "../../assets/moreif2.webp";
 
 export default function MoreInfo() {
   return (

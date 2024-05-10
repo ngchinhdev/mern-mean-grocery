@@ -4,7 +4,7 @@ import { LuShoppingCart } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { FiBell } from "react-icons/fi";
 
-import logoLight from "../../assets/logo-light_hls14v.svg";
+import logoLight from "../../../assets/logo-light_hls14v.svg";
 
 interface MiddleHeaderProps {
   onOpenCart: () => void;

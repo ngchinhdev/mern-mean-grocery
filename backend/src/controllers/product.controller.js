@@ -61,6 +61,35 @@ const getProductsByCategoryId = async (req, res, next) => {
     }
 };
 
+const getHotProducts = async (req, res, next) => {
+    try {
+        let { limitDocuments, skip, page, sortOptions } = req.customQueries;
+
+        const products = await ProductModel
+            .find({ hot: true, isDeleted: false })
+            .skip(skip)
+            .limit(limitDocuments)
+            .sort(sortOptions);
+
+        if (!products.length) {
+            createError(404, 'No hot products found.');
+        }
+
+        const resProducts = products.map(product => {
+            const { __v, isDeleted, ...data } = product._doc;
+            return data;
+        });
+
+        return res.status(200).json({
+            page: page || 1,
+            message: 'Hot products retrieved successfully.',
+            data: resProducts
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const getProductById = async (req, res, next) => {
     try {
         const { id } = req.params;
@@ -154,6 +183,7 @@ const deleteProduct = async (req, res, next) => {
 module.exports = {
     getAllProducts,
     getProductsByCategoryId,
+    getHotProducts,
     getProductById,
     createProduct,
     updateProduct,

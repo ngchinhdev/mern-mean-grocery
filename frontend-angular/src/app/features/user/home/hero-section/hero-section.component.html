@@ -1,54 +1,7 @@
 <section class="mt-5 w-full px-3 sm:px-10">
     <div class="mx-auto max-w-screen-2xl">
         <div class="lg:flex lg:gap-2 xl:gap-6">
-            <swiper-container slides-per-view="1" space-between="spaceBetween" speed="2000" loop="true" pagination="{
-              hideOnClick: true
-            }">
-                <swiper-slide class="relative">
-                    <img src='../../../assets/slider-2_o6aezc.webp' alt="Slide" class="w-full rounded-lg" />
-                    <div
-                        class="absolute left-0 top-0 flex h-full w-full flex-col justify-center pl-4 pr-12 sm:pe-12 sm:ps-8">
-                        <div class="w-10/12 sm:w-8/12">
-                            <h1
-                                class="mb-2 line-clamp-1 text-xl font-bold text-gray-800 sm:text-lg  md:line-clamp-none md:text-2xl lg:line-clamp-none lg:text-3xl">
-                                Best Different Type of Grocery Store
-                            </h1>
-                            <p
-                                class="line-clamp-1 text-base leading-6 text-gray-600 md:line-clamp-none lg:line-clamp-none">
-                                Quickly aggregate empowered networks after emerging
-                                products...
-                            </p>
-                        </div>
-                        <div class="pt-4">
-                            <button>
-                                Shop Now
-                            </button>
-                        </div>
-                    </div>
-                </swiper-slide>
-                <swiper-slide class="relative">
-                    <img src='../../../assets/slider-2_o6aezc.webp' alt="Slide" class="w-full rounded-lg" />
-                    <div
-                        class="absolute left-0 top-0 flex h-full w-full flex-col justify-center pl-4 pr-12 sm:pe-12 sm:ps-8">
-                        <div class="w-10/12 sm:w-8/12">
-                            <h1
-                                class="mb-2 line-clamp-1 text-xl font-bold text-gray-800 sm:text-lg  md:line-clamp-none md:text-2xl lg:line-clamp-none lg:text-3xl">
-                                Best Different Type of Grocery Store
-                            </h1>
-                            <p
-                                class="line-clamp-1 text-base leading-6 text-gray-600 md:line-clamp-none lg:line-clamp-none">
-                                Quickly aggregate empowered networks after emerging
-                                products...
-                            </p>
-                        </div>
-                        <div class="pt-4">
-                            <button>
-                                Shop Now
-                            </button>
-                        </div>
-                    </div>
-                </swiper-slide>
-            </swiper-container>
+            <app-home-hero-swiper class="w-3/5"></app-home-hero-swiper>
             <div
                 class="hidden h-full w-full transform rounded border-2 border-orange-500 bg-gray-50 shadow transition duration-150 ease-linear hover:border-primary-500 lg:flex lg:flex-col xl:w-4/5">
                 <h3 class="rounded-t border-b bg-orange-100 px-6 py-2 text-center text-base font-medium text-gray-900">
@@ -180,6 +133,22 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="mt-5 flex items-center justify-between gap-2 rounded-md bg-[#ffedd5] px-10 py-6">
+            <div>
+                <h1 class="text-xl font-bold text-primary-700">
+                    100% Natural Quality Organic Product
+                </h1>
+                <p class="text-gray-500">
+                    See Our latest discounted products from here and get a special
+                    discount product
+                </p>
+            </div>
+            <div class="ps-2">
+                <button type="primary" to="/products">
+                    Shop Now
+                </button>
             </div>
         </div>
     </div>

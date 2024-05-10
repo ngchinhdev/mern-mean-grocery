@@ -96,12 +96,14 @@
                 </button>
                 <mat-menu #menu="matMenu"
                     class="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 !rounded-md bg-white p-5 !shadow-md ring-1 !ring-black/5">
+                    @for(category of categories; track category._id) {
                     <button mat-menu-item class="!p-0 rounded-md">
-                        <a href="products" class="flex items-center py-2 px-3 hover:text-primary-700">
-                            <img src="https://kachabazar-store-nine.vercel.app/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fahossain%2Fimage%2Fupload%2Fv1658340705%2Fcategory%2520icon%2Fcarp-fish_paxzrt.png&w=96&q=75"
-                                alt="" class="h-[20px] w-[20px]" />
+                        <a href="{{imageUrl}}/{{category._id}}"
+                            class="flex items-center py-2 px-3 hover:text-primary-700">
+                            <img src='{{imageUrl}}/{{category.image}}' alt={{category.name}}
+                                class="h-[20px] w-[20px]" />
                             <div class="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">
-                                Fish &amp; Meat
+                                {{category.name}}
                                 <span
                                     class="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
                                     <mat-icon class="!mr-0">
@@ -113,6 +115,7 @@
                             </div>
                         </a>
                     </button>
+                    }
                 </mat-menu>
             </div>
             <div class="transition-all hover:text-primary-700">

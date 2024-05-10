@@ -1,14 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, provideRouter } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { register } from 'swiper/element/bundle';
 register();
-
-import { HeaderComponent } from './shared/components/header/header.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

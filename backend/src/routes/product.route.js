@@ -14,6 +14,12 @@ router.get(
 );
 
 router.get(
+    '/hot',
+    helperMiddleware.checkQueryParams,
+    productController.getHotProducts
+);
+
+router.get(
     '/categoryId/:id',
     helperMiddleware.checkValidId,
     helperMiddleware.checkQueryParams,

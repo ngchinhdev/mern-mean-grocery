@@ -1,41 +1,10 @@
-<!-- <app-admin-header></app-admin-header>
-<app-admin-sidebar></app-admin-sidebar>
-<router-outlet></router-outlet> -->
-<!-- <nz-layout>
-    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-        <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="User" nzIcon="user">
-                <ul>
-                    <li nz-menu-item>Tom</li>
-                    <li nz-menu-item>Bill</li>
-                    <li nz-menu-item>Alex</li>
-                </ul>
-            </li>
-            <li nz-submenu nzTitle="Team" nzIcon="team">
-                <ul>
-                    <li nz-menu-item>Team 1</li>
-                    <li nz-menu-item>Team 2</li>
-                </ul>
-            </li>
-            <li nz-menu-item>
-                <span nz-icon nzType="file"></span>
-                <span>File</span>
-            </li>
-        </ul>
-    </nz-sider>
-    <nz-layout>
-        <nz-header>
-            <span class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-                (click)="isCollapsed = !isCollapsed"></span>
-        </nz-header>
-        <nz-content>
-            <nz-breadcrumb>
-                <nz-breadcrumb-item>User</nz-breadcrumb-item>
-                <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-            </nz-breadcrumb>
-            <div class="inner-content">Bill is a cat.</div>
-        </nz-content>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-    </nz-layout>
-</nz-layout> -->
+<section class="flex">
+    <app-admin-sidebar></app-admin-sidebar>
+    <div class="flex-1">
+        <app-admin-header [isCollapsed]="isCollapsed" [toggleCollapsed]="toggleCollapsed"></app-admin-header>
+        <main class="relative h-full flex flex-auto flex-col px-4 sm:px-6 py-4 sm:py-6 md:px-8">
+            <router-outlet></router-outlet>
+        </main>
+        <footer>Ant Design ©2020 Implement By Angular</footer>
+    </div>
+</section>

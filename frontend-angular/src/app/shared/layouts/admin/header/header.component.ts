@@ -1,12 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-admin-header',
   standalone: true,
-  imports: [],
+  imports: [MatIconModule, NzIconModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
-export class HeaderComponent {
 
+export class HeaderComponent {
+  @Input() isCollapsed!: boolean;
+  @Input() toggleCollapsed!: () => void;
 }

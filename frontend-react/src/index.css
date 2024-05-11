@@ -15,6 +15,30 @@ body {
     height: 10000px;
 } */
 
+.ant-menu-submenu-arrow {
+    color: white !important;
+}
+
+.ant-menu-item {
+    /* padding: 2px !important; */
+}
+
+.ant-menu-item:not(:has(.ant-menu-item-selected)),
+.ant-menu-title-content,
+.ant-menu-item-icon {
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+    background-color: transparent !important;
+    color: white !important;
+}
+
+.ant-menu-item-selected {
+    background-color: white !important;
+    color: #10b981 !important;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
 .MuiPaper-root {
     width: 100%;
 }

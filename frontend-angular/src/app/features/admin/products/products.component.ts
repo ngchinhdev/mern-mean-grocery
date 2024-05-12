@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
-  selector: 'app-products',
+  selector: 'app-admin-products',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [RouterOutlet],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
-export class ProductsComponent {
 
+export class ProductsComponent {
 }

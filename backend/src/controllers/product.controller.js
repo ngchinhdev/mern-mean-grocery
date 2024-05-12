@@ -8,6 +8,7 @@ const getAllProducts = async (req, res, next) => {
 
         const products = await ProductModel
             .find({ isDeleted: false })
+            .populate('categoryId', 'name')
             .skip(skip)
             .limit(limitDocuments)
             .sort(sortOptions);

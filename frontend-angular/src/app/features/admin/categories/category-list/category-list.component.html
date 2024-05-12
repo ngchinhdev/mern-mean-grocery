@@ -1,0 +1,55 @@
+<div>
+    <div class="lg:flex items-center justify-between mb-4">
+        <h1 class="mb-4 lg:mb-0 text-2xl font-medium text-stone-800">Categories</h1>
+        <div>
+            <a routerLink="add"
+                class="flex items-center gap-2 font-semibold text-base py-2 px-2 rounded-md bg-primary-600 text-white">
+                <mat-icon>
+                    <span class="material-symbols-outlined">
+                        add_circle
+                    </span>
+                </mat-icon>
+                Add Category
+            </a>
+        </div>
+    </div>
+    <div>
+        <table class="w-full text-left text-gray-600">
+            <thead class="bg-[#f5f5f5] text-sm">
+                <tr>
+                    <th class="uppercase">Name</th>
+                    <th class="uppercase">Image</th>
+                    <th class="uppercase">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(category of categories; track category._id) {
+                <tr>
+                    <td>{{category.name}}</td>
+                    <td>
+                        <img src="{{imageUrl}}/{{category.image}}" alt="{{category.name}}" class="w-10 h-10 rounded-md">
+                    </td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <button class="flex items-center">
+                                <mat-icon class="scale-110">
+                                    <span class="material-symbols-outlined text-blue-500">
+                                        edit_square
+                                    </span>
+                                </mat-icon>
+                            </button>
+                            <button class="flex items-center">
+                                <mat-icon class="scale-110">
+                                    <span class="material-symbols-outlined text-red-500">
+                                        delete_forever
+                                    </span>
+                                </mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 
@@ -9,7 +10,7 @@ type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   {
-    key: "1",
+    key: "/admin/dashboard",
     icon: <RxDashboard />,
     label: "Dashboard",
   },
@@ -23,12 +24,15 @@ const items: MenuItem[] = [
     ],
   },
   {
-    key: "3",
+    key: "/admin/products/product-list",
     icon: <BsBox />,
     label: "Products",
     children: [
-      { key: "3.1", label: "All Products" },
-      { key: "3.2", label: "Add Product" },
+      {
+        key: "/admin/products/product-list",
+        label: "All Products",
+      },
+      { key: "/admin/products/add", label: "Add Product" },
     ],
   },
   {
@@ -56,14 +60,16 @@ interface SidebarMenuProps {
 }
 
 export default function SidebarMenu({ collapsed }: SidebarMenuProps) {
+  const navigate = useNavigate();
+
   return (
     <Menu
-      defaultSelectedKeys={["1"]}
-      defaultOpenKeys={["sub1"]}
+      onClick={({ key }) => navigate(key)}
+      defaultSelectedKeys={["/admin/dashboard"]}
       mode="inline"
       inlineCollapsed={collapsed}
       items={items}
-      className="h-full overflow-y-auto !border-none bg-primary-600 px-3 text-white"
+      className="no-scrollbar h-full overflow-y-auto !border-none bg-primary-600 px-3 pt-3 text-white"
     />
   );
 }

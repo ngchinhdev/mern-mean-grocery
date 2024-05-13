@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  Navigate,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
@@ -14,6 +18,8 @@ import Cart from "./pages/app/Cart";
 import AdminLayout from "./layouts/admin/AdminLayout";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProducts from "./pages/admin/Products";
+import AdminProductList from "./features/admin/products/ProductList";
+import AdminProductEditor from "./features/admin/products/ProductEditor";
 
 const router = createBrowserRouter([
   {
@@ -54,11 +60,29 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/admin",
+        element: <Navigate to="/admin/dashboard" />,
+      },
+      {
+        path: "/admin/dashboard",
         element: <AdminDashboard />,
       },
       {
         path: "/admin/products",
         element: <AdminProducts />,
+        children: [
+          {
+            path: "/admin/products/product-list",
+            element: <AdminProductList />,
+          },
+          {
+            path: "/admin/products/add",
+            element: <AdminProductEditor />,
+          },
+          {
+            path: "/admin/products/edit",
+            element: <AdminProductEditor />,
+          },
+        ],
       },
     ],
   },

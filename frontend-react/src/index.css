@@ -3,53 +3,107 @@
 @tailwind utilities;
 
 html {
-    font-family: Open Sans, sans-serif;
+    font-family: Open Sans, sans-serif !important;
 }
 
 li {
     list-style-type: none;
 }
 
-/* 
 body {
-    height: 10000px;
-} */
+    /* height: 10000px; */
+}
 
-.ant-menu-submenu-arrow {
+@layer utilities {
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+}
+
+:where(.css-dev-only-do-not-override-1okl62o).ant-layout {
+    font-family: Open Sans, sans-serif !important;
+}
+
+/* Table admin style  */
+.table-header-admin th {
+    @apply py-5 px-6 font-semibold leading-tight border-b border-gray-300;
+}
+
+.table-body-admin td {
+    @apply py-4 px-6 border-b border-gray-300 text-[1rem];
+}
+
+.table-body-admin tr:hover {
+    @apply bg-gray-100 transition-all duration-200;
+}
+
+/* Antd sidebar menu admin  */
+.ant-menu-item,
+.ant-menu-submenu-title {
+    height: 50px !important;
+    line-height: 50px !important;
+}
+
+.ant-menu-submenu-arrow,
+.ant-menu-submenu .ant-menu-title-content {
     color: white !important;
 }
 
-.ant-menu-item {
-    /* padding: 2px !important; */
+.ant-menu-submenu .ant-menu-title-content {
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
 }
 
-.ant-menu-item:not(:has(.ant-menu-item-selected)),
-.ant-menu-title-content,
-.ant-menu-item-icon {
+.ant-menu-item:has(:not(.ant-menu-item-selected)) {
     font-weight: 600 !important;
     font-size: 1.1rem !important;
     background-color: transparent !important;
+    color: white;
+}
+
+.ant-menu-item.ant-menu-item-selected .ant-menu-item-icon {
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
+}
+
+.ant-menu-item-active {
+    background-color: rgb(238, 238, 238) !important;
+    color: #10b981 !important;
+}
+
+.ant-menu-submenu .ant-menu-item-icon {
+    font-weight: 600 !important;
+    font-size: 1.1rem !important;
     color: white !important;
 }
 
-.ant-menu-item-selected {
+.ant-menu-item.ant-menu-item-selected {
     background-color: white !important;
     color: #10b981 !important;
-    font-weight: 600;
-    font-size: 1.1rem;
 }
 
 .MuiPaper-root {
     width: 100%;
 }
 
+/* Responsive sidebar app */
 @media (min-width: 480px) {
     .MuiPaper-root {
         width: 420px;
     }
 }
 
-/* HTML: <div class="loader"></div> */
+/* Loader animation */
 .loader {
     width: 100px;
     aspect-ratio: 1;

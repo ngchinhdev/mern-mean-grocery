@@ -23,9 +23,9 @@ export default function AdminLayout() {
         trigger={null}
         collapsed={collapsed}
         collapsible
-        className={`${!collapsed ? "!w-[290px] !min-w-[290px]" : ""} h-screen`}
+        className={`${!collapsed ? "!w-[290px] !min-w-[290px]" : ""} !sticky left-0 top-0 h-dvh`}
       >
-        <div className="flex w-full items-center bg-primary-600 px-9 py-4">
+        <div className="flex w-full items-center border-b border-gray-400 !bg-primary-600 px-9 py-4">
           {collapsed ? (
             <FaShoppingBag className="text-4xl text-white" />
           ) : (
@@ -36,7 +36,26 @@ export default function AdminLayout() {
       </Sider>
       <Content>
         <HeaderCustom collapsed={collapsed} onCollapse={toggleCollapsed} />
-        <Outlet />
+        <div className="relative flex flex-auto flex-col bg-white px-4 pt-4 sm:px-6 sm:pt-6 md:px-8">
+          <Outlet />
+          <footer className="flex h-16 flex-auto items-center !bg-white px-4 sm:px-6 md:px-8">
+            <div className="flex w-full flex-auto items-center justify-between">
+              <span>
+                Copyright © 2024 <span className="font-semibold">Elstar</span>{" "}
+                All rights reserved.
+              </span>
+              <div className="">
+                <a className="text-gray" href="/#">
+                  Term &amp; Conditions
+                </a>
+                <span className="text-muted mx-2"> | </span>
+                <a className="text-gray" href="/#">
+                  Privacy &amp; Policy
+                </a>
+              </div>
+            </div>
+          </footer>
+        </div>
       </Content>
     </Layout>
   );

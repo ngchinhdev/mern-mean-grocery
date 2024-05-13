@@ -13,8 +13,8 @@ interface HeaderProps {
 
 export default function Header({ onCollapse, collapsed }: HeaderProps) {
   return (
-    <header className="border-b border-gray-200">
-      <div className="text-t-gray-500 flex h-16 items-center justify-between px-6">
+    <header className="sticky top-0 z-40 border-b border-gray-200 bg-white">
+      <div className="flex h-16 items-center justify-between px-6 text-t-gray-500">
         <div className="flex items-center gap-3 text-2xl">
           <span
             className="cursor-pointer rounded-full p-2 transition-all hover:bg-gray-200 hover:text-black"

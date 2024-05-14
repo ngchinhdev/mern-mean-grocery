@@ -19,17 +19,17 @@ const items: MenuItem[] = [
     icon: <FiLayers />,
     label: "Categories",
     children: [
-      { key: "2.1", label: "All Categories" },
-      { key: "2.2", label: "Add Category" },
+      { key: "/admin/categories/list", label: "All Categories" },
+      { key: "/admin/categories/add", label: "Add Category" },
     ],
   },
   {
-    key: "/admin/products/product-list",
+    key: "/admin/products",
     icon: <BsBox />,
     label: "Products",
     children: [
       {
-        key: "/admin/products/product-list",
+        key: "/admin/products/list",
         label: "All Products",
       },
       { key: "/admin/products/add", label: "Add Product" },
@@ -69,7 +69,7 @@ export default function SidebarMenu({ collapsed }: SidebarMenuProps) {
       mode="inline"
       inlineCollapsed={collapsed}
       items={items}
-      className="no-scrollbar h-full overflow-y-auto !border-none bg-primary-600 px-3 pt-3 text-white"
+      className="no-scrollbar overflow-y-auto !border-none bg-primary-600 px-3 pt-3 text-white"
     />
   );
 }

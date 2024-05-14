@@ -38,7 +38,7 @@ export default function AdminLayout() {
         <HeaderCustom collapsed={collapsed} onCollapse={toggleCollapsed} />
         <div className="relative flex flex-auto flex-col bg-white px-4 pt-4 sm:px-6 sm:pt-6 md:px-8">
           <Outlet />
-          <footer className="flex h-16 flex-auto items-center !bg-white px-4 sm:px-6 md:px-8">
+          <footer className="absolute bottom-0 flex h-16 flex-auto items-center !bg-white px-4 sm:px-6 md:px-8">
             <div className="flex w-full flex-auto items-center justify-between">
               <span>
                 Copyright © 2024 <span className="font-semibold">Elstar</span>{" "}

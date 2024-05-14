@@ -31,14 +31,14 @@
                     </td>
                     <td>
                         <div class="flex items-center gap-3">
-                            <button class="flex items-center">
+                            <a class="flex items-center" routerLink="edit/{{category._id}}">
                                 <mat-icon class="scale-110">
                                     <span class="material-symbols-outlined text-blue-500">
                                         edit_square
                                     </span>
                                 </mat-icon>
-                            </button>
-                            <button class="flex items-center">
+                            </a>
+                            <button class="flex items-center" (click)="onDeleteCategory(category._id)">
                                 <mat-icon class="scale-110">
                                     <span class="material-symbols-outlined text-red-500">
                                         delete_forever

@@ -20,6 +20,9 @@ import AdminDashboard from "./pages/admin/Dashboard";
 import AdminProducts from "./pages/admin/Products";
 import AdminProductList from "./features/admin/products/ProductList";
 import AdminProductEditor from "./features/admin/products/ProductEditor";
+import AdminCategories from "./pages/admin/Categories";
+import AdminCategoryist from "./features/admin/categories/CategoryList";
+import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
 
 const router = createBrowserRouter([
   {
@@ -71,7 +74,7 @@ const router = createBrowserRouter([
         element: <AdminProducts />,
         children: [
           {
-            path: "/admin/products/product-list",
+            path: "/admin/products/list",
             element: <AdminProductList />,
           },
           {
@@ -81,6 +84,24 @@ const router = createBrowserRouter([
           {
             path: "/admin/products/edit",
             element: <AdminProductEditor />,
+          },
+        ],
+      },
+      {
+        path: "/admin/categories",
+        element: <AdminCategories />,
+        children: [
+          {
+            path: "/admin/categories/list",
+            element: <AdminCategoryist />,
+          },
+          {
+            path: "/admin/categories/add",
+            element: <AdminCategoryEditor />,
+          },
+          {
+            path: "/admin/categories/edit",
+            element: <AdminCategoryEditor />,
           },
         ],
       },

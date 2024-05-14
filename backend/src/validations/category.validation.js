@@ -8,16 +8,16 @@ const checkFileUploaded = async (_, { req }, isUpdate = false) => {
         isDeleted: false
     });
 
-    if (!oldCategory) {
-        createError(404, 'Category not found.');
-    }
-
     if (!isUpdate) {
         if (!req.file) {
             createError(400, 'Image is required');
         }
 
         return req.file.filename;
+    }
+
+    if (!oldCategory) {
+        createError(404, 'Category not found.');
     }
 
     if (!req.file) {

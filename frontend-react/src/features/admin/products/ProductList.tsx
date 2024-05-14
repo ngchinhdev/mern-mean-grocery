@@ -13,7 +13,7 @@ export default function ProductList() {
         </h1>
         <div>
           <Link
-            to="admin/add"
+            to="/admin/products/add"
             className="flex items-center gap-2 rounded-md bg-primary-600 px-3 py-2 text-base font-semibold text-white"
           >
             <span>

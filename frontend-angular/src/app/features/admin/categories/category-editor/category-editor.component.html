@@ -13,7 +13,7 @@
                             class="h-11 border focus:outline-primary-600 border-gray-300 rounded-lg py-3 px-5 w-full"
                             placeholder="Name" id="name" formControlName="name">
                         @if(editorForm.get('name')?.hasError('required') && editorForm.get('name')?.touched) {
-                        <small class="text-red-600 text-[15px] pt-1 inline-block">Name is required</small>
+                        <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Name is required</small>
                         }
                     </div>
                 </div>
@@ -21,11 +21,21 @@
                     <h2 class="text-xl font-medium">Category Image</h2>
                     <p class="mb-2">Add or change image of the category</p>
                     <div class="flex items-center gap-3">
+                        @if(imagePicked) {
                         <div
-                            class="border-dashed border-2 rounded-lg border-gray-300 hover:border-primary-600 transition-all w-24 h-24 relative overflow-hidden">
-                            <img src="https://elstar.themenate.net/img/products/product-1.jpg" class="w-full h-100"
-                                alt="Image">
+                            class="border-dashed image-small-admin border-2 rounded-lg border-gray-300 hover:border-primary-600 transition-all w-24 h-24 p-3 relative overflow-hidden">
+                            <img src="{{imagePicked}}" class="w-full h-full" alt="{{data!.name}}">
+                            <span class="trash hidden">
+                                <mat-icon
+                                    class="scale-110 absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer">
+                                    <span class="material-symbols-outlined text-red-500" (click)="onImageRemove()">
+                                        delete_forever
+                                    </span>
+                                </mat-icon>
+                            </span>
                         </div>
+                        }
+                        @if(!imagePicked) {
                         <div
                             class="border-dashed border-2 rounded-lg border-gray-300 hover:border-primary-600 transition-all w-24 h-24 relative overflow-hidden">
                             <label for="image"
@@ -40,6 +50,7 @@
                             <input type="file" id="image" #filePicker (change)="onImagePicked($event)"
                                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
                         </div>
+                        }
                     </div>
                 </div>
             </div>

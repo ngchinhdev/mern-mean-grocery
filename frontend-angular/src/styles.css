@@ -16,6 +16,14 @@ a {
     cursor: pointer;
 }
 
+.image-small-admin:hover {
+    @apply bg-gray-200;
+}
+
+.image-small-admin:hover .trash {
+    @apply inline-block
+}
+
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */
 
 /* position */
@@ -188,11 +196,11 @@ button.toast-close-button {
 }
 
 .toast-success {
-    background-color: #51A351;
+    background-color: #10b981;
 }
 
 .toast-error {
-    background-color: #BD362F;
+    background-color: #f92b20;
 }
 
 .toast-info {

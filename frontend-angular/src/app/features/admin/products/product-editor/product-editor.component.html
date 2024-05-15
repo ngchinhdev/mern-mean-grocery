@@ -1,6 +1,7 @@
 <div>
     <div class="lg:flex items-center justify-between mb-4">
-        <h1 class="mb-4 lg:mb-0 text-2xl font-medium text-stone-800">Add New Product</h1>
+        <h1 class="mb-4 lg:mb-0 text-2xl font-medium text-stone-800">
+            {{productData ? 'Edit Product' : 'Add New Product'}}</h1>
     </div>
     <div class="w-full">
         <form [formGroup]="editorForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
@@ -108,13 +109,24 @@
                 <div>
                     <h2 class="text-xl font-medium">Product Images</h2>
                     <p class="mb-2">Add or change images of the product</p>
-                    <div class="flex items-center gap-3">
+                    <div class="flex items-center flex-wrap gap-3">
+                        @if(imagesPicked.length) {
+                        @for(image of imagesPicked; track image; let index = $index) {
                         <div
-                            class="border-dashed border-2 rounded-lg border-gray-300 hover:border-primary-600 transition-all w-24 h-24 relative overflow-hidden">
-                            <img src="https://elstar.themenate.net/img/products/product-1.jpg" class="w-full h-100"
-                                alt="Image">
+                            class="border-dashed image-small-admin border-2 rounded-lg border-gray-300 hover:border-primary-600 transition-all w-24 h-24 p-3 relative overflow-hidden">
+                            <img src="{{image}}" class="w-full h-full" alt="">
+                            <span class="trash hidden">
+                                <mat-icon
+                                    class="scale-110 absolute inset-0 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10 cursor-pointer">
+                                    <span class="material-symbols-outlined text-red-500" (click)="onRemoveImage(index)">
+                                        delete_forever
+                                    </span>
+                                </mat-icon>
+                            </span>
                         </div>
-                        <div
+                        }
+                        }
+                        @if(imagesPicked.length < 5) { <div
                             class="border-dashed border-2 rounded-lg border-gray-300 hover:border-primary-600 transition-all w-24 h-24 relative overflow-hidden">
                             <label for="image"
                                 class="w-full h-full flex flex-col gap-2 items-center justify-center p-3 text-gray-500 font-medium mb-2 z-10">
@@ -125,36 +137,35 @@
                                 </mat-icon>
                                 <span>Upload</span>
                             </label>
-                            <input type="file" id="image"
+                            <input type="file" id="images" #filePicker (change)="onImagePicked($event)"
                                 class="absolute inset-0 w-full h-full opacity-0 cursor-pointer">
-                        </div>
                     </div>
+                    }
                 </div>
             </div>
-
-            <div
-                class="sticky bottom-0 -mx-8 flex items-center justify-between border-t border-gray-200 bg-white px-8 py-4">
-                <div></div>
-                <div class="items-center gap-3 md:flex">
-                    <button
-                        class="button radius-round rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-600 hover:bg-gray-50 active:bg-gray-100 ltr:mr-3 rtl:ml-3"
-                        type="button">
-                        Discard
-                    </button>
-                    <button
-                        class="button radius-round rounded-md bg-primary-600 px-3 py-2 text-base text-white hover:bg-primary-700 active:bg-primary-700"
-                        type="submit">
-                        <span class="flex items-center justify-center gap-2">
-                            <mat-icon>
-                                <span class="material-symbols-outlined">
-                                    save
-                                </span>
-                            </mat-icon>
-                            <span class="ltr:ml-1 rtl:mr-1">Save</span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </form>
     </div>
+    <div class="sticky bottom-0 -mx-8 flex items-center justify-between border-t border-gray-200 bg-white px-8 py-4">
+        <div></div>
+        <div class="items-center gap-3 md:flex">
+            <button
+                class="button radius-round rounded-md border border-gray-300 bg-white px-3 py-2 text-base text-gray-600 hover:bg-gray-50 active:bg-gray-100 ltr:mr-3 rtl:ml-3"
+                type="button">
+                Discard
+            </button>
+            <button
+                class="button radius-round rounded-md bg-primary-600 px-3 py-2 text-base text-white hover:bg-primary-700 active:bg-primary-700"
+                type="submit">
+                <span class="flex items-center justify-center gap-2">
+                    <mat-icon>
+                        <span class="material-symbols-outlined">
+                            save
+                        </span>
+                    </mat-icon>
+                    <span class="ltr:ml-1 rtl:mr-1">Save</span>
+                </span>
+            </button>
+        </div>
+    </div>
+    </form>
+</div>
 </div>

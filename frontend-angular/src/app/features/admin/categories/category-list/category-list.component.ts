@@ -43,7 +43,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   onDeleteCategory(id: string) {
-    if (confirm('Do you want to delete this category?')) {
+    if (confirm('Are you sure you want to delete this category?')) {
       this.categoriesService.deleteCategory(id).subscribe({
         next: (response) => {
           this.toast.success('Category deleted successfully!');

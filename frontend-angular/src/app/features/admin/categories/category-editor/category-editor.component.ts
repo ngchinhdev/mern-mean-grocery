@@ -38,7 +38,11 @@ export class CategoryEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getCategoryById();
+    this.routeSub = this.route.params.subscribe((params) => {
+      if (params['id']) {
+        this.getCategoryById(params['id']);
+      }
+    });
   }
 
   ngOnDestroy() {
@@ -67,15 +71,11 @@ export class CategoryEditorComponent implements OnInit {
     this.editorForm.patchValue({ image: null });
   }
 
-  getCategoryById() {
-    this.routeSub = this.route.params.subscribe((params) => {
-      if (params['id']) {
-        this.categoriesService.getCategoryById(params['id']).subscribe((response) => {
-          this.data = response.data;
-          this.imagePicked = this.imageUrl + '/' + response.data.image;
-          this.editorForm.patchValue(response.data);
-        });
-      }
+  getCategoryById(id: string) {
+    this.categoriesService.getCategoryById(id).subscribe((response) => {
+      this.data = response.data;
+      this.imagePicked = this.imageUrl + '/' + response.data.image;
+      this.editorForm.patchValue(response.data);
     });
   }
 

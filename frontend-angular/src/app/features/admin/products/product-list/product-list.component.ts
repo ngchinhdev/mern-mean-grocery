@@ -6,6 +6,7 @@ import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
 import { ProductsService } from '../../../../core/services/products.service';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-product-list',
@@ -19,7 +20,7 @@ export class ProductListComponent implements OnInit {
   isLoading: boolean = false;
   imageUrl = PUBLIC_ENDPOINTS.IMAGE_PRODUCTS;
 
-  constructor(private productsService: ProductsService) { }
+  constructor(private productsService: ProductsService, private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.getAllProducts();
@@ -35,5 +36,16 @@ export class ProductListComponent implements OnInit {
         }, 500);
       }
     });
+  }
+
+  onDeleteProduct(id: string) {
+    if (confirm('Are you sure you want to delete this product?')) {
+      this.productsService.deleteProduct(id).subscribe({
+        next: (response) => {
+          this.toastService.success('Product deleted successfully!');
+          this.getAllProducts();
+        }
+      });
+    }
   }
 }

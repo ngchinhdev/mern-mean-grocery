@@ -23,7 +23,7 @@ export default function AdminLayout() {
         trigger={null}
         collapsed={collapsed}
         collapsible
-        className={`${!collapsed ? "!w-[290px] !min-w-[290px]" : ""} !sticky left-0 top-0 h-dvh`}
+        className={`${!collapsed ? "!w-[290px] !min-w-[290px]" : ""} !sticky left-0 top-0 h-screen`}
       >
         <div className="flex w-full items-center border-b border-gray-400 !bg-primary-600 px-9 py-4">
           {collapsed ? (
@@ -32,30 +32,36 @@ export default function AdminLayout() {
             <img src={logoAdmin} alt="Logo Admin" className="h-10" />
           )}
         </div>
-        <SidebarMenu collapsed={collapsed} />
+        <div className="h-[calc(100vh-72.72px)] overflow-y-auto">
+          <div className="relative h-full overflow-hidden">
+            <div className="no-scrollbar absolute inset-0 overflow-scroll">
+              <SidebarMenu collapsed={collapsed} />
+            </div>
+          </div>
+        </div>
       </Sider>
-      <Content>
+      <Content className="relative">
         <HeaderCustom collapsed={collapsed} onCollapse={toggleCollapsed} />
         <div className="relative flex flex-auto flex-col bg-white px-4 pt-4 sm:px-6 sm:pt-6 md:px-8">
           <Outlet />
-          <footer className="absolute bottom-0 flex h-16 flex-auto items-center !bg-white px-4 sm:px-6 md:px-8">
-            <div className="flex w-full flex-auto items-center justify-between">
-              <span>
-                Copyright © 2024 <span className="font-semibold">Elstar</span>{" "}
-                All rights reserved.
-              </span>
-              <div className="">
-                <a className="text-gray" href="/#">
-                  Term &amp; Conditions
-                </a>
-                <span className="text-muted mx-2"> | </span>
-                <a className="text-gray" href="/#">
-                  Privacy &amp; Policy
-                </a>
-              </div>
-            </div>
-          </footer>
         </div>
+        <footer className="absolute bottom-0 flex h-16 w-full flex-auto items-center !bg-white px-4 sm:px-6 md:px-8">
+          <div className="flex w-full flex-auto items-center justify-between">
+            <span>
+              Copyright © 2024 <span className="font-semibold">Elstar</span>{" "}
+              All rights reserved.
+            </span>
+            <div className="">
+              <a className="text-gray" href="/#">
+                Term &amp; Conditions
+              </a>
+              <span className="text-muted mx-2"> | </span>
+              <a className="text-gray" href="/#">
+                Privacy &amp; Policy
+              </a>
+            </div>
+          </div>
+        </footer>
       </Content>
     </Layout>
   );

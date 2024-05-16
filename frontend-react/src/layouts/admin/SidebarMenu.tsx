@@ -69,7 +69,7 @@ export default function SidebarMenu({ collapsed }: SidebarMenuProps) {
       mode="inline"
       inlineCollapsed={collapsed}
       items={items}
-      className="no-scrollbar overflow-y-auto !border-none bg-primary-600 px-3 pt-3 text-white"
+      className="no-scrollbar h-full overflow-y-auto !border-none bg-primary-600 px-3 pt-3 text-white"
     />
   );
 }

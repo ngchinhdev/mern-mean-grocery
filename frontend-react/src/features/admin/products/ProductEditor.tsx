@@ -14,24 +14,42 @@ export default function ProductEditor() {
         </h1>
       </div>
       <div className="w-full">
-        <form>
-          <div className="flex w-full gap-6 pb-16">
+        <form className="relative pb-20">
+          <div className="flex w-full gap-6 pb-10">
             <div className="w-3/5">
               <div className="mb-5">
                 <h2 className="mb-1 text-xl font-medium">Basic Information</h2>
-                <div className="mb-3">
-                  <label
-                    htmlFor="name"
-                    className="mb-2 block text-base font-medium text-gray-500"
-                  >
-                    Product Name
-                  </label>
-                  <input
-                    type="text"
-                    className="w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
-                    placeholder="Name"
-                    id="name"
-                  />
+                <div className="mb-3 flex items-center gap-3">
+                  <div className="flex-[3]">
+                    <label
+                      htmlFor="name"
+                      className="mb-2 block text-base font-medium text-gray-500"
+                    >
+                      Product Name
+                    </label>
+                    <input
+                      type="text"
+                      className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
+                      placeholder="Name"
+                      id="name"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <label
+                      htmlFor="hot"
+                      className="mb-2 block font-medium text-gray-500"
+                    >
+                      Hot
+                    </label>
+                    <select
+                      name="hot"
+                      className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 text-gray-400 focus:outline-primary-600"
+                      id="hot"
+                    >
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
+                    </select>
+                  </div>
                 </div>
                 <div>
                   <label
@@ -58,7 +76,7 @@ export default function ProductEditor() {
                     </label>
                     <input
                       type="text"
-                      className="w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
+                      className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
                       placeholder="Price"
                       id="price"
                     />
@@ -72,7 +90,7 @@ export default function ProductEditor() {
                     </label>
                     <input
                       type="text"
-                      className="w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
+                      className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
                       placeholder="Origin Price"
                       id="orgPrice"
                     />
@@ -91,7 +109,7 @@ export default function ProductEditor() {
                     </label>
                     <input
                       type="text"
-                      className="w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
+                      className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
                       placeholder="Quantity"
                       id="quantity"
                     />
@@ -105,7 +123,7 @@ export default function ProductEditor() {
                     </label>
                     <select
                       name="category"
-                      className="w-full rounded-lg border border-gray-300 px-5 py-3 text-gray-400 focus:outline-primary-600"
+                      className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 text-gray-400 focus:outline-primary-600"
                       id="category"
                     >
                       <option value="hello">Hello</option>

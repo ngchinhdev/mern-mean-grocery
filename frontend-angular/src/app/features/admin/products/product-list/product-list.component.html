@@ -1,4 +1,4 @@
-<div>
+<div class="pb-10">
     <div class="lg:flex items-center justify-between mb-4">
         <h1 class="mb-4 lg:mb-0 text-2xl font-medium text-stone-800">Products</h1>
         <div>
@@ -72,6 +72,8 @@
                 }
             </tbody>
         </table>
+        <app-paginator [totalRecords]="totalRecords" [first]="first" [rows]="rows"
+            (pageChangeEvent)="onPageChanged($event)"></app-paginator>
     </div>
     }
 </div>

@@ -39,6 +39,7 @@ const getProductsByCategoryId = async (req, res, next) => {
 
         const products = await ProductModel
             .find({ categoryId: id, isDeleted: false })
+            .populate('categoryId', 'name')
             .skip(skip)
             .limit(limitDocuments)
             .sort(sortOptions);
@@ -68,6 +69,7 @@ const getHotProducts = async (req, res, next) => {
 
         const products = await ProductModel
             .find({ hot: true, isDeleted: false })
+            .populate('categoryId', 'name')
             .skip(skip)
             .limit(limitDocuments)
             .sort(sortOptions);
@@ -95,7 +97,9 @@ const getProductById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const product = await ProductModel.findOne({ _id: id, isDeleted: false });
+        const product = await ProductModel
+            .findOne({ _id: id, isDeleted: false })
+            .populate('categoryId', 'name');
 
         if (!product) {
             createError(404, 'Product not found.');

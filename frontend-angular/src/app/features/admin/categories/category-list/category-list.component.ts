@@ -7,11 +7,12 @@ import { ICategory } from '../../../../core/models/categories.model';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
+import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
 
 @Component({
   selector: 'app-admin-category-list',
   standalone: true,
-  imports: [MatIconModule, RouterLink, LoaderComponent],
+  imports: [MatIconModule, RouterLink, LoaderComponent, PaginatorComponent],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
@@ -20,6 +21,9 @@ export class CategoryListComponent implements OnInit {
   categories: ICategory[] = [];
   imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
   isLoading: boolean = false;
+  totalRecords: number = 0;
+  first = 0;
+  rows = 10;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -30,11 +34,12 @@ export class CategoryListComponent implements OnInit {
     this.getAllCategories();
   }
 
-  getAllCategories() {
+  getAllCategories(page: number = 0, limit: number = 10) {
     this.isLoading = true;
-    this.categoriesService.getAllCategories().subscribe({
+    this.categoriesService.getAllCategories(page, limit).subscribe({
       next: (response) => {
         this.categories = response.data;
+        this.totalRecords = response.data.length;
         setTimeout(() => {
           this.isLoading = false;
         }, 500);
@@ -51,5 +56,12 @@ export class CategoryListComponent implements OnInit {
         }
       });
     }
+  }
+
+  onPageChanged(event: any) {
+    console.log(event);
+    this.first = event.first + 1;
+    this.rows = event.rows;
+    this.getAllCategories(event.first, event.rows);
   }
 }

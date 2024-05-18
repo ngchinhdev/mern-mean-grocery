@@ -11,9 +11,9 @@ import { IResponseDataCommon } from '../models/shares.model';
 export class CategoriesService {
   constructor(private http: HttpClient) { }
 
-  getAllCategories(): Observable<IResponseDataCommon<ICategory[]>> {
+  getAllCategories(page?: number, limit?: number): Observable<IResponseDataCommon<ICategory[]>> {
     return this.http.get<IResponseDataCommon<ICategory[]>>(
-      API_ENDPOINTS.CATEGORY_ENDPOINTS.GET_ALL_CATEGORIES
+      API_ENDPOINTS.CATEGORY_ENDPOINTS.GET_ALL_CATEGORIES + `?page=${page || 1}&limit=${limit || 10}`
     );
   }
 

@@ -4,8 +4,8 @@
             {{productData ? 'Edit Product' : 'Add New Product'}}</h1>
     </div>
     <div class="w-full">
-        <form [formGroup]="editorForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
-            <div class="flex w-full gap-6">
+        <form [formGroup]="editorForm" (ngSubmit)="onSubmit()" class="pb-10" enctype="multipart/form-data">
+            <div class="flex w-full gap-6 pb-16">
                 <div class="w-3/5">
                     <div class="mb-5">
                         <h2 class="text-xl mb-1 font-medium">Basic Information</h2>
@@ -51,7 +51,7 @@
                         <div class="flex gap-3">
                             <div class="flex-1">
                                 <label for="price" class="block text-gray-500 font-medium mb-2">Price</label>
-                                <input type="text"
+                                <input type="number"
                                     class="border focus:outline-primary-600 border-gray-300 rounded-lg py-3 px-5 w-full h-12"
                                     formControlName="price" placeholder="Price" id="price">
                                 @if(editorForm.get('price')?.hasError('required') &&
@@ -61,7 +61,7 @@
                             </div>
                             <div class="flex-1">
                                 <label for="orgPrice" class="block text-gray-500 font-medium mb-2">Origin Price</label>
-                                <input type="text" formControlName="orgPrice"
+                                <input type="number" formControlName="orgPrice"
                                     class="border focus:outline-primary-600 border-gray-300 rounded-lg py-3 px-5 w-full h-12"
                                     placeholder="Origin Price" id="orgPrice">
                                 @if(editorForm.get('orgPrice')?.hasError('required') &&
@@ -77,7 +77,7 @@
                         <div class="flex gap-3">
                             <div class="flex-1">
                                 <label for="quantity" class="block text-gray-500 font-medium mb-2">Quantity</label>
-                                <input type="text" formControlName="quantity"
+                                <input type="number" formControlName="quantity"
                                     class="border h-12 focus:outline-primary-600 border-gray-300 rounded-lg py-3 px-5 w-full"
                                     placeholder="Quantity" id="quantity">
                                 @if(editorForm.get('quantity')?.hasError('required') &&

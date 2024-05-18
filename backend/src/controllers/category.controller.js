@@ -1,4 +1,5 @@
 const CategoryModel = require('../models/category.model');
+const ProductModel = require('../models/product.model');
 const { createError } = require('../utils/helper.util');
 const { validationError } = require('../utils/validation.util');
 
@@ -109,6 +110,11 @@ const deleteCategory = async (req, res, next) => {
         if (!deletedCategory) {
             createError(404, 'Category not found.');
         }
+
+        await ProductModel.updateMany(
+            { categoryId: id, isDeleted: false },
+            { isDeleted: true }
+        );
 
         const { __v, isDeleted, ...resCategory } = deletedCategory._doc;
 

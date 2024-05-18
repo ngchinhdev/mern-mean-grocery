@@ -87,8 +87,8 @@ export class ProductEditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAllCategories() {
-    this.categoriesService.getAllCategories().subscribe({
+  getAllCategories(page: number = 1, limit: number = 10) {
+    this.categoriesService.getAllCategories(page, limit).subscribe({
       next: (response) => {
         this.categoriesData = response.data;
       }

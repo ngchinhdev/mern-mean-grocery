@@ -5,8 +5,10 @@ const cors = require('cors');
 const logger = require('morgan');
 const { createError } = require('./src/utils/helper.util');
 
+const authRoutes = require('./src/routes/auth.route');
 const categoryRoutes = require('./src/routes/category.route');
 const productRoutes = require('./src/routes/product.route');
+const userRoutes = require('./src/routes/user.route');
 
 const app = express();
 
@@ -17,8 +19,10 @@ app.use(cookieParser());
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/categories', categoryRoutes);
 app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/users', userRoutes);
 
 app.use(function (req, res, next) {
     next(createError(404, 'Endpoint not found.'));

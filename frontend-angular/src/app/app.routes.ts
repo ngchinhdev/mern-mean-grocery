@@ -13,6 +13,8 @@ import { CategoryEditorComponent } from './features/admin/categories/category-ed
 import { ProductEditorComponent } from './features/admin/products/product-editor/product-editor.component';
 import { CategoryListComponent } from './features/admin/categories/category-list/category-list.component';
 import { ProductListComponent } from './features/admin/products/product-list/product-list.component';
+import { UsersComponent } from './features/admin/users/users.component';
+import { UserListComponent } from './features/admin/users/user-list/user-list.component';
 
 export const routes: Routes = [
     {
@@ -43,6 +45,13 @@ export const routes: Routes = [
                     { path: '', component: ProductListComponent },
                     { path: 'add', component: ProductEditorComponent },
                     { path: 'edit/:id', component: ProductEditorComponent }
+                ]
+            },
+            {
+                path: 'users',
+                component: UsersComponent,
+                children: [
+                    { path: '', component: UserListComponent },
                 ]
             },
         ]

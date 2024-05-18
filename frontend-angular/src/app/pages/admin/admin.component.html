@@ -1,10 +1,10 @@
 <section class="flex">
     <app-admin-sidebar></app-admin-sidebar>
-    <div class="flex-1">
+    <div class="flex-1 relative">
         <app-admin-header [isCollapsed]="isCollapsed" [toggleCollapsed]="toggleCollapsed"></app-admin-header>
-        <main class="relative h-full flex flex-auto flex-col px-4 sm:px-6 py-4 sm:py-6 md:px-8">
+        <main class="relative flex flex-auto flex-col px-4 sm:px-6 py-4 sm:py-6 md:px-8">
             <router-outlet></router-outlet>
         </main>
-        <!-- <app-admin-footer></app-admin-footer> -->
+        <app-admin-footer></app-admin-footer>
     </div>
 </section>

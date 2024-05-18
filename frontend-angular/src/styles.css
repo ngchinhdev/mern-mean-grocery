@@ -16,12 +16,51 @@ a {
     cursor: pointer;
 }
 
+@layer utilities {
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        /* IE and Edge */
+        scrollbar-width: none;
+        /* Firefox */
+    }
+}
+
 .image-small-admin:hover {
     @apply bg-gray-200;
 }
 
 .image-small-admin:hover .trash {
     @apply inline-block
+}
+
+.p-paginator {
+    padding-top: 20px;
+    justify-content: start !important;
+}
+
+.paginator>.p-element.p-inputwrapper {
+    display: flex !important;
+    flex: 1 1 0 !important;
+    justify-content: flex-end !important;
+}
+
+.p-dropdown {
+    border: 1px solid #e5e5e5;
+}
+
+.p-highlight {
+    color: #10b981;
+    background-color: #eef2ff;
+    border-radius: 6px;
+    height: 2.4rem;
+    min-width: 2.4rem;
 }
 
 /* based on angular-toastr css https://github.com/Foxandxss/angular-toastr/blob/cb508fe6801d6b288d3afc525bb40fee1b101650/dist/angular-toastr.css */

@@ -28,6 +28,7 @@
     "@ckeditor/ckeditor5-watchdog": "^41.3.1",
     "ng-zorro-antd": "^17.4.0",
     "ngx-toastr": "^18.0.0",
+    "primeng": "^17.17.0",
     "rxjs": "~7.8.0",
     "swiper": "^11.1.1",
     "tslib": "^2.3.0",

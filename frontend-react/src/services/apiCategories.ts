@@ -1,11 +1,11 @@
 import axios, { AxiosResponse } from "axios";
-import { SERVER_API_CATEGORIES_URL } from "../constants/url";
+import { API_ENDPOINTS } from "../constants/url";
 
 import { ICategory } from "../interfaces/ICategory";
 
 export const getAllCategories = async (): Promise<ICategory[]> => {
     try {
-        const response: AxiosResponse = await axios.get(SERVER_API_CATEGORIES_URL);
+        const response: AxiosResponse = await axios.get(API_ENDPOINTS.CATEGORY_ENDPOINTS.GET_ALL_CATEGORIES);
 
         const categories: ICategory[] = response.data.data;
         return categories;

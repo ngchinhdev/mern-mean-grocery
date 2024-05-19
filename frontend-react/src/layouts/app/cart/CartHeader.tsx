@@ -15,7 +15,7 @@ export default function CartHeader({ onClose }: CartHeaderProps) {
       <span className="inline-flex items-center justify-center p-2 text-base text-gray-500 transition-opacity hover:text-primary-600 focus:outline-none">
         <span
           onClick={() => onClose()}
-          className="font-sens text-md ml-1 flex items-center text-gray-500 hover:text-red-400"
+          className="font-sens text-md ml-1 flex cursor-pointer items-center text-gray-500 hover:text-red-400"
         >
           <IoMdClose className="pe-2 text-2xl" />
           Close

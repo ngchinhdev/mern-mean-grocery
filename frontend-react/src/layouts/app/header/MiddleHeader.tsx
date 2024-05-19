@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 import { LuShoppingCart } from "react-icons/lu";
@@ -5,12 +6,15 @@ import { FiUser } from "react-icons/fi";
 import { FiBell } from "react-icons/fi";
 
 import logoLight from "../../../assets/logo-light_hls14v.svg";
+import { RootState } from "src/store/store";
 
 interface MiddleHeaderProps {
   onOpenCart: () => void;
 }
 
 export default function MiddleHeader({ onOpenCart }: MiddleHeaderProps) {
+  const cart = useSelector((state: RootState) => state.cart.items);
+
   return (
     <div className="bg-primary-600">
       <div className="mx-auto flex max-w-screen-2xl items-center justify-between p-3 sm:px-10 lg:py-4">
@@ -36,7 +40,7 @@ export default function MiddleHeader({ onOpenCart }: MiddleHeaderProps) {
           <span className="relative cursor-pointer" onClick={onOpenCart}>
             <LuShoppingCart className="text-2xl text-white" />
             <span className="absolute -top-2 right-0 z-10 inline-flex h-5 w-5 translate-x-1/2 transform items-center justify-center rounded-full bg-red-500 p-1 text-xs font-bold leading-none text-red-100">
-              3
+              {cart.length}
             </span>
           </span>
           <span className="cursor-pointer ps-5">

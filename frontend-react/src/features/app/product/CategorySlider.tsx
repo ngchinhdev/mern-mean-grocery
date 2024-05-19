@@ -6,7 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllCategories } from "../../../services/apiCategories";
 
 import ButtonsSlider from "./ButtonsSlider";
-import { SERVER_IMAGES_CATEGORY_URL } from "../../../constants/url";
+import { PUBLIC_ENDPOINTS } from "../../../constants/url";
 
 export default function CategorySlider() {
   const { data: categories } = useQuery({
@@ -56,7 +56,7 @@ export default function CategorySlider() {
               className="flex cursor-pointer flex-col items-center rounded-lg bg-white p-3 text-center shadow-sm"
             >
               <img
-                src={`${SERVER_IMAGES_CATEGORY_URL}/${category.image}`}
+                src={`${PUBLIC_ENDPOINTS.IMAGE_CATEGORIES}/${category.image}`}
                 alt={category.name}
                 className="h-[40px] w-[40px]"
               />

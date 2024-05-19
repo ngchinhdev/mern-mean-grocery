@@ -1,3 +1,8 @@
+export interface ICategoryId {
+    _id: string;
+    name: string;
+}
+
 export interface ICreateProduct {
     name?: string,
     description?: string,
@@ -8,6 +13,7 @@ export interface ICreateProduct {
     images?: string[],
 }
 
-export interface IProduct extends Required<ICreateProduct> {
+export interface IProduct extends Required<Omit<ICreateProduct, 'categoryId'>> {
     _id: string,
+    categoryId: ICategoryId,
 }

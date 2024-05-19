@@ -6,7 +6,7 @@ import { MdKeyboardArrowDown } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
 
 import { getAllCategories } from "../../../services/apiCategories";
-import { SERVER_IMAGES_CATEGORY_URL } from "../../../constants/url";
+import { PUBLIC_ENDPOINTS } from "../../../constants/url";
 
 import vFlag from "../../../assets/vietnamflag.png";
 import aFlag from "../../../assets/americanflag.svg";
@@ -43,8 +43,8 @@ export default function BottomHeader() {
                       className="flex items-center rounded-md px-2 py-3 hover:bg-gray-100 hover:text-primary-700"
                     >
                       <img
-                        src={`${SERVER_IMAGES_CATEGORY_URL}/${category.image}`}
-                        alt=""
+                        src={`${PUBLIC_ENDPOINTS.IMAGE_CATEGORIES}/${category.image}`}
+                        alt={category.name}
                         className="h-[20px] w-[20px]"
                       />
                       <div className="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">

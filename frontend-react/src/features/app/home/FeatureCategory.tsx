@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 import { getAllCategories } from "../../../services/apiCategories";
-import { SERVER_IMAGES_CATEGORY_URL } from "../../../constants/url";
+import { PUBLIC_ENDPOINTS } from "../../../constants/url";
 
 export default function FeatureCategory() {
   const { data: categories } = useQuery({
@@ -27,7 +27,7 @@ export default function FeatureCategory() {
                 className="flex h-full w-full transform cursor-pointer items-center border border-gray-100 bg-white px-4 py-6 shadow-sm transition duration-200 ease-linear group-hover:shadow-lg"
               >
                 <img
-                  src={`${SERVER_IMAGES_CATEGORY_URL}/${category.image}`}
+                  src={`${PUBLIC_ENDPOINTS.IMAGE_CATEGORIES}/${category.image}`}
                   alt={category.name}
                   className="h-[40px] w-[40px]"
                 />

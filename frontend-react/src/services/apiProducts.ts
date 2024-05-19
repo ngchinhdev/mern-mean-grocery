@@ -2,11 +2,11 @@ import axios, { AxiosResponse } from "axios";
 
 import { type IProduct } from '../interfaces/IProduct';
 
-import { SERVER_API_PRODUCTS_URL } from "../constants/url";
+import { API_ENDPOINTS } from "../constants/url";
 
 export const getAllProducts = async (): Promise<IProduct[]> => {
     try {
-        const response: AxiosResponse = await axios.get(SERVER_API_PRODUCTS_URL);
+        const response: AxiosResponse = await axios.get(API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_ALL_PRODUCTS);
 
         const products: IProduct[] = response.data.data;
         return products;
@@ -18,7 +18,7 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
 
 export const getProductsByCategoryId = async (categoryId: string): Promise<IProduct[]> => {
     try {
-        const response: AxiosResponse = await axios.get(`${SERVER_API_PRODUCTS_URL}/categoryId/${categoryId}`);
+        const response: AxiosResponse = await axios.get(`${API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_ALL_PRODUCTS}/categoryId/${categoryId}`);
 
         const products: IProduct[] = response.data.data;
         return products;

@@ -8,11 +8,12 @@ import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
 import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
+import { NotFoundComponent } from '../../../../shared/ui/not-found/not-found.component';
 
 @Component({
   selector: 'app-admin-category-list',
   standalone: true,
-  imports: [MatIconModule, RouterLink, LoaderComponent, PaginatorComponent],
+  imports: [MatIconModule, RouterLink, LoaderComponent, PaginatorComponent, NotFoundComponent],
   templateUrl: './category-list.component.html',
   styleUrl: './category-list.component.css'
 })
@@ -39,10 +40,15 @@ export class CategoryListComponent implements OnInit {
     this.categoriesService.getAllCategories(page, limit).subscribe({
       next: (response) => {
         this.categories = response.data;
-        this.totalRecords = response.data.length;
+        this.totalRecords = response.totalRecords;
         setTimeout(() => {
           this.isLoading = false;
         }, 500);
+      },
+      error: (error) => {
+        if (this.categories.length === 0) {
+          this.isLoading = false;
+        }
       }
     });
   }
@@ -59,9 +65,8 @@ export class CategoryListComponent implements OnInit {
   }
 
   onPageChanged(event: any) {
-    console.log(event);
-    this.first = event.first + 1;
+    this.first = event.first;
     this.rows = event.rows;
-    this.getAllCategories(event.first, event.rows);
+    this.getAllCategories(event.page + 1, event.rows);
   }
 }

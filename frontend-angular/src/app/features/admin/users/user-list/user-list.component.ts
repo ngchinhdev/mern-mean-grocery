@@ -7,11 +7,12 @@ import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
 import { UsersService } from '../../../../core/services/users.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
 import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
+import { NotFoundComponent } from '../../../../shared/ui/not-found/not-found.component';
 
 @Component({
   selector: 'app-user-list',
   standalone: true,
-  imports: [MatIconModule, LoaderComponent, PaginatorComponent],
+  imports: [MatIconModule, LoaderComponent, PaginatorComponent, NotFoundComponent],
   templateUrl: './user-list.component.html',
   styleUrl: './user-list.component.css'
 })
@@ -42,8 +43,24 @@ export class UserListComponent implements OnInit {
         setTimeout(() => {
           this.isLoading = false;
         }, 500);
+      },
+      error: (error) => {
+        if (this.users.length === 0) {
+          this.isLoading = false;
+        }
       }
     });
+  }
+
+  onDeleteUser(id: string) {
+    if (confirm('Are you sure you want to delete this user?')) {
+      this.usersSevices.deleteUser(id).subscribe({
+        next: (response) => {
+          this.toast.success('User deleted successfully!');
+          this.getAllUsers();
+        }
+      });
+    }
   }
 
   onPageChanged(event: any) {

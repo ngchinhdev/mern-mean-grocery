@@ -8,11 +8,12 @@ import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
 import { ProductsService } from '../../../../core/services/products.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
 import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
+import { NotFoundComponent } from '../../../../shared/ui/not-found/not-found.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [MatIconModule, RouterLink, LoaderComponent, PaginatorComponent],
+  imports: [MatIconModule, RouterLink, LoaderComponent, PaginatorComponent, NotFoundComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
@@ -36,10 +37,16 @@ export class ProductListComponent implements OnInit {
     this.productsService.getAllProducts(page, limit).subscribe({
       next: (response) => {
         this.products = response.data;
-        this.totalRecords = response.data.length;
+        this.totalRecords = response.totalRecords;
+        console.log(response.totalRecords);
         setTimeout(() => {
           this.isLoading = false;
         }, 500);
+      },
+      error: (error) => {
+        if (this.products.length === 0) {
+          this.isLoading = false;
+        }
       }
     });
   }
@@ -57,8 +64,8 @@ export class ProductListComponent implements OnInit {
 
   onPageChanged(event: any) {
     console.log(event);
-    this.first = event.first + 1;
+    this.first = event.first;
     this.rows = event.rows;
-    this.getAllProducts(event.first, event.rows);
+    this.getAllProducts(event.page + 1, event.rows);
   }
 }

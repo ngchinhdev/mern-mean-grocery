@@ -88,9 +88,9 @@ export class CategoryEditorComponent implements OnInit {
       } else {
         this.categoriesService.createCategory(this.editorForm.value).subscribe((response) => {
           this.toast.success('Category created successfully!');
+          this.router.navigate(['/admin/categories']);
         });
       }
-      this.router.navigate(['/admin/categories']);
     } else {
       this.editorForm.markAllAsTouched();
 

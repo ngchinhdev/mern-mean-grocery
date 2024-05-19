@@ -15,6 +15,7 @@ import { CategoryListComponent } from './features/admin/categories/category-list
 import { ProductListComponent } from './features/admin/products/product-list/product-list.component';
 import { UsersComponent } from './features/admin/users/users.component';
 import { UserListComponent } from './features/admin/users/user-list/user-list.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 export const routes: Routes = [
     {
@@ -55,6 +56,10 @@ export const routes: Routes = [
                 ]
             },
         ]
-    }
+    },
+    {
+        path: '**',
+        component: NotFoundComponent,
+    },
 ];
 

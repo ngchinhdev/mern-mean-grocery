@@ -18,4 +18,10 @@ export class UsersService {
       API_ENDPOINTS.USERS_ENDPOINTS.GET_ALL_USERS + `?page=${page || 1}&limit=${limit || 10}`
     );
   }
+
+  deleteUser(id: string): Observable<IResponseDataCommon<IUser>> {
+    return this.http.delete<IResponseDataCommon<IUser>>(
+      API_ENDPOINTS.USERS_ENDPOINTS.DELETE_USER + '/' + id
+    );
+  }
 }

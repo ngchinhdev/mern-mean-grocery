@@ -16,6 +16,9 @@
     @if(isLoading) {
     <app-loader></app-loader>
     }
+    @if(!products.length) {
+    <app-not-found></app-not-found>
+    }
     @if(!isLoading) {
     <div>
         <table class="w-full text-left text-gray-600">

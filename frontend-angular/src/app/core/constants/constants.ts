@@ -21,6 +21,7 @@ export const API_ENDPOINTS = {
         GET_ALL_USERS: `${API_ENDPOINT_ROOT_URL}/users`,
         GET_USER_BY_ID: `${API_ENDPOINT_ROOT_URL}/users`,
         CREATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/register`,
+        DELETE_USER: `${API_ENDPOINT_ROOT_URL}/auth/delete`
     }
 };
 

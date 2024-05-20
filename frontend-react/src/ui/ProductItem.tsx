@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { BsBagPlusFill } from "react-icons/bs";
 
-import { type IProduct } from "../interfaces/IProduct";
+import { type IProduct } from "../interfaces/product";
 import { PUBLIC_ENDPOINTS } from "../constants/url";
 import { formatCurrency, formatDiscount } from "../utils/helpers";
 import { AppDispatch } from "../store/store";

@@ -1,4 +1,4 @@
-import { type IProduct } from "src/interfaces/IProduct";
+import { type IProduct } from "src/interfaces/product";
 
 import ProductItem from "./ProductItem";
 

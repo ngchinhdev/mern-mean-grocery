@@ -4,8 +4,10 @@ const crypto = require('crypto');
 
 const UserModel = require('../models/user.model');
 const { validationError } = require('../utils/validation.util');
+const { createError } = require('../utils/helper.util');
 
 const generateAccessToken = (user) => {
+    console.log(process.env.ACCESS_TOKEN_SECRET);
     return jwt.sign(
         {
             id: user._id,
@@ -166,9 +168,35 @@ const refreshToken = async (req, res, next) => {
     }
 };
 
+const deleteUser = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const user = await UserModel.findOneAndUpdate(
+            { _id: id, isDeleted: false },
+            { isDeleted: true },
+            { new: true }
+        );
+
+        if (!user) {
+            createError(404, 'User not found.');
+        }
+
+        const { __v, isDeleted, isAdmin, ...resUser } = user._doc;
+
+        return res.status(200).json({
+            message: 'User has been deleted successfully.',
+            data: resUser
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     register,
     login,
     logout,
     refreshToken,
+    deleteUser
 };

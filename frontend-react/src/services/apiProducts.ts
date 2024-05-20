@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 
-import { type IProduct } from '../interfaces/IProduct';
+import { type IProduct } from '../interfaces/product';
 
 import { API_ENDPOINTS } from "../constants/url";
 

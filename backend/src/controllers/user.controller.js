@@ -1,4 +1,5 @@
 const userModel = require("../models/user.model");
+const { createError } = require("../utils/helper.util");
 const { validationError } = require("../utils/validation.util");
 
 const getAllUsers = async (req, res, next) => {

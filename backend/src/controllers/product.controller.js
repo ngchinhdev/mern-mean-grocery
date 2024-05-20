@@ -6,6 +6,10 @@ const getAllProducts = async (req, res, next) => {
     try {
         let { limitDocuments, skip, page, sortOptions } = req.customQueries;
 
+        const records = await ProductModel
+            .find({ isDeleted: false })
+            .populate('categoryId', 'name');
+
         const products = await ProductModel
             .find({ isDeleted: false })
             .populate('categoryId', 'name')
@@ -25,7 +29,8 @@ const getAllProducts = async (req, res, next) => {
         return res.status(200).json({
             page: page || 1,
             message: 'Products retrieved successfully.',
-            data: resProducts
+            data: resProducts,
+            totalRecords: records.length
         });
     } catch (error) {
         next(error);

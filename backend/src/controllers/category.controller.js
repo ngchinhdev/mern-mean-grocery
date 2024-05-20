@@ -7,6 +7,8 @@ const getAllCategories = async (req, res, next) => {
     try {
         let { limitDocuments, skip, page, sortOptions } = req.customQueries;
 
+        const records = await CategoryModel.find({ isDeleted: false });
+
         const categories = await CategoryModel
             .find({ isDeleted: false })
             .skip(skip)
@@ -25,7 +27,8 @@ const getAllCategories = async (req, res, next) => {
         return res.status(200).json({
             page: page || 1,
             message: 'Categories retrieved successfully.',
-            data: resCategories
+            data: resCategories,
+            totalRecords: records.length
         });
     } catch (error) {
         next(error);

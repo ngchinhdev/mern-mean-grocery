@@ -32,6 +32,24 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    refreshToken: {
+        token: {
+            type: String,
+            trim: true
+        },
+        expired: {
+            type: Number,
+        }
+    },
+    resetPasswordToken: {
+        token: {
+            type: String,
+            trim: true
+        },
+        expired: {
+            type: Number,
+        }
+    },
     isDeleted: {
         type: Boolean,
         default: false

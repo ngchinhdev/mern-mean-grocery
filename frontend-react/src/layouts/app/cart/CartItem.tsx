@@ -3,7 +3,7 @@ import { FiPlus } from "react-icons/fi";
 import { FiMinus } from "react-icons/fi";
 import { useDispatch } from "react-redux";
 
-import { ICartItem } from "../../../interfaces/ICart";
+import { ICartItem } from "../../../interfaces/cart";
 import { PUBLIC_ENDPOINTS } from "../../../constants/url";
 import { formatCurrency } from "../../../utils/helpers";
 import { AppDispatch } from "src/store/store";

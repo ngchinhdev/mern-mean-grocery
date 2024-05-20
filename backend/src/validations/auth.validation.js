@@ -19,14 +19,28 @@ const userPostValidator = checkSchema({
         },
         trim: true
     },
-    phone: {
-        optional: true,
-        isMobilePhone: {
-            errorMessage: 'Invalid phone number'
+    password: {
+        exists: {
+            errorMessage: 'Password is required'
+        },
+        isLength: {
+            errorMessage: 'Password should be at least 6 chars long',
+            options: { min: 6 }
+        },
+        isString: {
+            errorMessage: 'Password should be a string'
         }
-    },
-    address: {
-        optional: true,
+    }
+});
+
+const userLoginValidator = checkSchema({
+    email: {
+        exists: {
+            errorMessage: 'Email is required'
+        },
+        isEmail: {
+            errorMessage: 'Invalid email'
+        },
         trim: true
     },
     password: {
@@ -44,5 +58,6 @@ const userPostValidator = checkSchema({
 });
 
 module.exports = {
-    userPostValidator
+    userPostValidator,
+    userLoginValidator
 };

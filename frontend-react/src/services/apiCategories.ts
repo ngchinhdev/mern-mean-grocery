@@ -1,7 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { API_ENDPOINTS } from "../constants/url";
 
-import { ICategory } from "../interfaces/ICategory";
+import { ICategory } from "../interfaces/category";
 
 export const getAllCategories = async (): Promise<ICategory[]> => {
     try {

@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable, Subscription, forkJoin } from 'rxjs';
 
 import { IProduct } from '../../../../core/models/products.model';
-import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
+import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 import { ProductsService } from '../../../../core/services/products.service';
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { ICategory } from '../../../../core/models/categories.model';

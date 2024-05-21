@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { API_ENDPOINTS } from '../constants/constants';
+import { API_ENDPOINTS } from '../constants/urls';
 import { ICategory, ICreateCategory } from '../models/categories.model';
 import { IResponseDataCommon } from '../models/shares.model';
 

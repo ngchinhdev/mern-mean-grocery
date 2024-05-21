@@ -7,7 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 
 import { CategoriesService } from '../../../../core/services/categories.service';
 import { ICategory } from '../../../../core/models/categories.model';
-import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
+import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 
 @Component({
   selector: 'app-admin-category-editor',

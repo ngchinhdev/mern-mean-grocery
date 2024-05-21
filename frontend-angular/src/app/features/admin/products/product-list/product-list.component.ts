@@ -4,7 +4,7 @@ import { RouterLink } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 import { IProduct } from '../../../../core/models/products.model';
-import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
+import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 import { ProductsService } from '../../../../core/services/products.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
 import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';

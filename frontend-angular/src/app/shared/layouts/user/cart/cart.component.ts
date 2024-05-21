@@ -1,5 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+
+import { CartService } from '../../../../core/services/cart.service';
+import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 
 @Component({
   selector: 'app-cart',
@@ -11,6 +14,10 @@ import { MatIconModule } from '@angular/material/icon';
 
 export class CartComponent {
   @Output() closeCart = new EventEmitter<void>();
+
+  imageUrl = PUBLIC_ENDPOINTS.IMAGE_PRODUCTS;
+
+  cartService = inject(CartService);
 
   onCloseCart() {
     this.closeCart.emit();

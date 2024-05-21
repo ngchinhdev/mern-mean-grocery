@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { IResponseDataCommon } from '../models/shares.model';
 import { ICreateProduct, IProduct } from '../models/products.model';
-import { API_ENDPOINTS } from '../constants/constants';
+import { API_ENDPOINTS } from '../constants/urls';
 import { Observable } from 'rxjs';
 
 @Injectable({

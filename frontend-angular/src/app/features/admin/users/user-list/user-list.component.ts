@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 
 import { IUser } from '../../../../core/models/users.model';
-import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
+import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 import { UsersService } from '../../../../core/services/users.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
 import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';

@@ -4,14 +4,15 @@
         <div class="mx-auto overflow-hidden bg-white">
             <div class="mb-6 text-center">
                 <h2 class=" text-3xl font-bold">
-                    Login
+                    {{currentFormTexts.title}}
                 </h2>
                 <p class="mb-8 mt-2 text-sm text-gray-500 sm:mb-10 md:text-base">
-                    pls login
+                    {{currentFormTexts.subtitle}}
                 </p>
             </div>
             <form class="flex flex-col justify-center" onSubmit={handleSubmit(onSubmit)}>
                 <div class="grid grid-cols-1 gap-5">
+                    @if(isRegisterForm && !isForgotPasswordForm) {
                     <div class="form-group">
                         <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
                             Full Name
@@ -19,13 +20,11 @@
                         <div>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <span class="text-gray-800 focus-within:text-gray-900 sm:text-base">
-                                        <mat-icon>
-                                            <span class="material-symbols-outlined">
-                                                person
-                                            </span>
-                                        </mat-icon>
-                                    </span>
+                                    <mat-icon class="scale-75">
+                                        <span class="material-symbols-outlined">
+                                            person
+                                        </span>
+                                    </mat-icon>
                                 </div>
                                 <input type="text" placeholder="Your full name"
                                     class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12" />
@@ -34,6 +33,7 @@
                             </small>
                         </div>
                     </div>
+                    }
                     <div class="form-group">
                         <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
                             Email
@@ -41,13 +41,11 @@
                         <div>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <span class="text-gray-800 focus-within:text-gray-900 sm:text-base">
-                                        <mat-icon>
-                                            <span class="material-symbols-outlined">
-                                                email
-                                            </span>
-                                        </mat-icon>
-                                    </span>
+                                    <mat-icon class="scale-75">
+                                        <span class="material-symbols-outlined">
+                                            email
+                                        </span>
+                                    </mat-icon>
                                 </div>
                                 <input placeholder="Email"
                                     class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12" />
@@ -56,6 +54,7 @@
                             </small>
                         </div>
                     </div>
+                    @if(!isForgotPasswordForm) {
                     <div class="form-group">
                         <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
                             Password
@@ -63,13 +62,11 @@
                         <div>
                             <div class="relative">
                                 <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-                                    <span class="text-gray-800 focus-within:text-gray-900 sm:text-base">
-                                        <mat-icon>
-                                            <span class="material-symbols-outlined">
-                                                lock
-                                            </span>
-                                        </mat-icon>
-                                    </span>
+                                    <mat-icon class="scale-75">
+                                        <span class="material-symbols-outlined">
+                                            lock
+                                        </span>
+                                    </mat-icon>
                                 </div>
                                 <input type="password" placeholder="Password"
                                     class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12" />
@@ -81,35 +78,46 @@
                     <div class="flex items-center justify-between">
                         <div class="ms-auto flex">
                             <button type="button"
-                                class="text-heading ps-3 text-end text-sm underline hover:no-underline focus:outline-none">
+                                class="text-heading ps-3 text-end text-sm underline hover:no-underline focus:outline-none"
+                                (click)="onFormChange(forgotPasswordForm)">
                                 Forgot password?
                             </button>
                         </div>
                     </div>
                     <button type="submit"
                         class="my-1 w-full rounded bg-primary-600 py-3 text-center text-white transition-all hover:bg-primary-700 focus:outline-none">
-                        SUBMIT
+                        {{currentFormTexts.button}}
                     </button>
+                    }
                 </div>
             </form>
             <div class="fo10t-sans my-3 text-center font-medium before:bg-gray-100 after:bg-gray-100">
                 OR
             </div>
             <div class="flex flex-col justify-between gap-3 lg:flex-row">
-                <div class="w-full text-nowrap rounded bg-gray-100 px-5 py-3 text-center text-base text-gray-900 transition-all hover:bg-gray-200 focus:outline-none"
+                <div class="w-full text-nowrap rounded bg-gray-100 px-5 py-3 text-center text-sm text-gray-900 transition-all hover:bg-gray-200 focus:outline-none flex items-center gap-3 justify-center"
                     role="button">
-                    Login with Facebook
+                    <img src="https://img.icons8.com/?size=100&id=yGcWL8copNNQ&format=png&color=000000"
+                        alt="Facebook Icon" width="20px" height="20px">
+                    <span>
+                        Login with Facebook
+                    </span>
                 </div>
-                <div class="w-full text-nowrap rounded bg-gray-100 px-5 py-3 text-center text-gray-900 transition-all hover:bg-gray-200 focus:outline-none"
+                <div class="w-full text-nowrap rounded bg-gray-100 px-5 py-3 text-center text-sm text-gray-900 transition-all hover:bg-gray-200 focus:outline-none flex items-center gap-3 justify-center"
                     role="button">
-                    Login with Google
+                    <img src="https://img.icons8.com/?size=100&id=17949&format=png&color=000000" alt="Google Icon"
+                        width="20px" height="20px">
+                    <span>
+                        Login with Google
+                    </span>
                 </div>
             </div>
             <div class="mt-4 text-center text-sm text-gray-900">
-                <div class="mt-2.5 text-gray-500">
-                    <button disabled={isSubmitting} type="submit"
-                        class="mx-2 font-bold text-gray-800 hover:text-primary-600">
-                        LINK
+                <div class="text-gray-500 mt-2.5">
+                    {{currentFormTexts.link}}
+                    <button class="text-gray-800 hover:text-emerald-500 font-bold mx-2"
+                        (click)="onFormChange(currentFormTexts.linkTo)">
+                        {{currentFormTexts.linkTo}}
                     </button>
                 </div>
             </div>

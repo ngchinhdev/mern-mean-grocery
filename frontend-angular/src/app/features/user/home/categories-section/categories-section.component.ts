@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 
 import { ICategory } from '../../../../core/models/categories.model';
 import { CategoriesService } from '../../../../core/services/categories.service';
-import { PUBLIC_ENDPOINTS } from '../../../../core/constants/constants';
+import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 
 @Component({
   selector: 'app-home-categories-section',

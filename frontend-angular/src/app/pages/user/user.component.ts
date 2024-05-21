@@ -22,6 +22,8 @@ export class UserComponent {
   constructor(public dialog: MatDialog) { }
 
   openAuthDialog() {
-    this.dialog.open(AuthComponent);
+    this.dialog.open(AuthComponent, {
+      width: '500px'
+    });
   }
 }

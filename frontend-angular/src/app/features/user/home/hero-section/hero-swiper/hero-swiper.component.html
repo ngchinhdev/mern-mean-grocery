@@ -1,4 +1,4 @@
-<swiper-container fmSwiper [config]="config">
+<swiper-container appSwiper [config]="config" init="false">
     @for(slide of sliders; track slide.title) {
     <swiper-slide class="relative">
         <img src='{{slide.image}}' alt="Slide" class="w-full rounded-lg" />

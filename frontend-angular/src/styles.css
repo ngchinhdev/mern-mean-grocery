@@ -9,7 +9,7 @@ body {
 
 body {
     margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: Open Sans, sans-serif !important;
 }
 
 a {
@@ -30,6 +30,10 @@ a {
         scrollbar-width: none;
         /* Firefox */
     }
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    border-radius: 16px !important;
 }
 
 .image-small-admin:hover {

@@ -16,7 +16,7 @@
     @if(isLoading) {
     <app-loader></app-loader>
     }
-    @if(!categories.length) {
+    @if(!categories.length && !isLoading) {
     <app-not-found></app-not-found>
     }
     @if(!isLoading) {

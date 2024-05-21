@@ -1,4 +1,12 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
-<app-above-footer></app-above-footer>
-<app-footer></app-footer>
+<mat-drawer-container class="w-full h-full" autosize [hasBackdrop]="true">
+
+    <mat-drawer #drawer class="example-sidenav !w-full sm:!w-[70%] md:!w-[60%] lg:!w-[40%] xl:!w-[30%]" mode="over"
+        opened="false" position="end">
+        <app-cart class="h-full flex flex-col" (closeCart)="drawer.close()"></app-cart>
+    </mat-drawer>
+
+    <app-header (toggleSidenav)="drawer.toggle()" [openAuthDialog]="openAuthDialog.bind(this)"></app-header>
+    <router-outlet></router-outlet>
+    <app-above-footer></app-above-footer>
+    <app-footer></app-footer>
+</mat-drawer-container>

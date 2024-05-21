@@ -17,7 +17,7 @@
     <app-loader></app-loader>
     }
 
-    @if(!users.length) {
+    @if(!users.length && !isLoading) {
     <app-not-found></app-not-found>
     }
 

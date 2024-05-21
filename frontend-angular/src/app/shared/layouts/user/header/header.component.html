@@ -63,7 +63,7 @@
                         notifications
                     </span>
                 </mat-icon>
-                <span class="relative flex items-center cursor-pointer" onClick={onOpenCart}>
+                <span class="relative flex items-center cursor-pointer" (click)="onToggleSidenav()">
                     <mat-icon class="scale-125">
                         <span class="material-symbols-outlined text-white">
                             shopping_cart
@@ -75,7 +75,7 @@
                     </span>
                 </span>
                 <mat-icon class="me-2 scale-125">
-                    <span class="material-symbols-outlined cursor-pointer text-white">
+                    <span class="material-symbols-outlined cursor-pointer text-white" (click)="onOpenAuthDialog()">
                         person
                     </span>
                 </mat-icon>

@@ -1,0 +1,118 @@
+<mat-dialog-content class="no-scrollbar !max-h-max !rounded-lg overflow-hidden">
+    <div
+        class="inline-block w-full max-w-lg scale-100 transform overflow-hidden rounded-2xl bg-white text-left align-middle opacity-100 transition-all">
+        <div class="mx-auto overflow-hidden bg-white">
+            <div class="mb-6 text-center">
+                <h2 class=" text-3xl font-bold">
+                    Login
+                </h2>
+                <p class="mb-8 mt-2 text-sm text-gray-500 sm:mb-10 md:text-base">
+                    pls login
+                </p>
+            </div>
+            <form class="flex flex-col justify-center" onSubmit={handleSubmit(onSubmit)}>
+                <div class="grid grid-cols-1 gap-5">
+                    <div class="form-group">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Full Name
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <span class="text-gray-800 focus-within:text-gray-900 sm:text-base">
+                                        <mat-icon>
+                                            <span class="material-symbols-outlined">
+                                                person
+                                            </span>
+                                        </mat-icon>
+                                    </span>
+                                </div>
+                                <input type="text" placeholder="Your full name"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12" />
+                            </div>
+                            <small class="text-sm text-red-500">
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Email
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <span class="text-gray-800 focus-within:text-gray-900 sm:text-base">
+                                        <mat-icon>
+                                            <span class="material-symbols-outlined">
+                                                email
+                                            </span>
+                                        </mat-icon>
+                                    </span>
+                                </div>
+                                <input placeholder="Email"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12" />
+                            </div>
+                            <small class="text-sm text-red-500">
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Password
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                    <span class="text-gray-800 focus-within:text-gray-900 sm:text-base">
+                                        <mat-icon>
+                                            <span class="material-symbols-outlined">
+                                                lock
+                                            </span>
+                                        </mat-icon>
+                                    </span>
+                                </div>
+                                <input type="password" placeholder="Password"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12" />
+                            </div>
+                            <small class="text-sm text-red-500">
+                            </small>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="ms-auto flex">
+                            <button type="button"
+                                class="text-heading ps-3 text-end text-sm underline hover:no-underline focus:outline-none">
+                                Forgot password?
+                            </button>
+                        </div>
+                    </div>
+                    <button type="submit"
+                        class="my-1 w-full rounded bg-primary-600 py-3 text-center text-white transition-all hover:bg-primary-700 focus:outline-none">
+                        SUBMIT
+                    </button>
+                </div>
+            </form>
+            <div class="fo10t-sans my-3 text-center font-medium before:bg-gray-100 after:bg-gray-100">
+                OR
+            </div>
+            <div class="flex flex-col justify-between gap-3 lg:flex-row">
+                <div class="w-full text-nowrap rounded bg-gray-100 px-5 py-3 text-center text-base text-gray-900 transition-all hover:bg-gray-200 focus:outline-none"
+                    role="button">
+                    Login with Facebook
+                </div>
+                <div class="w-full text-nowrap rounded bg-gray-100 px-5 py-3 text-center text-gray-900 transition-all hover:bg-gray-200 focus:outline-none"
+                    role="button">
+                    Login with Google
+                </div>
+            </div>
+            <div class="mt-4 text-center text-sm text-gray-900">
+                <div class="mt-2.5 text-gray-500">
+                    <button disabled={isSubmitting} type="submit"
+                        class="mx-2 font-bold text-gray-800 hover:text-primary-600">
+                        LINK
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

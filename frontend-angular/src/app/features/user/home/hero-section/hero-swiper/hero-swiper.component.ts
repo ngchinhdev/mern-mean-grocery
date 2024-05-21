@@ -41,7 +41,7 @@ export class HeroSwiperComponent {
     spaceBetween: 30,
     slidesPerView: 1,
     loop: true,
-    navigation: true,
+    navigation: false,
     autoplay: {
       delay: 2500,
       disableOnInteraction: false,

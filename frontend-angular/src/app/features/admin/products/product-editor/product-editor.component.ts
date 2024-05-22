@@ -42,11 +42,24 @@ export class ProductEditorComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder) {
     this.editorForm = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
-      price: new FormControl('', [Validators.required]),
-      orgPrice: new FormControl('', [Validators.required]),
-      quantity: new FormControl('', [Validators.required]),
+      price: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
+      orgPrice: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
+      quantity: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[0-9]*$')
+      ]),
       description: new FormControl('', [Validators.required]),
-      images: new FormControl(null, [Validators.required]),
+      images: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(4)
+      ]),
       hot: new FormControl('', [Validators.required]),
       categoryId: new FormControl('', [Validators.required]),
     });

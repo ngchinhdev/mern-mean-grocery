@@ -13,6 +13,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     importProvidersFrom(HttpClientModule),
     provideAnimations(),
-    provideToastr()
+    provideToastr({
+      preventDuplicates: true
+    })
   ]
 };

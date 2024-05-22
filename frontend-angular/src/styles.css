@@ -194,7 +194,6 @@ button.toast-close-button {
 }
 
 .toast-container .ngx-toastr:hover {
-    box-shadow: 0 0 12px #000000;
     opacity: 1;
     cursor: pointer;
 }
@@ -243,7 +242,7 @@ button.toast-close-button {
 }
 
 .toast-error {
-    background-color: #f92b20;
+    background-color: #d31409;
 }
 
 .toast-info {

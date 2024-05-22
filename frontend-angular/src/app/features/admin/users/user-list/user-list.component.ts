@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { MatIconModule } from '@angular/material/icon';
 
-import { IUser } from '../../../../core/models/users.model';
+import { IUser } from '../../../../core/models/auth.model';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
-import { UsersService } from '../../../../core/services/users.service';
 import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
 import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
 import { NotFoundComponent } from '../../../../shared/ui/not-found/not-found.component';
+import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({
   selector: 'app-user-list',
@@ -26,7 +26,7 @@ export class UserListComponent implements OnInit {
   rows = 10;
 
   constructor(
-    private usersSevices: UsersService,
+    private authService: AuthService,
     private toast: ToastrService,
   ) { }
 
@@ -36,7 +36,7 @@ export class UserListComponent implements OnInit {
 
   getAllUsers(page: number = 0, limit: number = 10) {
     this.isLoading = true;
-    this.usersSevices.getAllUsers(page, limit).subscribe({
+    this.authService.getAllUsers(page, limit).subscribe({
       next: (response) => {
         this.users = response.data;
         this.totalRecords = response.data.length;
@@ -54,7 +54,7 @@ export class UserListComponent implements OnInit {
 
   onDeleteUser(id: string) {
     if (confirm('Are you sure you want to delete this user?')) {
-      this.usersSevices.deleteUser(id).subscribe({
+      this.authService.deleteUser(id).subscribe({
         next: (response) => {
           this.toast.success('User deleted successfully!');
           this.getAllUsers();

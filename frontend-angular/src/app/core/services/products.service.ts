@@ -34,17 +34,12 @@ export class ProductsService {
   createProduct(product: ICreateProduct) {
     const formData = new FormData();
 
-    if (!product.name || !product.price || !product.orgPrice || !product.quantity || !product.description || !product.images?.length || !product.categoryId) return new Observable(
-      observer => observer.error('All fields are required!')
-    );
-
     formData.append('name', product.name);
     formData.append('price', product.price.toString());
     formData.append('orgPrice', product.orgPrice.toString());
     formData.append('quantity', product.quantity.toString());
     formData.append('description', product.description);
     formData.append('categoryId', product.categoryId);
-    console.log(product.images);
     product.images.forEach((image) => {
       formData.append('images', image);
     });
@@ -57,10 +52,6 @@ export class ProductsService {
 
   updateProduct(id: string, product: ICreateProduct) {
     const formData = new FormData();
-
-    if (!product.name || !product.price || !product.orgPrice || !product.quantity || !product.description || !product.images?.length || !product.categoryId) return new Observable(
-      observer => observer.error('All fields are required!')
-    );
 
     formData.append('name', product.name);
     formData.append('price', product.price.toString());

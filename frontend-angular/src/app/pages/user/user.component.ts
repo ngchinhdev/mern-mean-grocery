@@ -23,7 +23,8 @@ export class UserComponent {
 
   openAuthDialog() {
     this.dialog.open(AuthComponent, {
-      width: '500px'
+      width: '500px',
+      height: 'auto',
     });
   }
 }

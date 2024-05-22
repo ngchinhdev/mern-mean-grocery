@@ -1,16 +1,16 @@
 interface ICategoryId {
-    _id?: string;
-    name?: string;
+    _id: string;
+    name: string;
 }
 
 export interface ICreateProduct {
-    name?: string;
-    price?: number;
-    orgPrice?: number;
-    quantity?: number;
-    images?: string[];
+    name: string;
+    price: number;
+    orgPrice: number;
+    quantity: number;
+    images: string[];
     hot: boolean;
-    description?: string;
+    description: string;
     categoryId: string;
 }
 

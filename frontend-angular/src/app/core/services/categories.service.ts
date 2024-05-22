@@ -26,10 +26,6 @@ export class CategoriesService {
   createCategory(category: ICreateCategory): Observable<IResponseDataCommon<ICategory>> {
     const formData = new FormData();
 
-    if (!category.name || !category.image) return new Observable(
-      observer => observer.error('Name and Image are required!')
-    );
-
     formData.append('name', category.name);
     formData.append('image', category.image);
 
@@ -45,10 +41,6 @@ export class CategoriesService {
     if (category.image) {
       formData.append('image', category.image);
     }
-
-    if (!category.name) return new Observable(
-      observer => observer.error('Name and Image are required!')
-    );
 
     formData.append('name', category.name);
 

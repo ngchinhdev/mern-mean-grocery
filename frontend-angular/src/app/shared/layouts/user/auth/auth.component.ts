@@ -1,11 +1,12 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { MatDialog, MatDialogContent } from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogContent } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 
 import { AuthFormType, authFormTexts } from '../../../../core/constants/enums';
 import { AuthService } from '../../../../core/services/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { CustomValidators } from '../../../../core/validators/custom.validator';
 
 @Component({
   selector: 'app-auth',
@@ -40,7 +41,7 @@ export class AuthComponent implements OnInit {
   private updateFormControl(): void {
     if (this.currentForm === AuthFormType.LOGIN) {
       this.form = this.formBuilder.group({
-        email: new FormControl('', [Validators.required, Validators.email]),
+        email: new FormControl('', [Validators.required, CustomValidators.email]),
         password: new FormControl('', [Validators.required, Validators.minLength(6)])
       });
     }
@@ -48,14 +49,14 @@ export class AuthComponent implements OnInit {
     if (this.currentForm === AuthFormType.REGISTER) {
       this.form = this.formBuilder.group({
         name: new FormControl('', [Validators.required]),
-        email: new FormControl('', [Validators.required, Validators.email]),
+        email: new FormControl('', [Validators.required, CustomValidators.email]),
         password: new FormControl('', [Validators.required, Validators.minLength(6)])
       });
     }
 
     if (this.currentForm === AuthFormType.FORGOT_PASSWORD) {
       this.form = this.formBuilder.group({
-        email: new FormControl('', [Validators.required, Validators.email])
+        email: new FormControl('', [Validators.required, CustomValidators.email])
       });
     }
   }
@@ -95,6 +96,7 @@ export class AuthComponent implements OnInit {
         this.authService.createUser(this.form.value).subscribe({
           next: (response) => {
             console.log(response);
+            this.toast.success('User created successfully', 'Success');
             this.onFormChange(AuthFormType.LOGIN);
           },
           error: (error) => {

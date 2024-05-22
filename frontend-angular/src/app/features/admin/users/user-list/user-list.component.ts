@@ -4,9 +4,9 @@ import { MatIconModule } from '@angular/material/icon';
 
 import { IUser } from '../../../../core/models/auth.model';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
-import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
-import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
-import { NotFoundComponent } from '../../../../shared/ui/not-found/not-found.component';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
+import { NotFoundComponent } from '../../../../shared/components/not-found/not-found.component';
 import { AuthService } from '../../../../core/services/auth.service';
 
 @Component({

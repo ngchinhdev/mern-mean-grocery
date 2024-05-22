@@ -25,6 +25,7 @@ export class UserComponent {
     this.dialog.open(AuthComponent, {
       width: '500px',
       height: 'auto',
+      autoFocus: false
     });
   }
 }

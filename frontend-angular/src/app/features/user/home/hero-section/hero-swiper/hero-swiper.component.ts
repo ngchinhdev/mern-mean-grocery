@@ -4,6 +4,7 @@ import { SwiperOptions } from 'swiper/types';
 import { Pagination, Autoplay } from 'swiper/modules';
 
 import { SwiperDirective } from '../../../../../core/directives/swiper.directive';
+import { ButtonComponent } from '../../../../../shared/components/button/button.component';
 
 @Component({
   selector: 'app-home-hero-swiper',
@@ -11,7 +12,8 @@ import { SwiperDirective } from '../../../../../core/directives/swiper.directive
   encapsulation: ViewEncapsulation.None,
   imports: [
     CommonModule,
-    SwiperDirective
+    SwiperDirective,
+    ButtonComponent
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './hero-swiper.component.html',

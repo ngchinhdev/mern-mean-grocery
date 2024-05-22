@@ -12,58 +12,7 @@
         </div>
         <ul class="mx-auto mt-8 grid max-w-screen-2xl grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
             @for(product of products; track product._id) {
-            <li>
-                <div class="relative overflow-hidden rounded-md bg-white px-2 py-3 shadow-sm">
-                    <div
-                        class="absolute left-0 top-0 z-10 rounded-full bg-gray-100 px-2 py-0 text-xs font-medium text-primary-600">
-                        @if(product.quantity > 0) {
-                        <span>
-                            Stock:
-                            <span class="pl-1 font-bold text-orange-700">
-                                {{product.quantity}}
-                            </span>
-                        </span>
-                        } @else {
-                        <span class="pl-1 font-bold text-orange-700">
-                            Stock out
-                        </span>
-                        }
-                    </div>
-                    @if(product.orgPrice > product.price) {
-                    <div
-                        class="text-dark absolute right-0 top-0 z-10 rounded bg-orange-500 px-2 py-1 text-xs font-medium text-white">
-                        {{(product.orgPrice - product.price) / product.orgPrice * 100 }} Off
-                    </div>
-                    }
-                    <div
-                        class="flex cursor-pointer items-center justify-center overflow-hidden px-2 py-3 transition-transform duration-300 ease-in-out hover:scale-105 lg:px-4 lg:py-5">
-                        <img src="{{imageUrl}}/{{product.images[0]}}" alt={{product.name}}
-                            class="h-40 w-40 object-cover" />
-                    </div>
-                    <div class="px-2 pb-2 text-start">
-                        <h3 class="mb-2">{{product.name}}</h3>
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <span class="block text-lg font-semibold">
-                                    ${{product.price}}
-                                </span>
-                                <del class="text-base text-gray-400">
-                                    ${{product.orgPrice}}
-                                </del>
-                            </div>
-                            <span
-                                class="flex items-center cursor-pointer rounded-md border border-gray-200 p-2 text-primary-600 hover:bg-primary-600 hover:text-white"
-                                (click)="onAddToCart(product)">
-                                <mat-icon>
-                                    <span class="material-symbols-outlined">
-                                        add_shopping_cart
-                                    </span>
-                                </mat-icon>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </li>
+            <app-product-item [product]="product"></app-product-item>
             }
         </ul>
     </div>

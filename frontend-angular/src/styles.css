@@ -36,6 +36,10 @@ a {
     border-radius: 16px !important;
 }
 
+.mat-mdc-dialog-content {
+    max-height: unset !important;
+}
+
 .image-small-admin:hover {
     @apply bg-gray-200;
 }

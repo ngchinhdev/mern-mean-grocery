@@ -5,12 +5,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { IProduct } from '../../../../core/models/products.model';
 import { ProductsService } from '../../../../core/services/products.service';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
-import { CartService } from '../../../../core/services/cart.service';
+import { ProductItemComponent } from '../../../../shared/components/product-item/product-item.component';
 
 @Component({
   selector: 'app-home-popular-products',
   standalone: true,
-  imports: [MatIconModule, MatMenuModule],
+  imports: [MatIconModule, MatMenuModule, ProductItemComponent],
   templateUrl: './popular-products.component.html',
   styleUrl: './popular-products.component.css',
 })
@@ -21,7 +21,6 @@ export class PopularProductComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -34,17 +33,5 @@ export class PopularProductComponent implements OnInit {
         this.products = response.data;
       }
     });
-  }
-
-  onAddToCart(product: IProduct) {
-    const item = {
-      id: product._id,
-      image: product.images[0],
-      name: product.name,
-      quantity: 1,
-      price: product.price,
-      category: product.categoryId.name!,
-    };
-    this.cartService.addToCart(item);
   }
 }

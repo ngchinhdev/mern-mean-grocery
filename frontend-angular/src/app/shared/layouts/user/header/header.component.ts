@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
@@ -7,6 +7,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { CategoriesService } from "../../../../core/services/categories.service";
 import { ICategory } from "../../../../core/models/categories.model";
 import { PUBLIC_ENDPOINTS } from "../../../../core/constants/urls";
+import { CartService } from "../../../../core/services/cart.service";
 
 @Component({
     selector: "app-header",
@@ -20,11 +21,14 @@ import { PUBLIC_ENDPOINTS } from "../../../../core/constants/urls";
 export class HeaderComponent implements OnInit {
     public categories: ICategory[] = [];
     public imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
-    @Input() openAuthDialog!: () => void;
 
+    @Input() openAuthDialog!: () => void;
     @Output() toggleSidenav = new EventEmitter<void>();
 
-    constructor(private categoriesService: CategoriesService) { }
+    constructor(
+        private categoriesService: CategoriesService,
+        private cartService: CartService
+    ) { }
 
     ngOnInit(): void {
         this.getAllCategories();
@@ -44,5 +48,9 @@ export class HeaderComponent implements OnInit {
 
     onOpenAuthDialog() {
         this.openAuthDialog();
+    }
+
+    get cartTotal() {
+        return this.cartService.getCartItems().length;
     }
 }

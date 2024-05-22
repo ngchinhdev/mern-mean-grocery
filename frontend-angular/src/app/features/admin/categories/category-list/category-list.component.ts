@@ -6,9 +6,9 @@ import { ToastrService } from 'ngx-toastr';
 import { ICategory } from '../../../../core/models/categories.model';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 import { CategoriesService } from '../../../../core/services/categories.service';
-import { LoaderComponent } from '../../../../shared/ui/loader/loader.component';
-import { PaginatorComponent } from '../../../../shared/ui/paginator/paginator.component';
-import { NotFoundComponent } from '../../../../shared/ui/not-found/not-found.component';
+import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
+import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
+import { NotFoundComponent } from '../../../../shared/components/not-found/not-found.component';
 
 @Component({
   selector: 'app-admin-category-list',

@@ -1,9 +1,9 @@
 export interface ICreateCategory {
-    name?: string,
-    image?: string,
+    name: string,
+    image: string,
 }
 
-export interface ICategory extends Required<ICreateCategory> {
+export interface ICategory extends ICreateCategory {
     _id: string,
 }
 

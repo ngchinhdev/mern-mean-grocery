@@ -9,9 +9,13 @@ import { addItem } from "../store/cart/cartSlice";
 
 type ProductItemProps = {
   product: IProduct;
+  onOpenPopup: (product: IProduct) => void;
 };
 
-export default function ProductItem({ product }: ProductItemProps) {
+export default function ProductItem({
+  product,
+  onOpenPopup,
+}: ProductItemProps) {
   const dispatch = useDispatch<AppDispatch>();
 
   const discount =
@@ -52,11 +56,14 @@ export default function ProductItem({ product }: ProductItemProps) {
         ) : (
           ""
         )}
-        <div className="flex cursor-pointer items-center justify-center overflow-hidden px-2 py-3 transition-transform duration-300 ease-in-out hover:scale-105 lg:px-4 lg:py-5">
+        <div
+          className="flex cursor-pointer items-center justify-center overflow-hidden px-2 py-3 transition-transform duration-300 ease-in-out hover:scale-105 lg:px-4 lg:py-5"
+          onClick={() => onOpenPopup(product)}
+        >
           <img
             src={`${PUBLIC_ENDPOINTS.IMAGE_PRODUCTS}/${product.images[0]}`}
             alt={product.name}
-            className="h-40 w-40 object-cover"
+            className="h-40 w-40 object-contain"
           />
         </div>
         <div className="px-2 pb-2 text-start">

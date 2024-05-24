@@ -12,7 +12,7 @@ export default function CartList() {
   }
 
   return (
-    <ul className="scrollbar-hide max-h-full w-full flex-grow overflow-y-scroll">
+    <ul className="no-scrollbar max-h-full w-full flex-grow overflow-y-scroll">
       {cart.map((item) => (
         <CartItem key={item.id} item={item} />
       ))}

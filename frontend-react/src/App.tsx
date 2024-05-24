@@ -12,7 +12,7 @@ import Home from "./pages/app/Home";
 import Products from "./pages/app/Products";
 import About from "./pages/app/About";
 import Contact from "./pages/app/Contact";
-import Cart from "./pages/app/Cart";
+import ProductDetail from "./pages/app/ProductDetail";
 
 // Admin pages
 import AdminLayout from "./layouts/admin/AdminLayout";
@@ -21,7 +21,7 @@ import AdminProducts from "./pages/admin/Products";
 import AdminProductList from "./features/admin/products/ProductList";
 import AdminProductEditor from "./features/admin/products/ProductEditor";
 import AdminCategories from "./pages/admin/Categories";
-import AdminCategoryist from "./features/admin/categories/CategoryList";
+import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
 
 const router = createBrowserRouter([
@@ -52,8 +52,8 @@ const router = createBrowserRouter([
         element: <Contact />,
       },
       {
-        path: "/cart",
-        element: <Cart />,
+        path: "/product/:productId",
+        element: <ProductDetail />,
       },
     ],
   },
@@ -93,7 +93,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/admin/categories/list",
-            element: <AdminCategoryist />,
+            element: <AdminCategoryList />,
           },
           {
             path: "/admin/categories/add",

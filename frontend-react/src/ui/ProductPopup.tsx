@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/store";
-import { FiMinus, FiPlus } from "react-icons/fi";
 
 import Modal from "./Modal";
 import { IProduct } from "src/interfaces/product";
@@ -13,6 +12,7 @@ import {
   sanitizeHTML,
 } from "src/utils/helpers";
 import { addItem } from "src/store/cart/cartSlice";
+import AddToCartControl from "./AddToCartControl";
 
 interface ProductPopupProps {
   isOpen: boolean;
@@ -117,33 +117,12 @@ export default function ProductPopup({
             </div>
           </div>
           <div className="mb-1"></div>
-          <div className="mt-4 flex items-center">
-            <div className="space-s-3 sm:space-s-4 flex w-full items-center justify-between">
-              <div className="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-gray-300 md:h-12">
-                <button
-                  className="text-heading flex h-full w-8 flex-shrink-0 items-center justify-center border-e border-gray-300 transition duration-300 ease-in-out hover:text-gray-500 focus:outline-none md:w-12"
-                  onClick={handleDecreaseQuantity}
-                >
-                  <FiMinus />
-                </button>
-                <p className="duration-250 text-heading flex h-full w-8 flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out md:w-20 xl:w-24">
-                  {quantityAddCart}
-                </p>
-                <button
-                  className="text-heading flex h-full w-8 flex-shrink-0 items-center justify-center border-s border-gray-300 transition duration-300 ease-in-out hover:text-gray-500 focus:outline-none md:w-12"
-                  onClick={handleIncreaseQuantity}
-                >
-                  <FiPlus />
-                </button>
-              </div>
-              <button
-                className="ml-4 inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-md border-0 border-transparent bg-primary-600 px-4 py-4 text-center text-sm font-semibold leading-4 text-white transition duration-300 ease-in-out hover:bg-primary-700 hover:text-white focus:outline-none focus-visible:outline-none md:px-6 md:py-3.5 lg:px-8 lg:py-4"
-                onClick={handleAddToCart}
-              >
-                Add to Cart
-              </button>
-            </div>
-          </div>
+          <AddToCartControl
+            quantityAddCart={quantityAddCart}
+            onAddToCart={handleAddToCart}
+            onDecreaseQuantity={handleDecreaseQuantity}
+            onIncreaseQuantity={handleIncreaseQuantity}
+          />
           <div className="mt-4 flex items-center">
             <div className="space-s-3 sm:space-s-4 flex w-full items-center justify-between">
               <div>
@@ -160,9 +139,12 @@ export default function ProductPopup({
                 </span>
               </div>
               <div>
-                <button className="font-sans text-sm font-medium text-orange-500">
+                <Link
+                  to={"/product/" + product._id}
+                  className="font-sans text-sm font-medium text-orange-500"
+                >
                   More Info
-                </button>
+                </Link>
               </div>
             </div>
           </div>

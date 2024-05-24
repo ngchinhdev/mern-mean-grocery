@@ -10,9 +10,10 @@ export const registerSchema = z.object({
         .trim(),
     password: z.string().min(6, "Password must be at least 6 characters!").trim(),
 });
+
 export const loginSchema = registerSchema.omit({ name: true });
 export const forgotPasswordSchema = loginSchema.pick({ email: true });
 
 export type FormRegisterFields = z.infer<typeof registerSchema>;
 export type FormLoginFields = z.infer<typeof loginSchema>;
-export type FormForgotPasswordFields = z.infer<typeof forgotPasswordSchema>;
+export type FormForgotPasswordFields = z.infer<typeof forgotPasswordSchema>;    

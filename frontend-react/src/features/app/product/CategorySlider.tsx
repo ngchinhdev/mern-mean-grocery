@@ -8,6 +8,30 @@ import { getAllCategories } from "../../../services/apiCategories";
 import ButtonsSlider from "./ButtonsSlider";
 import { PUBLIC_ENDPOINTS } from "../../../constants/url";
 
+const breakpoints = {
+  320: {
+    slidesPerView: 2,
+  },
+  480: {
+    slidesPerView: 3,
+  },
+  640: {
+    slidesPerView: 4,
+  },
+  768: {
+    slidesPerView: 5,
+  },
+  902: {
+    slidesPerView: 6,
+  },
+  1024: {
+    slidesPerView: 8,
+  },
+  1280: {
+    slidesPerView: 10,
+  },
+};
+
 export default function CategorySlider() {
   const { data: categories } = useQuery({
     queryKey: ["allCategories"],
@@ -19,29 +43,7 @@ export default function CategorySlider() {
       <Swiper
         spaceBetween={10}
         slidesPerView={10}
-        breakpoints={{
-          320: {
-            slidesPerView: 2,
-          },
-          480: {
-            slidesPerView: 3,
-          },
-          640: {
-            slidesPerView: 4,
-          },
-          768: {
-            slidesPerView: 5,
-          },
-          902: {
-            slidesPerView: 6,
-          },
-          1024: {
-            slidesPerView: 8,
-          },
-          1280: {
-            slidesPerView: 10,
-          },
-        }}
+        breakpoints={breakpoints}
         loop={true}
         autoplay={{
           delay: 3500,

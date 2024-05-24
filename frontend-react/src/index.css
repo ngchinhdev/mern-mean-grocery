@@ -103,50 +103,42 @@ body {
     }
 }
 
-/* Loader animation */
+/* HTML: <div class="loader"></div> */
 .loader {
-    width: 100px;
+    height: 80px;
     aspect-ratio: 1;
-    padding: 10px;
-    box-sizing: border-box;
     display: grid;
-    background: #fff;
-    filter: blur(5px) contrast(10) hue-rotate(300deg);
-    mix-blend-mode: darken;
 }
 
 .loader:before,
 .loader:after {
     content: "";
-    grid-area: 1/1;
-    width: 40px;
-    height: 40px;
-    background: #ffff00;
-    animation: l7 2s infinite;
+    --c: no-repeat linear-gradient(#10b981 0 0);
+    background: var(--c), var(--c);
+    background-size: 25% 50%;
+    animation: l4 1.5s infinite linear;
 }
 
 .loader:after {
-    animation-delay: -1s;
+    transform: scale(-1);
 }
 
-@keyframes l7 {
-    0% {
-        transform: translate(0, 0)
+@keyframes l4 {
+
+    0%,
+    10% {
+        background-position: 33.4% 100%, 66.6% 100%
     }
 
-    25% {
-        transform: translate(100%, 0)
+    40% {
+        background-position: 33.4% 0, 100% 100%
     }
 
-    50% {
-        transform: translate(100%, 100%)
-    }
-
-    75% {
-        transform: translate(0, 100%)
+    70% {
+        background-position: 0 100%, 66.6% 0
     }
 
     100% {
-        transform: translate(0, 0)
+        background-position: 33.4% 100%, 66.6% 100%
     }
 }

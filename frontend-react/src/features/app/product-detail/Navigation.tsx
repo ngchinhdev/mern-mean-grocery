@@ -1,6 +1,12 @@
 import { RiArrowRightSLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
+import { IProduct } from "src/interfaces/product";
 
-export default function Navigation() {
+interface NavigationProps {
+  product: IProduct;
+}
+
+export default function Navigation({ product }: NavigationProps) {
   return (
     <div className="flex items-center pb-4">
       <ol className="flex w-full items-center overflow-hidden">
@@ -11,15 +17,15 @@ export default function Navigation() {
           <RiArrowRightSLine />
         </li>
         <li className="cursor-pointer pl-1 text-sm font-semibold transition duration-200 ease-in hover:text-emerald-500 ">
-          <a href="/search?category=fresh-vegetable&amp;_id=632aca374d87ff2494210bf0">
-            <button type="button">fresh-vegetable</button>
-          </a>
+          <Link to={"/products/category/" + product.categoryId._id}>
+            <button type="button">{product.categoryId.name}</button>
+          </Link>
         </li>
         <li className="mt-[1px] text-sm">
           <RiArrowRightSLine />
         </li>
         <li className="px-1 text-sm transition duration-200 ease-in ">
-          Rainbow Chard
+          {product.name}
         </li>
       </ol>
     </div>

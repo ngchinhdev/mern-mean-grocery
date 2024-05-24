@@ -23,7 +23,11 @@ export default function DownloadApp() {
             </Button>
           </div>
           <div>
-            <img src={deliveryMan} alt="" className="hidden w-full lg:block" />
+            <img
+              src={deliveryMan}
+              alt="Delivery Man"
+              className="hidden w-full lg:block"
+            />
           </div>
         </div>
       </div>

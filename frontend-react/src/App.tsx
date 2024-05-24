@@ -23,6 +23,7 @@ import AdminProductEditor from "./features/admin/products/ProductEditor";
 import AdminCategories from "./pages/admin/Categories";
 import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
+import NotFoundPage from "./pages/not-found/NotFoundPage";
 
 const router = createBrowserRouter([
   {
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/product/:productId",
         element: <ProductDetail />,
+      },
+      {
+        path: "*",
+        element: <NotFoundPage />,
       },
     ],
   },

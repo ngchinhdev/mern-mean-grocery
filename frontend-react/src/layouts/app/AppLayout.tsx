@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import Cart from "./cart";
 import FooterMobile from "./FooterMobile";
 import MenuMobile from "./menuMobile";
+import MoreInfo from "./MoreInfo";
 
 export default function AppLayout() {
   const [openCart, setOpenCart] = useState(false);
@@ -33,6 +34,7 @@ export default function AppLayout() {
       <div>
         <Outlet />
       </div>
+      <MoreInfo />
       <Footer />
       <Cart open={openCart} onClose={handleCloseCart} />
       <MenuMobile open={openMenuMobile} onClose={handleCloseMenuMobile} />

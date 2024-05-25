@@ -1,4 +1,4 @@
-<header>
+<header style="display: unset;">
     <div class="hidden bg-gray-100 lg:block">
         <div class="mx-auto max-w-screen-2xl px-3 sm:px-10">
             <div class="flex items-center justify-between border-b py-2 text-xs font-medium text-gray-700">
@@ -43,135 +43,140 @@
             </div>
         </div>
     </div>
-    <div class="bg-primary-600">
-        <div class="mx-auto flex max-w-screen-2xl items-center justify-between p-3 sm:px-10 lg:py-4">
-            <a routerLink="" class="relative hidden h-10 w-32 lg:block">
-                <img src="../../../../assets/logo-light_hls14v.svg" class="w-full" alt="Logo" />
-            </a>
-            <div
-                class="flex w-full items-center rounded-md bg-white px-4 py-3 transition-all duration-200 ease-in-out md:mx-12 lg:mx-4 lg:flex lg:max-w-[520px] xl:mx-0 xl:max-w-[750px] 2xl:max-w-[900px]">
-                <input type="search" name="search" id="search" placeholder="Search for products (e.g. fish, apple, oil)"
-                    class="w-full border-none text-sm focus:outline-none" />
-                <mat-icon>
-                    <span class="material-symbols-outlined text-gray-500">
-                        search
-                    </span>
-                </mat-icon>
-            </div>
-            <div class="hidden items-center gap-10 lg:flex">
-                <mat-icon class="scale-125">
-                    <span class="material-symbols-outlined cursor-pointer pe-5 text-white">
-                        notifications
-                    </span>
-                </mat-icon>
-                <span class="relative flex items-center cursor-pointer" (click)="onToggleSidenav()">
-                    <mat-icon class="scale-125">
-                        <span class="material-symbols-outlined text-white">
-                            shopping_cart
-                        </span>
-                    </mat-icon>
-                    <span
-                        class="absolute -top-2 right-0 z-10 inline-flex h-5 w-5 translate-x-1/2 transform items-center justify-center rounded-full bg-red-500 p-1 text-xs font-bold leading-none text-red-100">
-                        {{cartTotal}}
-                    </span>
-                </span>
-                <mat-icon class="me-2 scale-125">
-                    <span class="material-symbols-outlined cursor-pointer text-white" (click)="onOpenAuthDialog()">
-                        person
-                    </span>
-                </mat-icon>
-            </div>
-        </div>
-    </div>
-    <div
-        class="text-md mx-auto hidden max-w-screen-2xl items-center justify-between border-b bg-white px-10 font-medium lg:flex">
-        <div class="flex items-center gap-8">
-            <div class="relative inline-block py-3 text-left">
-                <button mat-button [matMenuTriggerFor]="menu" class="flex items-center gap-1">
-                    Categories
+    <div class="sticky top-0 z-20">
+        <div class="bg-primary-600">
+            <div class="mx-auto flex max-w-screen-2xl items-center justify-between p-3 sm:px-10 lg:py-4">
+                <a routerLink="" class="relative hidden h-10 w-32 lg:block">
+                    <img src="../../../../assets/logo-light_hls14v.svg" class="w-full" alt="Logo" />
+                </a>
+                <div
+                    class="flex w-full items-center rounded-md bg-white px-4 py-3 transition-all duration-200 ease-in-out md:mx-12 lg:mx-4 lg:flex lg:max-w-[520px] xl:mx-0 xl:max-w-[750px] 2xl:max-w-[900px]">
+                    <input type="search" name="search" id="search"
+                        placeholder="Search for products (e.g. fish, apple, oil)"
+                        class="w-full border-none text-sm focus:outline-none" />
                     <mat-icon>
-                        <span class="material-symbols-outlined">
-                            expand_more
+                        <span class="material-symbols-outlined text-gray-500">
+                            search
                         </span>
                     </mat-icon>
-                </button>
-                <mat-menu #menu="matMenu"
-                    class="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 !rounded-md bg-white p-5 !shadow-md ring-1 !ring-black/5">
-                    @for(category of categories; track category._id) {
-                    <button mat-menu-item class="!p-0 rounded-md">
-                        <a href="{{imageUrl}}/{{category._id}}"
-                            class="flex items-center py-2 px-3 hover:text-primary-700">
-                            <img src='{{imageUrl}}/{{category.image}}' alt={{category.name}}
-                                class="h-[20px] w-[20px]" />
-                            <div class="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">
-                                {{category.name}}
-                                <span
-                                    class="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
-                                    <mat-icon class="!mr-0">
-                                        <span class="material-symbols-outlined">
-                                            chevron_right
-                                        </span>
-                                    </mat-icon>
-                                </span>
-                            </div>
-                        </a>
-                    </button>
-                    }
-                </mat-menu>
-            </div>
-            <div class="transition-all hover:text-primary-700">
-                <a routerLink="about-us" class="">
-                    About Us
-                </a>
-            </div>
-            <div class="transition-all hover:text-primary-700">
-                <a routerLink="about-us" class="">
-                    Contact Us
-                </a>
-            </div>
-            <div class="transition-all hover:text-primary-700">
-                <a routerLink="about-us" class="">
-                    Orders
-                </a>
-            </div>
-            <a class="text-md relative inline-flex items-center rounded bg-red-100 px-2 py-0 font-medium text-red-500 transition-all cursor-pointer hover:text-primary-700"
-                to="offer">
-                Offers
-                <div class="absolute -right-1 -top-1 left-auto flex h-2 w-2">
-                    <span class="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-red-400 opacity-75"></span>
-                    <span class="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
                 </div>
-            </a>
-        </div>
-        <div class="flex items-center gap-8">
-            <div class="dropdown relative">
-                <div class="flot-l flag us flex cursor-pointer items-center gap-3">
-                    <img src='../../../../assets/americanflag.svg' alt="American Flag" width="25" height="20" />
-                    <span class="dropbtn">
-                        ENGLISH&nbsp;<i class="fas fa-angle-down"></i>
+                <div class="hidden items-center gap-10 lg:flex">
+                    <mat-icon class="scale-125">
+                        <span class="material-symbols-outlined cursor-pointer pe-5 text-white">
+                            notifications
+                        </span>
+                    </mat-icon>
+                    <span class="relative flex items-center cursor-pointer" (click)="onToggleSidenav()">
+                        <mat-icon class="scale-125">
+                            <span class="material-symbols-outlined text-white">
+                                shopping_cart
+                            </span>
+                        </mat-icon>
+                        <span
+                            class="absolute -top-2 right-0 z-10 inline-flex h-5 w-5 translate-x-1/2 transform items-center justify-center rounded-full bg-red-500 p-1 text-xs font-bold leading-none text-red-100">
+                            {{cartTotal}}
+                        </span>
                     </span>
+                    <mat-icon class="me-2 scale-125">
+                        <span class="material-symbols-outlined cursor-pointer text-white" (click)="onOpenAuthDialog()">
+                            person
+                        </span>
+                    </mat-icon>
                 </div>
-                <ul class="dropdown-content absolute hidden">
-                    <li>
-                        <div class="flot-l flag de">
-                            <img src='../../../../assets/americanflag.svg' alt="American Flag" width="25" height="20" />
-                        </div>
-                        ENGLISH
-                    </li>
-                    <li>
-                        <div class="flot-l flag us">
-                            <img src="../../../../assets/vietnamflag.png" alt="Vietnam Flag" />
-                        </div>
-                        VIETNAM
-                    </li>
-                </ul>
             </div>
-            <a class="text-md font-medium transition-all hover:text-primary-700" to="privacy-policy">
-                Privacy Policy
-            </a>
-            <a class="text-md font-medium transition-all hover:text-primary-700" to="terms-and-conditions">
-                Terms &amp; Conditions
-            </a>
+        </div>
+        <div
+            class="text-md mx-auto hidden max-w-screen-2xl items-center justify-between border-b bg-white px-10 font-medium lg:flex">
+            <div class="flex items-center gap-8">
+                <div class="relative inline-block py-3 text-left">
+                    <button mat-button [matMenuTriggerFor]="menu" class="flex items-center gap-1">
+                        Categories
+                        <mat-icon>
+                            <span class="material-symbols-outlined">
+                                expand_more
+                            </span>
+                        </mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu"
+                        class="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 !rounded-md bg-white p-5 !shadow-md ring-1 !ring-black/5">
+                        @for(category of categories; track category._id) {
+                        <button mat-menu-item class="!p-0 rounded-md">
+                            <a href="{{imageUrl}}/{{category._id}}"
+                                class="flex items-center py-2 px-3 hover:text-primary-700">
+                                <img src='{{imageUrl}}/{{category.image}}' alt={{category.name}}
+                                    class="h-[20px] w-[20px]" />
+                                <div class="ml-3 inline-flex w-full items-center justify-between text-sm font-medium">
+                                    {{category.name}}
+                                    <span
+                                        class="loading-none inline-flex items-end text-gray-400 transition duration-700 ease-in-out">
+                                        <mat-icon class="!mr-0">
+                                            <span class="material-symbols-outlined">
+                                                chevron_right
+                                            </span>
+                                        </mat-icon>
+                                    </span>
+                                </div>
+                            </a>
+                        </button>
+                        }
+                    </mat-menu>
+                </div>
+                <div class="transition-all hover:text-primary-700">
+                    <a routerLink="about-us" class="">
+                        About Us
+                    </a>
+                </div>
+                <div class="transition-all hover:text-primary-700">
+                    <a routerLink="about-us" class="">
+                        Contact Us
+                    </a>
+                </div>
+                <div class="transition-all hover:text-primary-700">
+                    <a routerLink="about-us" class="">
+                        Orders
+                    </a>
+                </div>
+                <a class="text-md relative inline-flex items-center rounded bg-red-100 px-2 py-0 font-medium text-red-500 transition-all cursor-pointer hover:text-primary-700"
+                    to="offer">
+                    Offers
+                    <div class="absolute -right-1 -top-1 left-auto flex h-2 w-2">
+                        <span
+                            class="absolute inline-flex h-2 w-2 animate-ping rounded-full bg-red-400 opacity-75"></span>
+                        <span class="relative inline-flex h-2 w-2 rounded-full bg-red-500"></span>
+                    </div>
+                </a>
+            </div>
+            <div class="flex items-center gap-8">
+                <div class="dropdown relative">
+                    <div class="flot-l flag us flex cursor-pointer items-center gap-3">
+                        <img src='../../../../assets/americanflag.svg' alt="American Flag" width="25" height="20" />
+                        <span class="dropbtn">
+                            ENGLISH&nbsp;<i class="fas fa-angle-down"></i>
+                        </span>
+                    </div>
+                    <ul class="dropdown-content absolute hidden">
+                        <li>
+                            <div class="flot-l flag de">
+                                <img src='../../../../assets/americanflag.svg' alt="American Flag" width="25"
+                                    height="20" />
+                            </div>
+                            ENGLISH
+                        </li>
+                        <li>
+                            <div class="flot-l flag us">
+                                <img src="../../../../assets/vietnamflag.png" alt="Vietnam Flag" />
+                            </div>
+                            VIETNAM
+                        </li>
+                    </ul>
+                </div>
+                <a class="text-md font-medium transition-all hover:text-primary-700" to="privacy-policy">
+                    Privacy Policy
+                </a>
+                <a class="text-md font-medium transition-all hover:text-primary-700" to="terms-and-conditions">
+                    Terms &amp; Conditions
+                </a>
+            </div>
         </div>
     </div>
 </header>

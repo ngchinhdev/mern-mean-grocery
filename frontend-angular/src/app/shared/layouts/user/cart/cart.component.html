@@ -20,8 +20,9 @@
         </span>
     </span>
 </div>
+@if(getCartItem().length) {
 <ul class="no-scrollbar max-h-full w-full flex-grow overflow-y-scroll">
-    @for(item of cartService.getCartItems(); track item.id) {
+    @for(item of getCartItem(); track item.id) {
     <li>
         <div class="flex items-center px-4 py-3">
             <div class="me-3 h-16 w-16 overflow-hidden rounded-full border border-gray-100 shadow-sm">
@@ -66,12 +67,36 @@
     </li>
     }
 </ul>
+} @else {
+<div class="no-scrollbar max-h-full w-full flex-grow overflow-y-scroll">
+    <div class="flex h-full flex-col justify-center">
+        <div class="flex flex-col items-center">
+            <div class="flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100">
+                <span class="block text-4xl text-emerald-600">
+                    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" height="1em"
+                        width="1em" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M454.65 169.4A31.82 31.82 0 00432 160h-64v-16a112 112 0 00-224 0v16H80a32 32 0 00-32 32v216c0 39 33 72 72 72h272a72.22 72.22 0 0050.48-20.55 69.48 69.48 0 0021.52-50.2V192a31.75 31.75 0 00-9.35-22.6zM176 144a80 80 0 01160 0v16H176zm192 96a112 112 0 01-224 0v-16a16 16 0 0132 0v16a80 80 0 00160 0v-16a16 16 0 0132 0z">
+                        </path>
+                    </svg>
+                </span>
+            </div>
+            <h3 class="pt-5 text-lg font-semibold text-gray-700">
+                Your cart is empty
+            </h3>
+            <p class="px-12 pt-2 text-center text-sm text-gray-500">
+                No items added in your cart. Please add product to your cart list.
+            </p>
+        </div>
+    </div>
+</div>
+}
 <div class="mx-5 my-3">
     <button
         class="bg-heading flex w-full items-center justify-between rounded-lg bg-primary-600 px-3 py-3 text-sm text-white transition duration-300 hover:bg-primary-700 focus:outline-none sm:text-base">
         <span class="align-middle font-medium">Proceed To Checkout</span>
         <span class="rounded-lg bg-white px-3 py-2 font-bold text-primary-600">
-            sdfsf
+            {{getTotalCartPrice() | currency}}
         </span>
     </button>
 </div>

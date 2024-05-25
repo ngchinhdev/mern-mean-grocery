@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogContent } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { ToastrService } from 'ngx-toastr';
 
 import { AuthFormType, authFormTexts } from '../../../../core/constants/enums';
 import { AuthService } from '../../../../core/services/auth.service';
-import { ToastrService } from 'ngx-toastr';
 import { CustomValidators } from '../../../../core/validators/custom.validator';
 
 @Component({

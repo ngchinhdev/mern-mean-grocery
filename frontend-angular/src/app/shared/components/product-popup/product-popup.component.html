@@ -1,0 +1,108 @@
+<mat-dialog-content>
+    <div class="flex w-full max-w-3xl relative flex-col overflow-hidden p-2 md:flex-row lg:flex-row">
+        <a href="/product/lettuce">
+            <div class="flex h-full flex-shrink-0 cursor-pointer items-center justify-center">
+                @if(data.orgPrice > data.price) {
+                <span
+                    class="text-dark absolute left-0 top-0 z-10 rounded bg-orange-500 px-2 py-1 text-sm font-medium text-white">
+                    {{((data.orgPrice - data.price) / data.orgPrice * 100).toFixed(1)}}%
+                </span>
+                }
+                <img alt="product" loading="lazy" width="420" height="420" class="p-6 md:p-3"
+                    src="{{imageUrl + '/' + data.images[0]}}" />
+            </div>
+        </a>
+        <div class="flex w-full flex-col px-5 text-left md:px-8">
+            <div class="-mt-1.5 mb-2 block md:mb-2.5">
+                <a href="/product/lettuce">
+                    <h1
+                        class="text-heading cursor-pointer text-lg font-semibold hover:text-black md:text-xl lg:text-2xl">
+                        {{data.name}}
+                    </h1>
+                </a>
+                <div class="relative">
+                    <span
+                        class="inline-flex items-center justify-center rounded-full bg-primary-100 px-2 py-0 text-xs font-semibold text-primary-500">
+                        Stock :
+                        <span class="pl-1 font-bold text-orange-700">
+                            {{data.quantity}}
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <p class="line-clamp-5 text-sm" [innerHtml]="data.description"></p>
+            <div class="my-4 flex items-center">
+                <div class="product-price font-bold">
+                    <span class="inline-block text-2xl">
+                        {{data.price | currency}}
+                    </span>
+                    <del class="ms-2 text-lg font-normal text-gray-400">
+                        {{data.orgPrice | currency}}
+                    </del>
+                </div>
+            </div>
+            <div class="mb-1"></div>
+            <div class="mt-4 flex items-center">
+                <div class="space-s-3 sm:space-s-4 flex w-full items-center justify-between">
+                    <div
+                        class="group flex h-11 flex-shrink-0 items-center justify-between overflow-hidden rounded-md border border-gray-300 md:h-12">
+                        <button
+                            class="text-heading flex h-full w-8 flex-shrink-0 items-center justify-center border-e border-gray-300 transition duration-300 ease-in-out hover:text-gray-500 focus:outline-none md:w-12"
+                            (click)="onDecreaseQuantity()">
+                            <mat-icon>
+                                <span class="material-symbols-outlined">
+                                    remove
+                                </span>
+                            </mat-icon>
+                        </button>
+                        <p
+                            class="duration-250 text-heading flex h-full w-8 flex-shrink-0 cursor-default items-center justify-center text-base font-semibold transition-colors ease-in-out md:w-20 xl:w-24">
+                            {{quantityAddCart}}
+                        </p>
+                        <button
+                            class="text-heading flex h-full w-8 flex-shrink-0 items-center justify-center border-s border-gray-300 transition duration-300 ease-in-out hover:text-gray-500 focus:outline-none md:w-12"
+                            (click)="onIncreaseQuantity()">
+                            <mat-icon>
+                                <span class="material-symbols-outlined">
+                                    add
+                                </span>
+                            </mat-icon>
+                        </button>
+                    </div>
+                    <button (click)="onAddToCart()"
+                        class="ml-4 inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-md border-0 border-transparent bg-primary-600 px-4 py-4 text-center text-sm font-semibold leading-4 text-white transition duration-300 ease-in-out hover:bg-primary-700 hover:text-white focus:outline-none focus-visible:outline-none md:px-6 md:py-3.5 lg:px-8 lg:py-4">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+            <div class="mt-4 flex items-center">
+                <div class="space-s-3 sm:space-s-4 flex w-full items-center justify-between">
+                    <div>
+                        <span class="d-block py-1 text-sm font-semibold">
+                            <span class="text-gray-700">Category:</span>
+                            <a href="">
+                                <button type="button"
+                                    class="ml-2 font-medium text-gray-600 underline hover:text-primary-600">
+                                    {{data.categoryId.name}}
+                                </button>
+                            </a>
+                        </span>
+                    </div>
+                    <div>
+                        <a class="font-sans text-sm font-medium text-orange-500">
+                            More Info
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <p class="text-xs text-gray-600 sm:text-sm">
+                    Call Us To Order By Mobile Number :
+                    <span class="font-semibold text-primary-700">
+                        +0044235234
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

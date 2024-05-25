@@ -23,12 +23,12 @@ export class CartService {
     const existingProduct = this.cartItems.find((item) => item.id === product.id);
 
     if (existingProduct) {
-      existingProduct.quantity += 1;
+      existingProduct.quantity += product.quantity;
       this.setCartItems(this.cartItems);
       return;
     }
 
-    this.cartItems.push({ ...product, quantity: 1 });
+    this.cartItems.push({ ...product });
     this.setCartItems(this.cartItems);
   }
 
@@ -49,7 +49,7 @@ export class CartService {
     const existingProduct = this.cartItems.find((item) => item.id === id);
     if (existingProduct) {
       existingProduct.quantity -= 1;
-      if (existingProduct.quantity === 0) {
+      if (existingProduct.quantity < 1) {
         this.removeCartItem(id);
       }
     }

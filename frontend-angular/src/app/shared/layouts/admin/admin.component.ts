@@ -5,9 +5,9 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 
-import { HeaderComponent } from '../../shared/layouts/admin/header/header.component';
-import { SidebarComponent } from '../../shared/layouts/admin/sidebar/sidebar.component';
-import { FooterComponent } from '../../shared/layouts/admin/footer/footer.component';
+import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @Component({
   selector: 'app-admin',

@@ -1,19 +1,21 @@
 import { Routes } from '@angular/router';
 
 // User Components
-import { UserComponent } from './pages/user/user.component';
-import { HomeComponent } from './features/user/home/home.component';
+import { HomeComponent } from './pages/user/home/home.component';
+import { ProductDetailComponent } from './pages/user/product-detail/product-detail.component';
+import { UserComponent } from './shared/layouts/user/user.component';
+import { ProductsComponent } from './pages/user/products/products.component';
 
 // Admin Components
-import { AdminComponent } from './pages/admin/admin.component';
-import { ProductsComponent } from './features/admin/products/products.component';
-import { CategoriesComponent } from './features/admin/categories/categories.component';
-import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
-import { CategoryEditorComponent } from './features/admin/categories/category-editor/category-editor.component';
-import { ProductEditorComponent } from './features/admin/products/product-editor/product-editor.component';
+import { AdminComponent } from './shared/layouts/admin/admin.component';
+import { DashboardComponent } from './pages/admin/dashboard/dashboard.component';
+import { UsersComponent as AdminUsersComponent } from './pages/admin/users/users.component';
+import { CategoriesComponent as AdminCategoriesComponent } from './pages/admin/categories/categories.component';
+import { ProductsComponent as AdminProductsComponent } from './pages/admin/products/products.component';
 import { CategoryListComponent } from './features/admin/categories/category-list/category-list.component';
+import { CategoryEditorComponent } from './features/admin/categories/category-editor/category-editor.component';
 import { ProductListComponent } from './features/admin/products/product-list/product-list.component';
-import { UsersComponent } from './features/admin/users/users.component';
+import { ProductEditorComponent } from './features/admin/products/product-editor/product-editor.component';
 import { UserListComponent } from './features/admin/users/user-list/user-list.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 
@@ -23,6 +25,8 @@ export const routes: Routes = [
         component: UserComponent,
         children: [
             { path: '', component: HomeComponent },
+            { path: 'product/:id', component: ProductDetailComponent },
+            { path: 'products/search', component: ProductsComponent },
         ]
     },
     {
@@ -33,7 +37,7 @@ export const routes: Routes = [
             { path: 'dashboard', component: DashboardComponent },
             {
                 path: 'categories',
-                component: CategoriesComponent,
+                component: AdminCategoriesComponent,
                 children: [
                     { path: '', component: CategoryListComponent },
                     { path: 'add', component: CategoryEditorComponent },
@@ -42,7 +46,7 @@ export const routes: Routes = [
             },
             {
                 path: 'products',
-                component: ProductsComponent,
+                component: AdminProductsComponent,
                 children: [
                     { path: '', component: ProductListComponent },
                     { path: 'add', component: ProductEditorComponent },
@@ -51,7 +55,7 @@ export const routes: Routes = [
             },
             {
                 path: 'users',
-                component: UsersComponent,
+                component: AdminUsersComponent,
                 children: [
                     { path: '', component: UserListComponent },
                 ]

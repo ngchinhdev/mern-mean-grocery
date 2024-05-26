@@ -6,6 +6,7 @@ import { CartService } from '../../../core/services/cart.service';
 import { CurrencyPipe } from '../../../core/pipes/currency.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductPopupComponent } from '../product-popup/product-popup.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-item',
@@ -21,7 +22,8 @@ export class ProductItemComponent {
 
   constructor(
     private cartService: CartService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   ) { }
 
   onAddToCart(product: IProduct) {
@@ -37,10 +39,16 @@ export class ProductItemComponent {
   }
 
   onOpenPopupDetail() {
-    this.dialog.open(ProductPopupComponent, {
+    const dialogRef = this.dialog.open(ProductPopupComponent, {
       width: '768px',
       autoFocus: false,
+      closeOnNavigation: true,
       data: this.product
     });
+
+    this.router.events
+      .subscribe(() => {
+        dialogRef.close();
+      });
   }
 }

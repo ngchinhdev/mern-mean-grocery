@@ -1,16 +1,18 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogContent } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 
 import { IProduct } from '../../../core/models/products.model';
 import { PUBLIC_ENDPOINTS } from '../../../core/constants/urls';
 import { CurrencyPipe } from '../../../core/pipes/currency.pipe';
 import { CartService } from '../../../core/services/cart.service';
+import { AddCartControlComponent } from '../add-cart-control/add-cart-control.component';
 
 @Component({
   selector: 'app-product-popup',
   standalone: true,
-  imports: [MatDialogContent, MatIconModule, CurrencyPipe],
+  imports: [MatDialogContent, MatIconModule, CurrencyPipe, RouterLink, AddCartControlComponent],
   templateUrl: './product-popup.component.html',
   styleUrl: './product-popup.component.css'
 })
@@ -21,11 +23,12 @@ export class ProductPopupComponent implements OnInit {
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: IProduct,
-    private cartService: CartService
+    public dialogRef: MatDialogRef<ProductPopupComponent>,
+    private cartService: CartService,
   ) { }
 
-  ngOnInit(): void {
-    console.log(this.data);
+  ngOnInit() {
+
   }
 
   onIncreaseQuantity() {
@@ -38,11 +41,11 @@ export class ProductPopupComponent implements OnInit {
     }
   }
 
-  onAddToCart() {
+  onAddToCart(quantityAddCart: number) {
     this.cartService.addToCart({
       id: this.data._id,
       name: this.data.name,
-      quantity: this.quantityAddCart,
+      quantity: quantityAddCart,
       category: this.data.categoryId.name,
       image: this.data.images[0],
       price: this.data.price

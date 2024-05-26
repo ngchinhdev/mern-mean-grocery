@@ -1,1 +1,11 @@
-<p>detail-images works!</p>
+<div class="flex flex-col">
+    <img src="{{imageUrl}}/{{curImage}}" alt="Detail picture" class="aspect-square object-contain" />
+    <div class="mt-4 flex flex-row gap-2 border-t pt-2">
+        @for(image of images; track image; let index = $index) {
+        <div class="w-3/12 cursor-pointer overflow-hidden rounded-sm border border-sky-100 p-2"
+            (click)="onChangeImage(image)">
+            <img src="{{imageUrl}}/{{image}}" alt="Image-{{index}}" />
+        </div>
+        }
+    </div>
+</div>

@@ -31,6 +31,12 @@ export class ProductsService {
     );
   }
 
+  getProductsByCategoryId(id: string) {
+    return this.http.get<IResponseDataCommon<IProduct[]>>(
+      API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_PRODUCT_BY_CATEGORY_ID + '/' + id
+    );
+  }
+
   createProduct(product: ICreateProduct) {
     const formData = new FormData();
 

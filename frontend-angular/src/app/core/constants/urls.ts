@@ -12,7 +12,8 @@ export const API_ENDPOINTS = {
     PRODUCT_ENDPOINTS: {
         GET_ALL_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products`,
         GET_HOT_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products/hot`,
-        GET_PRODUCT_BY_ID: `${API_ENDPOINT_ROOT_URL}/products/`,
+        GET_PRODUCT_BY_ID: `${API_ENDPOINT_ROOT_URL}/products`,
+        GET_PRODUCT_BY_CATEGORY_ID: `${API_ENDPOINT_ROOT_URL}/products/categoryId`,
         CREATE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/add`,
         UPDATE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/update`,
         DELETE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/delete`

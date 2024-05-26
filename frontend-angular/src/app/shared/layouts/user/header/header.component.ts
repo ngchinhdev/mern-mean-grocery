@@ -37,6 +37,7 @@ export class HeaderComponent implements OnInit {
     getAllCategories() {
         this.categoriesService.getAllCategories().subscribe({
             next: (response) => {
+                console.log(response.data);
                 this.categories = response.data;
             }
         });

@@ -1,0 +1,59 @@
+<div class="bg-gray-50">
+    <div class="px-0 py-10 lg:py-10">
+        <div class="mx-auto max-w-screen-2xl px-3 lg:px-10">
+            <div class="flex items-center pb-4">
+                <ol class="flex w-full items-center overflow-hidden">
+                    <li
+                        class="cursor-pointer pr-1 text-sm font-semibold transition duration-200 ease-in hover:text-emerald-500">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="mt-[1px] text-sm">
+                        <mat-icon>
+                            <span class="material-symbols-outlined">
+                                chevron_right
+                            </span>
+                        </mat-icon>
+                    </li>
+                    <li
+                        class="cursor-pointer pl-1 text-sm font-semibold transition duration-200 ease-in hover:text-emerald-500 ">
+                        <a routerLink="/products/category/{{product.categoryId._id}}">
+                            {{product.categoryId.name}}
+                        </a>
+                    </li>
+                    <li class="mt-[1px] text-sm">
+                        <mat-icon>
+                            <span class="material-symbols-outlined">
+                                chevron_right
+                            </span>
+                        </mat-icon>
+                    </li>
+                    <li class="px-1 text-sm transition duration-200 ease-in ">
+                        {{product.name}}
+                    </li>
+                </ol>
+            </div>
+            <div class="w-full rounded-lg bg-white p-3 lg:p-12 relative">
+                <div class="flex flex-col xl:flex-row">
+                    @if(discount) {
+                    <span
+                        class="text-dark absolute text-sm bg-orange-500 text-white py-1 px-2 rounded font-medium z-10 left-0 top-4">{{discount.toFixed(1)}}%
+                        Off</span>
+                    }
+                    <app-detail-images
+                        class="mx-auto w-full flex-shrink-0 md:w-6/12 lg:block lg:w-5/12 xl:w-4/12 xl:pr-10"
+                        [images]="product.images"></app-detail-images>
+                    <div class="w-full">
+                        <div class="flex flex-col md:flex-row">
+                            <app-detail-information class="w-3/5 md:w-2/3 md:pr-6 xl:pr-6"
+                                [product]="product"></app-detail-information>
+                            <app-detail-promotion class="w-full md:w-5/12 lg:w-6/12 xl:w-5/12"></app-detail-promotion>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pt-10 lg:pb-10 lg:pt-20">
+                <app-detail-related-product [relatedProducts]="relatedProducts"></app-detail-related-product>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,5 @@
 import { Component, Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { ICategory } from '../../../../core/models/categories.model';
 import { CategoriesService } from '../../../../core/services/categories.service';
@@ -14,10 +15,13 @@ import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesSectionComponent implements OnInit {
-  public categories: ICategory[] = [];
-  public imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
+  categories: ICategory[] = [];
+  imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
 
-  constructor(private categoriesService: CategoriesService) {
+  constructor(
+    private categoriesService: CategoriesService,
+    private router: Router
+  ) {
 
   }
 
@@ -31,5 +35,9 @@ export class CategoriesSectionComponent implements OnInit {
         this.categories = response.data;
       }
     });
+  }
+
+  navigateToCategory(categoryId: string) {
+    this.router.navigate(['/products/search'], { queryParams: { category: categoryId } });
   }
 }

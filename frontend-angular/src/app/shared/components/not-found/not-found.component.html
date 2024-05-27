@@ -1,4 +1,9 @@
-<div class="text-center mt-16">
-    <img src="../../../../assets/notfound.webp" alt="Not found" class="w-36 h-48 mx-auto">
-    <p class="text-lg pt-6">Sorry, we could not found anything!</p>
+<div class="mb-10 flex items-center justify-center py-4 text-center">
+    <div class="flex flex-col items-center justify-center gap-2">
+        <img [src]="'https://cdni.iconscout.com/illustration/premium/thumb/product-is-empty-8044872-6430781.png?f=webp'"
+            [width]="bigSize ? 300 : 150" [height]="bigSize ? 300 : 150" alt="Not Found" />
+        <h1 [class.text-2xl]="bigSize" [class.text-xl]="!bigSize" class="font-medium text-gray-700">
+            {{ message }}
+        </h1>
+    </div>
 </div>

@@ -1,0 +1,13 @@
+<swiper-container appSwiper [config]="config" init="false" class="mx-auto max-w-screen-2xl">
+  @for(category of categories; track category._id) {
+  <swiper-slide>
+    <a class="flex cursor-pointer flex-col items-center rounded-lg bg-white p-3 text-center shadow-sm"
+      (click)="navigateToCategory(category._id)">
+      <img [src]="imageUrl + '/' + category.image" [alt]="category.name" class="h-[40px] w-[40px]" />
+      <h3 class="mt-2 text-xs text-gray-600 group-hover:text-primary-600">
+        {{category.name}}
+      </h3>
+    </a>
+  </swiper-slide>
+  }
+</swiper-container>

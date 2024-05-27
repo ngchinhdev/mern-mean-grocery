@@ -9,7 +9,7 @@
         <ul class="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-6">
             @for(category of categories; track category._id) {
             <li>
-                <a href="{{imageUrl}}/{{category._id}}"
+                <a (click)="navigateToCategory(category._id)"
                     class="flex h-full w-full transform cursor-pointer items-center border border-gray-100 bg-white px-4 py-6 shadow-sm transition duration-200 ease-linear group-hover:shadow-lg">
                     <img src='{{imageUrl}}/{{category.image}}' alt={{category.name}} class="h-[40px] w-[40px]" />
                     <h3 class="line-clamp-1 ps-3 text-left text-sm font-semibold leading-tight text-gray-600">

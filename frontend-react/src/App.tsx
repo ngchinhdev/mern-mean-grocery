@@ -24,6 +24,7 @@ import AdminCategories from "./pages/admin/Categories";
 import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
+import Checkout from "./pages/app/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
       {
         path: "/product/:productId",

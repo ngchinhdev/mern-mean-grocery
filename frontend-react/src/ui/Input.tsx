@@ -29,7 +29,10 @@ export default function Input<T extends FieldValues>({
 
   return (
     <div>
-      <label className="mb-2 block text-sm font-medium leading-none text-gray-500">
+      <label
+        className="mb-2 block text-sm font-medium leading-none text-gray-500"
+        htmlFor={name + "Input"}
+      >
         {label}
       </label>
       <div>
@@ -44,8 +47,9 @@ export default function Input<T extends FieldValues>({
           <input
             {...register(name)}
             type={type}
+            id={name + "Input"}
             placeholder={placeholder}
-            className="h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-10 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+            className={`h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12 ${icon ? "px-10" : "px-5"}`}
           />
         </div>
         {error && (

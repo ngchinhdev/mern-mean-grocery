@@ -11,5 +11,5 @@ export default defineConfig({
       assets: "/src/assets",
       lib: "/src/lib",
     },
-  },
+  }
 });

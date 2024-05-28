@@ -78,6 +78,15 @@ export default function Form() {
     reset();
   }, [currentFormActive, reset]);
 
+  const handleGoogleAuth = () => {
+    try {
+      window.location.href =
+        "http://localhost:3500/api/v1/auth/google/callback";
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div className="inline-block w-full max-w-lg scale-100 transform overflow-hidden rounded-2xl bg-white text-left align-middle opacity-100 transition-all">
       <div className="mx-auto overflow-hidden bg-white">
@@ -157,12 +166,14 @@ export default function Form() {
           <ButtonSocial
             imageIcon="https://img.icons8.com/?size=100&id=yGcWL8copNNQ&format=png&color=000000"
             imageAlt="Google Icon"
+            onClick={handleGoogleAuth}
           >
             Login with Google
           </ButtonSocial>
           <ButtonSocial
             imageIcon="https://img.icons8.com/?size=100&id=17949&format=png&color=000000"
             imageAlt="Facebook Icon"
+            onClick={handleGoogleAuth}
           >
             Login with Facebook
           </ButtonSocial>

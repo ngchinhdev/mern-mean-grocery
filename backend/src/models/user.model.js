@@ -8,11 +8,13 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
+        unique: true,
         trim: true,
         required: true
     },
     phone: {
         type: String,
+        unique: true,
         trim: true,
     },
     address: {
@@ -50,9 +52,9 @@ const userSchema = new mongoose.Schema({
             type: Number,
         }
     },
-    isDeleted: {
+    isActivated: {
         type: Boolean,
-        default: false
+        default: true
     }
 }, {
     timestamps: true

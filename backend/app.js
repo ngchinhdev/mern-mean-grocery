@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('morgan');
 const { createError } = require('./src/utils/helper.util');
+const passportMiddleWare = require('./src/middlewares/passport.middleware');
 
 const authRoutes = require('./src/routes/auth.route');
 const categoryRoutes = require('./src/routes/category.route');
@@ -12,11 +13,20 @@ const userRoutes = require('./src/routes/user.route');
 
 const app = express();
 
+passportMiddleWare(app);
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", ["http://localhost:5173", "http://localhost:4200"]);
+    next();
+});
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(cors());
+app.use(cors({
+    origin: ['http://127.0.0.1:5173', 'http://localhost:5173', "http://127.0.0.1:4200", "http://localhost:4200"],
+    methods: "GET, PUT, POST, DELETE, PATCH",
+    credentials: true
+}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/v1/auth', authRoutes);

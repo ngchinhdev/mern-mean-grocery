@@ -23,5 +23,5 @@ const checkValidObjectId = (id, type) => {
 
 module.exports = {
     validationError,
-    checkValidObjectId
+    checkValidObjectId,
 };

@@ -4,39 +4,7 @@ const crypto = require('crypto');
 
 const UserModel = require('../models/user.model');
 const { validationError } = require('../utils/validation.util');
-const { createError } = require('../utils/helper.util');
-
-const generateAccessToken = (user) => {
-    console.log(process.env.ACCESS_TOKEN_SECRET);
-    return jwt.sign(
-        {
-            id: user._id,
-            isAdmin: user.isAdmin
-        },
-        process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15m' }
-    );
-};
-
-const generateRefreshToken = (user) => {
-    return jwt.sign(
-        {
-            id: user._id,
-            isAdmin: user.isAdmin
-        },
-        process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '7d' }
-    );
-};
-
-const saveRefreshToken = async (refreshToken, res) => {
-    res.cookie('refreshToken', refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: true,
-        maxAge: 604800000,
-    });
-};
+const { createError, generateAccessToken, generateRefreshToken, saveRefreshToken, generateAccessRefreshToken } = require('../utils/helper.util');
 
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
@@ -62,12 +30,56 @@ const register = async (req, res, next) => {
             password: hashedPassword,
         });
 
-        const { password, isAdmin, isDeleted, ...resUser } = newUser._doc;
+        const { password, isAdmin, isDeleted, _v, ...resUser } = newUser._doc;
 
         return res.status(201).json({
             message: 'User has been registered successfully.',
             data: resUser
         });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const loginSucceeded = async (req, res, next) => {
+    try {
+        if (req.user) {
+            const existingUser = await UserModel.findOne({
+                email: req.user._json.email
+            });
+
+            if (existingUser) {
+                const { accessToken, refreshToken } = generateAccessRefreshToken(existingUser);
+
+                existingUser.refreshToken = {
+                    token: refreshToken,
+                    expire: Date.now() + 604800000
+                };
+
+                await existingUser.save();
+
+                saveRefreshToken(refreshToken, res);
+
+                return res.status(200).json({
+                    message: 'User logged in successfully.',
+                    totalRecords: 1,
+                    accessToken
+                });
+            } else {
+                const newUser = await UserModel.create({
+                    name: req.user.displayName,
+                    email: req.user._json.email,
+                    password: '12345',
+                });
+
+                const { password, isAdmin, isDeleted, _v, ...resUser } = newUser._doc;
+
+                return res.status(201).json({
+                    message: 'User has been registered successfully.',
+                    data: resUser
+                });
+            }
+        }
     } catch (error) {
         next(error);
     }
@@ -91,8 +103,7 @@ const login = async (req, res, next) => {
             createError(400, 'Email or password is incorrect.');
         }
 
-        const accessToken = generateAccessToken(user);
-        const refreshToken = generateRefreshToken(user);
+        const { accessToken, refreshToken } = generateAccessRefreshToken(user);
 
         user.refreshToken = {
             token: refreshToken,
@@ -104,6 +115,8 @@ const login = async (req, res, next) => {
         saveRefreshToken(refreshToken, res);
 
         return res.status(200).json({
+            message: 'User logged in successfully.',
+            totalRecords: 1,
             accessToken
         });
     } catch (error) {
@@ -193,10 +206,24 @@ const deleteUser = async (req, res, next) => {
     }
 };
 
+const googleCallback = async (req, res, next) => {
+    try {
+        const { accessToken, refreshToken } = generateAccessRefreshToken(req.user);
+
+        saveRefreshToken(refreshToken, res);
+
+        return res.redirect(`${process.env.CLIENT_URL}?accessToken=${accessToken}`);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     register,
     login,
     logout,
     refreshToken,
-    deleteUser
+    loginSucceeded,
+    deleteUser,
+    googleCallback
 };

@@ -1,8 +1,8 @@
 const fs = require('fs');
 const path = require('path');
-
-const createHttpError = require('http-errors');
+const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const createHttpError = require('http-errors');
 
 const createError = (statusCode, message) => {
     throw new createHttpError(statusCode, message);
@@ -60,8 +60,41 @@ const removeImage = (pathImages, destination) => {
     });
 };
 
+const generateAccessRefreshToken = user => {
+    const accessToken = jwt.sign(
+        {
+            id: user._id,
+            isAdmin: user.isAdmin
+        },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: '15m' }
+    );
+
+    const refreshToken = jwt.sign(
+        {
+            id: user._id,
+            isAdmin: user.isAdmin
+        },
+        process.env.REFRESH_TOKEN_SECRET,
+        { expiresIn: '7d' }
+    );
+
+    return { accessToken, refreshToken };
+};
+
+const saveRefreshToken = async (refreshToken, res) => {
+    res.cookie('refreshToken', refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: true,
+        maxAge: 604800000,
+    });
+};
+
 module.exports = {
     createError,
     sendEmail,
-    removeImage
+    removeImage,
+    generateAccessRefreshToken,
+    saveRefreshToken
 };

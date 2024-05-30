@@ -7,7 +7,7 @@ const getAllCategories = async (req, res, next) => {
     try {
         let { limitDocuments, skip, page, sortOptions } = req.customQueries;
 
-        const records = await CategoryModel.find({ isDeleted: false });
+        const totalRecords = await CategoryModel.countDocuments({ isDeleted: false });
 
         const categories = await CategoryModel
             .find({ isDeleted: false })
@@ -28,7 +28,7 @@ const getAllCategories = async (req, res, next) => {
             page: page || 1,
             message: 'Categories retrieved successfully.',
             data: resCategories,
-            totalRecords: records.length
+            totalRecords
         });
     } catch (error) {
         next(error);

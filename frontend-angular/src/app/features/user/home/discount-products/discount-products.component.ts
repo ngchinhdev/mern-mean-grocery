@@ -9,6 +9,7 @@ import { MatMenuModule } from '@angular/material/menu';
   templateUrl: './discount-products.component.html',
   styleUrl: './discount-products.component.css'
 })
+
 export class DiscountProductsComponent {
 
 }

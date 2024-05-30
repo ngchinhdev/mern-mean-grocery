@@ -81,6 +81,7 @@ export class AuthComponent implements OnInit {
         this.authService.loginUser(this.form.value).subscribe({
           next: (response) => {
             console.log(response);
+            this.authService.isLoggedIn = true;
           },
           error: (error) => {
             console.error(error);
@@ -109,5 +110,9 @@ export class AuthComponent implements OnInit {
         // Forgot Password
       }
     }
+  }
+
+  onGoogleAuth() {
+    window.location.href = 'http://localhost:3500/api/v1/auth/google/callback';
   }
 }

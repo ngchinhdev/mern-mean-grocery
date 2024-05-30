@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,6 +11,9 @@ import { ICreateUser, ILoginUser, IResponseLogin, IUser } from '../models/auth.m
 })
 
 export class AuthService {
+  isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
+
   constructor(private http: HttpClient) { }
 
   getAllUsers(page?: number, limit?: number): Observable<IResponseDataCommon<IUser[]>> {
@@ -19,9 +22,15 @@ export class AuthService {
     );
   }
 
-  getUserById(id: string): Observable<IResponseDataCommon<IUser>> {
+  getUserProfile(): Observable<IResponseDataCommon<IUser>> {
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${accessToken}`
+    });
+
     return this.http.get<IResponseDataCommon<IUser>>(
-      API_ENDPOINTS.USERS_ENDPOINTS.GET_USER_BY_ID + '/' + id
+      API_ENDPOINTS.USERS_ENDPOINTS.GET_USER_PROFILE,
+      { headers: headers }
     );
   }
 

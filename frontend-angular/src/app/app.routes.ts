@@ -5,6 +5,8 @@ import { HomeComponent } from './pages/user/home/home.component';
 import { ProductDetailComponent } from './pages/user/product-detail/product-detail.component';
 import { UserComponent } from './shared/layouts/user/user.component';
 import { ProductsComponent } from './pages/user/products/products.component';
+import { UserDetailComponent } from './pages/user/user-detail/user-detail.component';
+import { UserInformationComponent } from './features/user/user-detail/user-information/user-information.component';
 
 // Admin Components
 import { AdminComponent } from './shared/layouts/admin/admin.component';
@@ -18,15 +20,24 @@ import { ProductListComponent } from './features/admin/products/product-list/pro
 import { ProductEditorComponent } from './features/admin/products/product-editor/product-editor.component';
 import { UserListComponent } from './features/admin/users/user-list/user-list.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
     {
         path: '',
         component: UserComponent,
         children: [
-            { path: '', component: HomeComponent },
+            { path: '', component: HomeComponent, pathMatch: 'full' },
             { path: 'product/:id', component: ProductDetailComponent },
             { path: 'products/search', component: ProductsComponent },
+            {
+                path: 'user',
+                component: UserDetailComponent,
+                canActivate: [authGuard],
+                children: [
+                    { path: 'information', component: UserInformationComponent }
+                ]
+            },
         ]
     },
     {

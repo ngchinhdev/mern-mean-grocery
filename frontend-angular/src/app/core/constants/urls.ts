@@ -20,7 +20,7 @@ export const API_ENDPOINTS = {
     },
     USERS_ENDPOINTS: {
         GET_ALL_USERS: `${API_ENDPOINT_ROOT_URL}/users`,
-        GET_USER_BY_ID: `${API_ENDPOINT_ROOT_URL}/users`,
+        GET_USER_PROFILE: `${API_ENDPOINT_ROOT_URL}/users/profile`,
         CREATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/register`,
         LOGIN_USER: `${API_ENDPOINT_ROOT_URL}/auth/login`,
         UPDATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/update`,

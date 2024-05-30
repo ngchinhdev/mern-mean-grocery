@@ -13,6 +13,7 @@ export interface IUser extends Required<ICreateUser> {
     phone: string;
     address: string;
     avatar: string;
+    isAdmin: boolean;
 }
 
 export interface IResponseLogin {

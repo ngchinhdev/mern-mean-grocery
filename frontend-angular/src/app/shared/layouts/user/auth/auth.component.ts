@@ -82,6 +82,7 @@ export class AuthComponent implements OnInit {
           next: (response) => {
             console.log(response);
             this.authService.isLoggedIn = true;
+            this.authService.accessToken = response.data.accessToken;
           },
           error: (error) => {
             console.error(error);

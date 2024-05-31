@@ -14,6 +14,8 @@ export class AuthService {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
 
+  accessToken: string = '';
+
   constructor(private http: HttpClient) { }
 
   getAllUsers(page?: number, limit?: number): Observable<IResponseDataCommon<IUser[]>> {
@@ -24,13 +26,14 @@ export class AuthService {
 
   getUserProfile(): Observable<IResponseDataCommon<IUser>> {
     const accessToken = localStorage.getItem('accessToken');
+    console.log(accessToken);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`
     });
 
     return this.http.get<IResponseDataCommon<IUser>>(
       API_ENDPOINTS.USERS_ENDPOINTS.GET_USER_PROFILE,
-      { headers: headers }
+      { headers: headers, withCredentials: true }
     );
   }
 
@@ -56,6 +59,19 @@ export class AuthService {
     return this.http.post<IResponseDataCommon<IResponseLogin>>(
       API_ENDPOINTS.USERS_ENDPOINTS.LOGIN_USER,
       formData
+    );
+  }
+
+  logoutUser() {
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'authorization': `Bearer ${accessToken}`
+    });
+
+    return this.http.post(
+      API_ENDPOINTS.USERS_ENDPOINTS.LOGOUT_USER,
+      {},
+      { headers: headers }
     );
   }
 

@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { register } from 'swiper/element/bundle';
+
 register();
 
 @Component({
@@ -11,9 +12,7 @@ register();
   styleUrl: './app.component.css'
 })
 
-export class AppComponent {
-  title = 'frontend-angular';
-
+export class AppComponent implements OnInit {
   private router = inject(Router);
 
   ngOnInit() {

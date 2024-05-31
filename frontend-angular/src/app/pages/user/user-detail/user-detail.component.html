@@ -1,1 +1,53 @@
-<router-outlet></router-outlet>
+<div class="bg-gray-50">
+    <div class="mx-auto max-w-screen-2xl px-3 sm:px-10">
+        <div class="py-10 lg:py-12 flex flex-col lg:flex-row w-full">
+            <div class="flex-shrink-0 w-full lg:w-80 mr-7 lg:mr-10 xl:mr-10 ">
+                <div class="bg-white p-4 sm:p-5 lg:p-8 rounded-md sticky top-32">
+                    <span class="p-2 my-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
+                        <mat-icon class="text-gray-500">
+                            <span class="material-symbols-outlined">
+                                list
+                            </span>
+                        </mat-icon>
+                        <a class="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-primary-600"
+                            href="/user/my-orders">My Orders</a>
+                    </span>
+                    <span class="p-2 my-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
+                        <mat-icon class="text-gray-500">
+                            <span class="material-symbols-outlined">
+                                manage_accounts
+                            </span>
+                        </mat-icon>
+                        <a class="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-primary-600"
+                            href="/user/update-profile">Update Profile</a>
+                    </span>
+                    <span class="p-2 my-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
+                        <mat-icon class="text-gray-500">
+                            <span class="material-symbols-outlined">
+                                key
+                            </span>
+                        </mat-icon>
+                        <a class="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-primary-600"
+                            href="/user/change-password">Change Password</a>
+                    </span>
+                    <span class="p-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
+                        <span class="mr-2">
+                            <mat-icon class="text-gray-500">
+                                <span class="material-symbols-outlined">
+                                    lock_open
+                                </span>
+                            </mat-icon>
+                        </span>
+                        <button
+                            class="inline-flex items-center justify-between text-sm font-medium w-full hover:text-primary-600">Logout</button>
+                    </span>
+                </div>
+            </div>
+            <div class="w-full bg-white mt-4 lg:mt-0 p-4 sm:p-5 lg:p-8 rounded-md overflow-hidden">
+                <div class="overflow-hidden">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewEncapsulation, inject } from "@angular/core";
-import { RouterLink, RouterLinkActive } from "@angular/router";
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -8,6 +8,8 @@ import { CategoriesService } from "../../../../core/services/categories.service"
 import { ICategory } from "../../../../core/models/categories.model";
 import { PUBLIC_ENDPOINTS } from "../../../../core/constants/urls";
 import { CartService } from "../../../../core/services/cart.service";
+import { AuthService } from "../../../../core/services/auth.service";
+import { IUser } from "../../../../core/models/auth.model";
 
 @Component({
     selector: "app-header",
@@ -20,6 +22,7 @@ import { CartService } from "../../../../core/services/cart.service";
 
 export class HeaderComponent implements OnInit {
     public categories: ICategory[] = [];
+    private userProfile: IUser | null = null;
     public imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
 
     @Input() openAuthDialog!: () => void;
@@ -27,11 +30,14 @@ export class HeaderComponent implements OnInit {
 
     constructor(
         private categoriesService: CategoriesService,
-        private cartService: CartService
+        private cartService: CartService,
+        private authService: AuthService,
+        private router: Router
     ) { }
 
     ngOnInit(): void {
         this.getAllCategories();
+        this.getUserProfile();
     }
 
     getAllCategories() {
@@ -49,6 +55,40 @@ export class HeaderComponent implements OnInit {
 
     onOpenAuthDialog() {
         this.openAuthDialog();
+    }
+
+    getUserProfile() {
+        return this.authService.getUserProfile().subscribe({
+            next: (response) => {
+                this.userProfile = response.data;
+                this.authService.isLoggedIn = true;
+            },
+            error: (error) => {
+                console.log(error);
+                return null;
+            }
+        });
+    }
+
+    onLogout() {
+        return this.authService.logoutUser().subscribe({
+            next: (response) => {
+                this.userProfile = null;
+                this.authService.isLoggedIn = false;
+
+                localStorage.removeItem('accessToken');
+
+                this.router.navigate(['/']);
+            },
+            error: (error) => {
+                console.log(error);
+                return null;
+            }
+        });
+    }
+
+    get authUser() {
+        return this.userProfile;
     }
 
     get cartTotal() {

@@ -30,6 +30,7 @@
                         My Account
                     </span>
                     <span class="mx-2">|</span>
+                    @if(!authUser) {
                     <span class="flex cursor-pointer items-center font-medium hover:text-primary-600"
                         (click)="onOpenAuthDialog()">
                         <mat-icon class="!h-4 !w-4 text-[16px] me-2">
@@ -39,6 +40,17 @@
                         </mat-icon>
                         Login
                     </span>
+                    } @else {
+                    <span class="flex cursor-pointer items-center font-medium hover:text-primary-600"
+                        (click)="onLogout()">
+                        <mat-icon class="!h-4 !w-4 text-[16px] me-2">
+                            <span class="material-symbols-outlined">
+                                lock_open
+                            </span>
+                        </mat-icon>
+                        Logout
+                    </span>
+                    }
                 </div>
             </div>
         </div>
@@ -77,11 +89,17 @@
                             {{cartTotal}}
                         </span>
                     </span>
+                    @if(!authUser) {
                     <mat-icon class="me-2 scale-125">
                         <span class="material-symbols-outlined cursor-pointer text-white" (click)="onOpenAuthDialog()">
                             person
                         </span>
                     </mat-icon>
+                    } @else {
+                    <a routerLink="/user/information">
+                        <img [src]="authUser.avatar" class="rounded-full" alt="Avatar" width="31" height="31">
+                    </a>
+                    }
                 </div>
             </div>
         </div>

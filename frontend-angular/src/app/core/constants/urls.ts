@@ -23,6 +23,7 @@ export const API_ENDPOINTS = {
         GET_USER_PROFILE: `${API_ENDPOINT_ROOT_URL}/users/profile`,
         CREATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/register`,
         LOGIN_USER: `${API_ENDPOINT_ROOT_URL}/auth/login`,
+        LOGOUT_USER: `${API_ENDPOINT_ROOT_URL}/auth/logout`,
         UPDATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/update`,
         DELETE_USER: `${API_ENDPOINT_ROOT_URL}/auth/delete`
     }

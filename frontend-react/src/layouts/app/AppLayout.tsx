@@ -2,11 +2,11 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Header from "./header";
-import Footer from "./Footer";
+import Footer from "./footer/Footer";
 import Cart from "./cart";
-import FooterMobile from "./FooterMobile";
+import FooterMobile from "./footer/FooterMobile";
 import MenuMobile from "./menuMobile";
-import MoreInfo from "./MoreInfo";
+import MoreInfo from "./footer/MoreInfo";
 
 export default function AppLayout() {
   const [openCart, setOpenCart] = useState(false);

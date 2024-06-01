@@ -1,0 +1,12 @@
+.active {
+    color: #10b981;
+    background-color: #f9fafb;
+}
+
+.active .material-symbols-outlined {
+    color: #10b981;
+}
+
+.nav-item:hover mat-icon {
+    color: #10b981 !important;
+}

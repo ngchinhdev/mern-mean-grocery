@@ -19,7 +19,7 @@ const getAllUsers = async (req, res, next) => {
         }
 
         const resUsers = users.map(user => {
-            const { __v, isDeleted, ...data } = user._doc;
+            const { __v, ...data } = user._doc;
             return data;
         });
 

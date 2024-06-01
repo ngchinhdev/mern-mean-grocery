@@ -4,19 +4,13 @@ const crypto = require('crypto');
 
 const UserModel = require('../models/user.model');
 const { validationError } = require('../utils/validation.util');
-const { createError, generateAccessToken, generateRefreshToken, saveRefreshToken, generateAccessRefreshToken } = require('../utils/helper.util');
+const { createError, generateAccessToken, generateRefreshToken, saveRefreshToken, generateAccessRefreshToken, removeImage, comparePassword } = require('../utils/helper.util');
 
 const hashPassword = async (password) => {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     return hashedPassword;
-};
-
-const comparePassword = async (password, hashedPassword) => {
-    const validPassword = await bcrypt.compare(password, hashedPassword);
-
-    return validPassword;
 };
 
 const register = async (req, res, next) => {
@@ -36,50 +30,6 @@ const register = async (req, res, next) => {
             message: 'User has been registered successfully.',
             data: resUser
         });
-    } catch (error) {
-        next(error);
-    }
-};
-
-const loginSucceeded = async (req, res, next) => {
-    try {
-        if (req.user) {
-            const existingUser = await UserModel.findOne({
-                email: req.user._json.email
-            });
-
-            if (existingUser) {
-                const { accessToken, refreshToken } = generateAccessRefreshToken(existingUser);
-
-                existingUser.refreshToken = {
-                    token: refreshToken,
-                    expire: Date.now() + 604800000
-                };
-
-                await existingUser.save();
-
-                saveRefreshToken(refreshToken, res);
-
-                return res.status(200).json({
-                    message: 'User logged in successfully.',
-                    totalRecords: 1,
-                    accessToken
-                });
-            } else {
-                const newUser = await UserModel.create({
-                    name: req.user.displayName,
-                    email: req.user._json.email,
-                    password: '12345',
-                });
-
-                const { password, isAdmin, isDeleted, _v, ...resUser } = newUser._doc;
-
-                return res.status(201).json({
-                    message: 'User has been registered successfully.',
-                    data: resUser
-                });
-            }
-        }
     } catch (error) {
         next(error);
     }
@@ -117,7 +67,9 @@ const login = async (req, res, next) => {
         return res.status(200).json({
             message: 'User logged in successfully.',
             totalRecords: 1,
-            accessToken
+            data: {
+                accessToken
+            }
         });
     } catch (error) {
         next(error);
@@ -127,10 +79,15 @@ const login = async (req, res, next) => {
 const logout = async (req, res, next) => {
     try {
         if (!res.cookie('refreshToken')) {
-            return res.status(204);
+            return res.status(204).send();
         }
 
-        res.clearCookie('refreshToken');
+        res.clearCookie('refreshToken', {
+            httpOnly: true,
+            secure: false,
+            sameSite: true,
+            maxAge: 604800000,
+        });
 
         await UserModel.findByIdAndUpdate(
             req.user.id,
@@ -181,25 +138,22 @@ const refreshToken = async (req, res, next) => {
     }
 };
 
-const deleteUser = async (req, res, next) => {
+const updateUserProfile = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const user = await UserModel.findOneAndUpdate(
-            { _id: id, isDeleted: false },
-            { isDeleted: true },
-            { new: true }
-        );
+        const updatedUser = await UserModel.findByIdAndUpdate(id, {
+            ...req.body,
+        });
 
-        if (!user) {
-            createError(404, 'User not found.');
+        if (!updatedUser) {
+            createError(404, "User not found");
         }
 
-        const { __v, isDeleted, isAdmin, ...resUser } = user._doc;
-
         return res.status(200).json({
-            message: 'User has been deleted successfully.',
-            data: resUser
+            message: 'User updated successfully.',
+            totalRecords: 1,
+            data: updatedUser
         });
     } catch (error) {
         next(error);
@@ -223,7 +177,6 @@ module.exports = {
     login,
     logout,
     refreshToken,
-    loginSucceeded,
-    deleteUser,
-    googleCallback
+    googleCallback,
+    updateUserProfile
 };

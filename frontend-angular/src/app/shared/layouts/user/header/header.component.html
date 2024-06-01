@@ -26,31 +26,25 @@
                         </a>
                         <span class="mx-2">|</span>
                     </div>
-                    <span class="cursor-pointer font-medium hover:text-primary-600">
+                    @if(userProfile) {
+                    <a routerLink="/user/information" class="cursor-pointer font-medium hover:text-primary-600">
+                        My Account
+                    </a>
+                    } @else {
+                    <span (click)="onOpenAuthDialog()" class="cursor-pointer font-medium hover:text-primary-600">
                         My Account
                     </span>
-                    <span class="mx-2">|</span>
-                    @if(!authUser) {
-                    <span class="flex cursor-pointer items-center font-medium hover:text-primary-600"
-                        (click)="onOpenAuthDialog()">
-                        <mat-icon class="!h-4 !w-4 text-[16px] me-2">
-                            <span class="material-symbols-outlined">
-                                person
-                            </span>
-                        </mat-icon>
-                        Login
-                    </span>
-                    } @else {
-                    <span class="flex cursor-pointer items-center font-medium hover:text-primary-600"
-                        (click)="onLogout()">
-                        <mat-icon class="!h-4 !w-4 text-[16px] me-2">
-                            <span class="material-symbols-outlined">
-                                lock_open
-                            </span>
-                        </mat-icon>
-                        Logout
-                    </span>
                     }
+                    <span class="mx-2">|</span>
+                    <span class="flex cursor-pointer items-center font-medium hover:text-primary-600"
+                        (click)="onAuth()">
+                        <mat-icon class="!h-4 !w-4 text-[16px] me-2">
+                            <span class="material-symbols-outlined">
+                                {{userProfile ? 'lock_open' : 'person'}}
+                            </span>
+                        </mat-icon>
+                        {{userProfile ? 'Logout' : 'Login'}}
+                    </span>
                 </div>
             </div>
         </div>
@@ -89,7 +83,7 @@
                             {{cartTotal}}
                         </span>
                     </span>
-                    @if(!authUser) {
+                    @if(!userProfile) {
                     <mat-icon class="me-2 scale-125">
                         <span class="material-symbols-outlined cursor-pointer text-white" (click)="onOpenAuthDialog()">
                             person
@@ -97,7 +91,7 @@
                     </mat-icon>
                     } @else {
                     <a routerLink="/user/information">
-                        <img [src]="authUser.avatar" class="rounded-full" alt="Avatar" width="31" height="31">
+                        <img [src]="avatarUrl" class="rounded-full" alt="Avatar" width="31" height="31">
                     </a>
                     }
                 </div>

@@ -7,6 +7,8 @@ import { UserComponent } from './shared/layouts/user/user.component';
 import { ProductsComponent } from './pages/user/products/products.component';
 import { UserDetailComponent } from './pages/user/user-detail/user-detail.component';
 import { UserInformationComponent } from './features/user/user-detail/user-information/user-information.component';
+import { ChangePasswordComponent } from './features/user/user-detail/change-password/change-password.component';
+import { MyOrderComponent } from './features/user/user-detail/my-order/my-order.component';
 
 // Admin Components
 import { AdminComponent } from './shared/layouts/admin/admin.component';
@@ -35,7 +37,9 @@ export const routes: Routes = [
                 component: UserDetailComponent,
                 canActivate: [authGuard],
                 children: [
-                    { path: 'information', component: UserInformationComponent }
+                    { path: 'information', component: UserInformationComponent },
+                    { path: 'change-password', component: ChangePasswordComponent },
+                    { path: 'orders', component: MyOrderComponent },
                 ]
             },
         ]

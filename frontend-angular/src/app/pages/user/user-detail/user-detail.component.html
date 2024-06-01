@@ -2,49 +2,55 @@
     <div class="mx-auto max-w-screen-2xl px-3 sm:px-10">
         <div class="py-10 lg:py-12 flex flex-col lg:flex-row w-full">
             <div class="flex-shrink-0 w-full lg:w-80 mr-7 lg:mr-10 xl:mr-10 ">
-                <div class="bg-white p-4 sm:p-5 lg:p-8 rounded-md sticky top-32">
-                    <span class="p-2 my-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
-                        <mat-icon class="text-gray-500">
-                            <span class="material-symbols-outlined">
-                                list
-                            </span>
-                        </mat-icon>
-                        <a class="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-primary-600"
-                            href="/user/my-orders">My Orders</a>
-                    </span>
-                    <span class="p-2 my-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
-                        <mat-icon class="text-gray-500">
-                            <span class="material-symbols-outlined">
-                                manage_accounts
-                            </span>
-                        </mat-icon>
-                        <a class="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-primary-600"
-                            href="/user/update-profile">Update Profile</a>
-                    </span>
-                    <span class="p-2 my-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
-                        <mat-icon class="text-gray-500">
-                            <span class="material-symbols-outlined">
-                                key
-                            </span>
-                        </mat-icon>
-                        <a class="inline-flex items-center justify-between ml-2 text-sm font-medium w-full hover:text-primary-600"
-                            href="/user/change-password">Change Password</a>
-                    </span>
-                    <span class="p-2 flex items-center rounded-md hover:bg-gray-50 w-full hover:text-primary-600">
-                        <span class="mr-2">
+                <div class="bg-white p-4 sm:p-5 lg:p-8 rounded-md sticky flex flex-col gap-1 text-base top-32">
+                    <a class="nav-item inline-flex gap-2 items-center font-medium w-full hover:text-primary-600 rounded-md hover:bg-gray-50 px-2 py-3"
+                        routerLink="/user/orders" routerLinkActive="active">
+                        <span class="flex items-center rounded-md">
+                            <mat-icon class="text-gray-500">
+                                <span class="material-symbols-outlined">
+                                    list
+                                </span>
+                            </mat-icon>
+                        </span>
+                        My Orders
+                    </a>
+                    <a class="nav-item inline-flex gap-2 items-center font-medium w-full hover:text-primary-600 rounded-md hover:bg-gray-50 px-2 py-3"
+                        routerLink="/user/information" routerLinkActive="active">
+                        <span class="flex items-center rounded-md">
+                            <mat-icon class="text-gray-500">
+                                <span class="material-symbols-outlined">
+                                    manage_accounts
+                                </span>
+                            </mat-icon>
+                        </span>
+                        Update Profile
+                    </a>
+                    <a class="nav-item inline-flex gap-2 items-center font-medium w-full hover:text-primary-600 rounded-md hover:bg-gray-50 px-2 py-3"
+                        routerLink="/user/change-password" routerLinkActive="active">
+                        <span class="flex items-center rounded-md">
+                            <mat-icon class="text-gray-500">
+                                <span class="material-symbols-outlined">
+                                    key
+                                </span>
+                            </mat-icon>
+                        </span>
+                        Change Password
+                    </a>
+                    <span role="button"
+                        class="nav-item inline-flex gap-2 items-center font-medium w-full hover:text-primary-600 rounded-md hover:bg-gray-50 px-2 py-3">
+                        <span class="flex items-center rounded-md">
                             <mat-icon class="text-gray-500">
                                 <span class="material-symbols-outlined">
                                     lock_open
                                 </span>
                             </mat-icon>
                         </span>
-                        <button
-                            class="inline-flex items-center justify-between text-sm font-medium w-full hover:text-primary-600">Logout</button>
+                        Logout
                     </span>
                 </div>
             </div>
             <div class="w-full bg-white mt-4 lg:mt-0 p-4 sm:p-5 lg:p-8 rounded-md overflow-hidden">
-                <div class="overflow-hidden">
+                <div class="max-w-screen-2xl">
                     <router-outlet></router-outlet>
                 </div>
             </div>

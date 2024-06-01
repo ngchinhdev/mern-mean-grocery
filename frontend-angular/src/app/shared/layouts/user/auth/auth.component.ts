@@ -3,10 +3,12 @@ import { MatDialogContent } from '@angular/material/dialog';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 import { AuthFormType, authFormTexts } from '../../../../core/constants/enums';
 import { AuthService } from '../../../../core/services/auth.service';
 import { CustomValidators } from '../../../../core/validators/custom.validator';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -30,7 +32,8 @@ export class AuthComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private router: Router
   ) {
   }
 
@@ -78,11 +81,17 @@ export class AuthComponent implements OnInit {
 
     if (!this.form.invalid) {
       if (this.currentForm === AuthFormType.LOGIN) {
-        this.authService.loginUser(this.form.value).subscribe({
-          next: (response) => {
-            console.log(response);
+        this.authService.loginUser(this.form.value).pipe(
+          switchMap(response => {
             this.authService.isLoggedIn = true;
-            this.authService.accessToken = response.data.accessToken;
+            localStorage.setItem('accessToken', response.data.accessToken);
+
+            return this.authService.getUserProfile();
+          })
+        ).subscribe({
+          next: (response) => {
+            this.authService.setUserProfile(response.data);
+            this.router.navigate(['/user/information']);
           },
           error: (error) => {
             console.error(error);

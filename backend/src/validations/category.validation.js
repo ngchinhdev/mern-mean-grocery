@@ -1,9 +1,9 @@
 const { checkSchema } = require('express-validator');
 const { createError, removeImage } = require('../utils/helper.util');
-const categoryModel = require('../models/category.model');
+const CategoryModel = require('../models/category.model');
 
 const checkFileUploaded = async (_, { req }, isUpdate = false) => {
-    const oldCategory = await categoryModel.findOne({
+    const oldCategory = await CategoryModel.findOne({
         _id: req.params.id,
         isDeleted: false
     });

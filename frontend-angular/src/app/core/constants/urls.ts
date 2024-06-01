@@ -24,12 +24,13 @@ export const API_ENDPOINTS = {
         CREATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/register`,
         LOGIN_USER: `${API_ENDPOINT_ROOT_URL}/auth/login`,
         LOGOUT_USER: `${API_ENDPOINT_ROOT_URL}/auth/logout`,
-        UPDATE_USER: `${API_ENDPOINT_ROOT_URL}/auth/update`,
+        UPDATE_USER_PROFILE: `${API_ENDPOINT_ROOT_URL}/auth/update-profile`,
         DELETE_USER: `${API_ENDPOINT_ROOT_URL}/auth/delete`
     }
 };
 
 export const PUBLIC_ENDPOINTS = {
     IMAGE_CATEGORIES: `${PUBLIC_ROOT_URL}/images/categories`,
-    IMAGE_PRODUCTS: `${PUBLIC_ROOT_URL}/images/products`
+    IMAGE_PRODUCTS: `${PUBLIC_ROOT_URL}/images/products`,
+    IMAGE_USERS: `${PUBLIC_ROOT_URL}/images/auth`,
 };

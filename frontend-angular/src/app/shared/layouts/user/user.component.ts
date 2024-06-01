@@ -1,4 +1,4 @@
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,13 +21,22 @@ import { AuthComponent } from './auth/auth.component';
 })
 
 export class UserComponent {
-  constructor(public dialog: MatDialog) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router
+  ) { }
 
   openAuthDialog() {
-    this.dialog.open(AuthComponent, {
+    const dialogRef = this.dialog.open(AuthComponent, {
       width: '500px',
       height: 'auto',
-      autoFocus: false
+      autoFocus: false,
+      closeOnNavigation: true
     });
+
+    this.router.events
+      .subscribe(() => {
+        dialogRef.close();
+      });
   }
 }

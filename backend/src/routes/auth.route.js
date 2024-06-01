@@ -7,14 +7,7 @@ const upload = require('../middlewares/upload.middleware');
 const authValidator = require('../validations/auth.validation');
 const authController = require('../controllers/auth.controller');
 const helperMiddleware = require('../middlewares/helper.middleware');
-
-// router.get(
-//     '/google/callback',
-//     passport.authenticate('google', {
-//         successRedirect: 'http://localhost:5173',
-//         failureRedirect: 'http://localhost:5173/products',
-//     })
-// );
+const authMiddleware = require('../middlewares/auth.middleware');
 
 router.get(
     '/google',
@@ -27,15 +20,10 @@ router.get(
     authController.googleCallback
 );
 
-router.get(
-    '/login/success',
-    authController.loginSucceeded
-);
-
 router.post(
     '/register',
     upload.none(),
-    authValidator.userPostValidator,
+    authValidator.userRegisterValidator,
     authController.register
 );
 
@@ -46,10 +34,18 @@ router.post(
     authController.login
 );
 
-router.delete(
-    '/delete/:id',
-    helperMiddleware.checkValidId,
-    authController.deleteUser
+router.put(
+    '/update-profile/:id',
+    upload.single('avatar'),
+    authValidator.userUpdateProfileValidator,
+    authController.updateUserProfile
 );
+
+router.post(
+    '/logout',
+    authMiddleware.verifyToken,
+    authController.logout
+);
+
 
 module.exports = router;

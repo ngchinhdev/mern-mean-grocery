@@ -21,9 +21,11 @@ import { IUser } from "../../../../core/models/auth.model";
 })
 
 export class HeaderComponent implements OnInit {
-    public categories: ICategory[] = [];
-    private userProfile: IUser | null = null;
-    public imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
+    userProfile: IUser | null = null;
+    categories: ICategory[] = [];
+    imageUrl = PUBLIC_ENDPOINTS.IMAGE_CATEGORIES;
+    avatarUrl!: string;
+
 
     @Input() openAuthDialog!: () => void;
     @Output() toggleSidenav = new EventEmitter<void>();
@@ -37,7 +39,7 @@ export class HeaderComponent implements OnInit {
 
     ngOnInit(): void {
         this.getAllCategories();
-        this.getUserProfile();
+        this.authService.userProfile$.subscribe(data => this.userProfile = data);
     }
 
     getAllCategories() {
@@ -57,38 +59,28 @@ export class HeaderComponent implements OnInit {
         this.openAuthDialog();
     }
 
-    getUserProfile() {
-        return this.authService.getUserProfile().subscribe({
-            next: (response) => {
-                this.userProfile = response.data;
-                this.authService.isLoggedIn = true;
-            },
-            error: (error) => {
-                console.log(error);
-                return null;
-            }
-        });
-    }
+    onAuth() {
+        if (this.userProfile) {
+            // Logout 
+            return this.authService.logoutUser().subscribe({
+                next: (response) => {
+                    this.userProfile = null;
+                    this.authService.isLoggedIn = false;
+                    this.authService.setUserProfile(null);
 
-    onLogout() {
-        return this.authService.logoutUser().subscribe({
-            next: (response) => {
-                this.userProfile = null;
-                this.authService.isLoggedIn = false;
+                    localStorage.removeItem('accessToken');
 
-                localStorage.removeItem('accessToken');
-
-                this.router.navigate(['/']);
-            },
-            error: (error) => {
-                console.log(error);
-                return null;
-            }
-        });
-    }
-
-    get authUser() {
-        return this.userProfile;
+                    this.router.navigate(['/']);
+                },
+                error: (error) => {
+                    console.log(error);
+                    return null;
+                }
+            });
+        } else {
+            this.onOpenAuthDialog();
+        }
+        return;
     }
 
     get cartTotal() {

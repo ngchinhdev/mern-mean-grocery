@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { IResponseDataCommon } from '../models/shares.model';
 import { API_ENDPOINTS } from '../constants/urls';
-import { ICreateUser, ILoginUser, IResponseLogin, IUser } from '../models/auth.model';
+import { ICreateUser, ILoginUser, IResponseLogin, IUpdateProfile, IUser } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,16 @@ import { ICreateUser, ILoginUser, IResponseLogin, IUser } from '../models/auth.m
 export class AuthService {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
+  private userProfile = new BehaviorSubject<IUser | null>(null);
+  userProfile$ = this.userProfile.asObservable();
 
   accessToken: string = '';
 
   constructor(private http: HttpClient) { }
+
+  setUserProfile(user: IUser | null) {
+    this.userProfile.next(user);
+  }
 
   getAllUsers(page?: number, limit?: number): Observable<IResponseDataCommon<IUser[]>> {
     return this.http.get<IResponseDataCommon<IUser[]>>(
@@ -30,6 +36,8 @@ export class AuthService {
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`
     });
+
+    if (!accessToken) return new Observable();
 
     return this.http.get<IResponseDataCommon<IUser>>(
       API_ENDPOINTS.USERS_ENDPOINTS.GET_USER_PROFILE,
@@ -75,15 +83,17 @@ export class AuthService {
     );
   }
 
-  updateUser(id: string, user: ICreateUser): Observable<IResponseDataCommon<IUser>> {
+  updateUserProfile(id: string, user: IUpdateProfile): Observable<IResponseDataCommon<IUser>> {
     const formData = new FormData();
 
     formData.append('name', user.name);
     formData.append('email', user.email);
-    formData.append('password', user.password);
+    formData.append('phone', user.phone || '');
+    formData.append('address', user.address || '');
+    formData.append('avatar', user.avatar || '');
 
     return this.http.put<IResponseDataCommon<IUser>>(
-      API_ENDPOINTS.USERS_ENDPOINTS.UPDATE_USER + '/' + id,
+      API_ENDPOINTS.USERS_ENDPOINTS.UPDATE_USER_PROFILE + '/' + id,
       formData
     );
   }

@@ -3,7 +3,6 @@ const { createError } = require('../utils/helper.util');
 
 const verifyToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-
     const token = authHeader && authHeader.split(' ')[1];
 
     if (!token) {

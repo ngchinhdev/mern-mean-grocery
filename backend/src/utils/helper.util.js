@@ -85,16 +85,24 @@ const generateAccessRefreshToken = user => {
 const saveRefreshToken = async (refreshToken, res) => {
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
-        secure: true,
+        secure: false,
         sameSite: true,
-        maxAge: 604800000,
     });
 };
+
+
+const comparePassword = async (password, hashedPassword) => {
+    const validPassword = await bcrypt.compare(password, hashedPassword);
+
+    return validPassword;
+};
+
 
 module.exports = {
     createError,
     sendEmail,
     removeImage,
     generateAccessRefreshToken,
-    saveRefreshToken
+    saveRefreshToken,
+    comparePassword
 };

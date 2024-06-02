@@ -29,6 +29,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
       if (params['category']) {
         this.getProductByCategoryId(params['category']);
       }
+
+      if (params['name']) {
+        this.getProductBySearchName(params['name']);
+      }
     });
   }
 
@@ -49,4 +53,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     });
   }
 
+  getProductBySearchName(name: string) {
+    this.productServices.getSearchProducts(name).subscribe({
+      next: (response) => {
+        this.productsFilter = response.data;
+      },
+      error: () => {
+        this.productsFilter = [];
+      }
+    });
+  }
 }

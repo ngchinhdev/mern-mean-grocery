@@ -1,18 +1,54 @@
-import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
+import { HttpEvent, HttpInterceptorFn, HttpRequest, HttpHandlerFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  // const authToken = localStorage.getItem('accessToken');
+export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: HttpHandlerFn): Observable<HttpEvent<any>> => {
+  const authService = inject(AuthService);
 
-  // // Clone the request and add the authorization header
-  // const authReq = req.clone({
-  //   setHeaders: {
-  //     Authorization: `Bearer ${authToken}`
-  //   }
-  // });
+  let authReq = req;
+  authService.initializeAccessToken();
 
-  // // Pass the cloned request with the updated header to the next handler
-  return next(req);
+  const accessToken = authService.getAccessToken();
+
+  if (accessToken) {
+    authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      withCredentials: true
+    });
+  }
+
+  return next(authReq).pipe(
+    catchError((err: any) => {
+      if (err instanceof HttpErrorResponse && err.status === 401) {
+        console.error('Unauthorized request:', err);
+        authService.clearAccessToken();
+
+        return authService.refreshToken().pipe(
+          switchMap((res: any) => {
+            const newAccessToken = res.newAccessToken;
+            authService.saveAccessToken(newAccessToken);
+
+            authReq = req.clone({
+              setHeaders: {
+                Authorization: `Bearer ${newAccessToken}`
+              }
+            });
+
+            return next(authReq);
+          }),
+          catchError(refreshErr => {
+            console.error('Refresh token error:', refreshErr);
+            return throwError(() => refreshErr);
+          })
+        );
+      } else {
+        console.error('HTTP error:', err);
+        return throwError(() => err);
+      }
+    })
+  );
 };

@@ -16,9 +16,9 @@
                     </li>
                     <li
                         class="cursor-pointer pl-1 text-sm font-semibold transition duration-200 ease-in hover:text-emerald-500 ">
-                        <a routerLink="/products/category/{{product.categoryId._id}}">
+                        <span (click)="navigateToCategory(product.categoryId._id)">
                             {{product.categoryId.name}}
-                        </a>
+                        </span>
                     </li>
                     <li class="mt-[1px] text-sm">
                         <mat-icon>

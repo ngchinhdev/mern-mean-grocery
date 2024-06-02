@@ -12,11 +12,12 @@ export const API_ENDPOINTS = {
     PRODUCT_ENDPOINTS: {
         GET_ALL_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products`,
         GET_HOT_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products/hot`,
+        GET_SEARCH_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products/search`,
         GET_PRODUCT_BY_ID: `${API_ENDPOINT_ROOT_URL}/products`,
         GET_PRODUCT_BY_CATEGORY_ID: `${API_ENDPOINT_ROOT_URL}/products/categoryId`,
         CREATE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/add`,
         UPDATE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/update`,
-        DELETE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/delete`
+        DELETE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/delete`,
     },
     USERS_ENDPOINTS: {
         GET_ALL_USERS: `${API_ENDPOINT_ROOT_URL}/users`,
@@ -25,7 +26,8 @@ export const API_ENDPOINTS = {
         LOGIN_USER: `${API_ENDPOINT_ROOT_URL}/auth/login`,
         LOGOUT_USER: `${API_ENDPOINT_ROOT_URL}/auth/logout`,
         UPDATE_USER_PROFILE: `${API_ENDPOINT_ROOT_URL}/auth/update-profile`,
-        DELETE_USER: `${API_ENDPOINT_ROOT_URL}/auth/delete`
+        CHANGE_PASSWORD: `${API_ENDPOINT_ROOT_URL}/auth/change-password`,
+        REFRESH_TOKEN: `${API_ENDPOINT_ROOT_URL}/auth/refresh-token`,
     }
 };
 

@@ -27,3 +27,8 @@ export interface IUpdateProfile {
     address?: string;
     avatar?: string;
 }
+
+export interface IPasswordChange {
+    currentPassword: string,
+    newPassword: string;
+}

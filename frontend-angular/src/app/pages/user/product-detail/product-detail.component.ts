@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 
@@ -26,14 +26,17 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private productServices: ProductsService
+    private productServices: ProductsService,
+    private router: Router
   ) {
 
   }
 
   ngOnInit(): void {
     this.routeSub = this.route.params.subscribe(params => {
-      this.getProductById(params['id']);
+      if (params['id']) {
+        this.getProductById(params['id']);
+      }
     });
   }
 
@@ -45,6 +48,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     return this.productServices.getProductById(id).subscribe({
       next: (response) => {
         this.product = response.data;
+        console.log(response.data);
         this.discount = ((this.product.orgPrice - this.product.price) / this.product.orgPrice * 100);
         this.getProductsByCategoryId(this.product.categoryId._id);
       }
@@ -54,9 +58,12 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   getProductsByCategoryId(id: string) {
     return this.productServices.getProductsByCategoryId(id).subscribe({
       next: (response) => {
-        console.log(response);
         this.relatedProducts = response.data.filter(p => p._id !== this.product._id);
       }
     });
+  }
+
+  navigateToCategory(categoryId: string) {
+    this.router.navigate(['/products/search'], { queryParams: { category: categoryId } });
   }
 }

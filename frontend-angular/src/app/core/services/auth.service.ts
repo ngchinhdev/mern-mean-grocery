@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 import { IResponseDataCommon } from '../models/shares.model';
 import { API_ENDPOINTS } from '../constants/urls';
-import { ICreateUser, ILoginUser, IResponseLogin, IUpdateProfile, IUser } from '../models/auth.model';
+import { ICreateUser, ILoginUser, IPasswordChange, IResponseLogin, IUpdateProfile, IUser } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,12 +16,29 @@ export class AuthService {
   private userProfile = new BehaviorSubject<IUser | null>(null);
   userProfile$ = this.userProfile.asObservable();
 
-  accessToken: string = '';
+  accessToken: string | null = null;
 
   constructor(private http: HttpClient) { }
 
   setUserProfile(user: IUser | null) {
     this.userProfile.next(user);
+  }
+
+  initializeAccessToken(): void {
+    this.accessToken = localStorage.getItem('accessToken');
+  }
+
+  saveAccessToken(accessToken: string): void {
+    localStorage.setItem('accessToken', accessToken);
+    this.accessToken = accessToken;
+  }
+
+  getAccessToken(): string | null {
+    return this.accessToken;
+  }
+
+  clearAccessToken() {
+    localStorage.removeItem('accessToken');
   }
 
   getAllUsers(page?: number, limit?: number): Observable<IResponseDataCommon<IUser[]>> {
@@ -32,7 +49,6 @@ export class AuthService {
 
   getUserProfile(): Observable<IResponseDataCommon<IUser>> {
     const accessToken = localStorage.getItem('accessToken');
-    console.log(accessToken);
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${accessToken}`
     });
@@ -66,7 +82,8 @@ export class AuthService {
 
     return this.http.post<IResponseDataCommon<IResponseLogin>>(
       API_ENDPOINTS.USERS_ENDPOINTS.LOGIN_USER,
-      formData
+      formData,
+      { withCredentials: true }
     );
   }
 
@@ -79,7 +96,7 @@ export class AuthService {
     return this.http.post(
       API_ENDPOINTS.USERS_ENDPOINTS.LOGOUT_USER,
       {},
-      { headers: headers }
+      { headers: headers, withCredentials: true }
     );
   }
 
@@ -98,9 +115,25 @@ export class AuthService {
     );
   }
 
-  deleteUser(id: string): Observable<IResponseDataCommon<IUser>> {
-    return this.http.delete<IResponseDataCommon<IUser>>(
-      API_ENDPOINTS.USERS_ENDPOINTS.DELETE_USER + '/' + id
+  changePassword(id: string, bodyPasswordChange: IPasswordChange): Observable<IResponseDataCommon<IUser>> {
+    const accessToken = localStorage.getItem('accessToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${accessToken}`,
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.put<IResponseDataCommon<IUser>>(
+      API_ENDPOINTS.USERS_ENDPOINTS.CHANGE_PASSWORD + '/' + id,
+      { ...bodyPasswordChange },
+      { headers: headers, }
+    );
+  }
+
+  refreshToken(): Observable<any> {
+    return this.http.post(
+      API_ENDPOINTS.USERS_ENDPOINTS.REFRESH_TOKEN,
+      {},
+      { withCredentials: true }
     );
   }
 }

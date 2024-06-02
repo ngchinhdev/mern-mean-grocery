@@ -1,0 +1,132 @@
+<div class="order-2 flex h-full flex-col sm:order-1 md:w-full lg:order-1 lg:w-3/5">
+    <div class="mt-5 md:col-span-2 md:mt-0">
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <div>
+                <h2 class="pb-3 text-base font-semibold text-gray-700">
+                    01. Personal Details
+                </h2>
+                <div class="flex items-center justify-between gap-5">
+                    <div class="flex-1">
+                        <Input label="First Name" placeholder="Nguyen" name="firstName" type="string" errors={errors}
+                            register={register} />
+                    </div>
+                    <div class="flex-1">
+                        <Input label="Last Name" placeholder="Chinh" name="lastName" type="string" errors={errors}
+                            register={register} />
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center justify-between gap-5">
+                    <div class="flex-1">
+                        <Input label="Email Address" placeholder="youremail@gmail.com" name="email" type="string"
+                            errors={errors} register={register} />
+                    </div>
+                    <div class="flex-1">
+                        <Input label="Phone Number" placeholder="0899234654" name="phone" type="string" errors={errors}
+                            register={register} />
+                    </div>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h2 class="pb-3 text-base font-semibold text-gray-700">
+                    02. Shipping Details
+                </h2>
+                <div class="w-full">
+                    <Input label="Street Address" placeholder="123 Boulevard Rd, Beverley Hills" name="street"
+                        type="string" errors={errors} register={register} />
+                </div>
+            </div>
+            <div class="mt-6 flex items-center justify-between gap-5">
+                <div class="flex-1">
+                    <Input label="City" placeholder="Los Angeles" name="city" type="string" errors={errors}
+                        register={register} />
+                </div>
+                <div class="flex-1">
+                    <Input label="Country" placeholder="United States" name="country" type="string" errors={errors}
+                        register={register} />
+                </div>
+                <div class="flex-1">
+                    <Input label="Zip Code" placeholder="2345" name="zip" type="string" errors={errors}
+                        register={register} />
+                </div>
+            </div>
+            <div class="mt-8">
+                <h2 class="pb-3 text-base font-semibold text-gray-700">
+                    03. Payment method
+                </h2>
+                <div class="flex w-full items-center justify-between gap-5">
+                    <div class="card flex-1 rounded-md border border-gray-200 bg-white px-3 py-4">
+                        <label class="label cursor-pointer">
+                            <div class="item-center flex justify-between">
+                                <div class="flex items-center">
+                                    <span class="mr-3 text-xl text-gray-400">
+                                        <mat-icon>
+                                            <span class="material-symbols-outlined">
+                                                wallet
+                                            </span>
+                                        </mat-icon>
+                                    </span>
+                                    <h6 class="text-sm font-medium text-gray-600">
+                                        Cash On Delivery
+                                    </h6>
+                                </div>
+                                <input name="paymentMethod" type="radio" checked
+                                    class="radio-css text-emerald-500 accent-primary-600" value="Cash" />
+                            </div>
+                        </label>
+                    </div>
+                    <div class="card flex-1 rounded-md border border-gray-200 bg-white px-3 py-4">
+                        <label class="label cursor-pointer">
+                            <div class="item-center flex justify-between">
+                                <div class="flex items-center">
+                                    <span class="mr-3 text-xl text-gray-400">
+                                        <mat-icon>
+                                            <span class="material-symbols-outlined">
+                                                credit_card
+                                            </span>
+                                        </mat-icon>
+                                    </span>
+                                    <h6 class="text-sm font-medium text-gray-600">
+                                        Credit Card
+                                    </h6>
+                                </div>
+                                <input name="paymentMethod" type="radio"
+                                    class="form-radio radio-css text-emerald-500 outline-none focus:ring-0"
+                                    value="Cash" />
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10 grid grid-cols-6 gap-4 lg:gap-6">
+                <div class="col-span-6 sm:col-span-3">
+                    <a class="flex w-full justify-center rounded border border-indigo-100 bg-indigo-50 py-3 text-center text-sm font-medium text-gray-700 transition-all hover:border-gray-300 hover:text-gray-800"
+                        href="/">
+                        <span class="mr-2 text-xl">
+                            <mat-icon>
+                                <span class="material-symbols-outlined">
+                                    keyboard_return
+                                </span>
+                            </mat-icon>
+                        </span>
+                        Continue Shipping
+                    </a>
+                </div>
+                <div class="col-span-6 sm:col-span-3">
+                    <button type="submit"
+                        class="flex w-full justify-center rounded border border-emerald-500 bg-emerald-500 py-3 text-center text-sm font-medium text-white transition-all hover:bg-emerald-600">
+                        <span class="flex justify-center text-center">
+                            Confirm Order
+                            <span class="ml-2 text-xl">
+                                <mat-icon>
+                                    <span class="material-symbols-outlined">
+                                        arrow_right_alt
+                                    </span>
+                                </mat-icon>
+                            </span>
+                        </span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

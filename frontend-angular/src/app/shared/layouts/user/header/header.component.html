@@ -59,9 +59,10 @@
                     class="flex w-full items-center rounded-md bg-white px-4 py-3 transition-all duration-200 ease-in-out md:mx-12 lg:mx-4 lg:flex lg:max-w-[520px] xl:mx-0 xl:max-w-[750px] 2xl:max-w-[900px]">
                     <input type="search" name="search" id="search"
                         placeholder="Search for products (e.g. fish, apple, oil)"
-                        class="w-full border-none text-sm focus:outline-none" />
+                        class="w-full border-none text-sm focus:outline-none focus:bg-transparent active:bg-transparent"
+                        [(ngModel)]="searchValue" (keydown.enter)="onSearch()" />
                     <mat-icon>
-                        <span class="material-symbols-outlined text-gray-500">
+                        <span class="material-symbols-outlined text-gray-500 cursor-pointer" (click)="onSearch()">
                             search
                         </span>
                     </mat-icon>
@@ -113,7 +114,7 @@
                         class="c-h-65vh absolute left-0 z-20 mt-2 grid w-72 origin-top-right gap-6 divide-gray-100 !rounded-md bg-white p-5 !shadow-md ring-1 !ring-black/5">
                         @for(category of categories; track category._id) {
                         <button mat-menu-item class="!p-0 rounded-md">
-                            <a href="{{imageUrl}}/{{category._id}}"
+                            <span (click)="navigateToCategory(category._id)"
                                 class="flex items-center py-2 px-3 hover:text-primary-700">
                                 <img src='{{imageUrl}}/{{category.image}}' alt={{category.name}}
                                     class="h-[20px] w-[20px]" />
@@ -128,7 +129,7 @@
                                         </mat-icon>
                                     </span>
                                 </div>
-                            </a>
+                            </span>
                         </button>
                         }
                     </mat-menu>

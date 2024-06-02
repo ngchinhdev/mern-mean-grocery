@@ -52,17 +52,6 @@ export class UserListComponent implements OnInit {
     });
   }
 
-  onDeleteUser(id: string) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.authService.deleteUser(id).subscribe({
-        next: (response) => {
-          this.toast.success('User deleted successfully!');
-          this.getAllUsers();
-        }
-      });
-    }
-  }
-
   onPageChanged(event: any) {
     console.log(event);
     this.first = event.first + 1;

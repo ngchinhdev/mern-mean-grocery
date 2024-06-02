@@ -25,6 +25,12 @@ export class ProductsService {
     );
   }
 
+  getSearchProducts(name: string) {
+    return this.http.get<IResponseDataCommon<IProduct[]>>(
+      API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_SEARCH_PRODUCTS + '?name=' + name
+    );
+  }
+
   getProductById(id: string) {
     return this.http.get<IResponseDataCommon<IProduct>>(
       API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_PRODUCT_BY_ID + '/' + id

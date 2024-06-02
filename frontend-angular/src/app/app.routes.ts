@@ -23,6 +23,7 @@ import { ProductEditorComponent } from './features/admin/products/product-editor
 import { UserListComponent } from './features/admin/users/user-list/user-list.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { authGuard } from './core/guards/auth.guard';
+import { CheckoutComponent } from './pages/user/checkout/checkout.component';
 
 export const routes: Routes = [
     {
@@ -42,6 +43,7 @@ export const routes: Routes = [
                     { path: 'orders', component: MyOrderComponent },
                 ]
             },
+            { path: 'checkout', component: CheckoutComponent },
         ]
     },
     {

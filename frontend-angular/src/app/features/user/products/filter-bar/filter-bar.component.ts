@@ -9,5 +9,5 @@ import { Component, Input } from '@angular/core';
 })
 
 export class FilterBarComponent {
-  @Input() lengthProductFound!: number;
+  @Input() lengthProductFound: number = 0;
 }

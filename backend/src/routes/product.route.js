@@ -20,6 +20,12 @@ router.get(
 );
 
 router.get(
+    '/search',
+    helperMiddleware.checkQueryParams,
+    productController.getSearchProducts
+);
+
+router.get(
     '/categoryId/:id',
     helperMiddleware.checkValidId,
     helperMiddleware.checkQueryParams,
@@ -27,7 +33,7 @@ router.get(
 );
 
 router.get(
-    '/:id',
+    '/product/:id',
     helperMiddleware.checkValidId,
     productController.getProductById
 );

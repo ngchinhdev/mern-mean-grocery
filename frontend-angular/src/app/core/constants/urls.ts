@@ -4,7 +4,7 @@ const PUBLIC_ROOT_URL = 'http://localhost:3500';
 export const API_ENDPOINTS = {
     CATEGORY_ENDPOINTS: {
         GET_ALL_CATEGORIES: `${API_ENDPOINT_ROOT_URL}/categories`,
-        GET_CATEGORY_BY_ID: `${API_ENDPOINT_ROOT_URL}/categories`,
+        GET_CATEGORY_BY_ID: `${API_ENDPOINT_ROOT_URL}/categories/category`,
         CREATE_CATEGORY: `${API_ENDPOINT_ROOT_URL}/categories/add`,
         UPDATE_CATEGORY: `${API_ENDPOINT_ROOT_URL}/categories/update`,
         DELETE_CATEGORY: `${API_ENDPOINT_ROOT_URL}/categories/delete`
@@ -13,11 +13,16 @@ export const API_ENDPOINTS = {
         GET_ALL_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products`,
         GET_HOT_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products/hot`,
         GET_SEARCH_PRODUCTS: `${API_ENDPOINT_ROOT_URL}/products/search`,
-        GET_PRODUCT_BY_ID: `${API_ENDPOINT_ROOT_URL}/products`,
+        GET_PRODUCT_BY_ID: `${API_ENDPOINT_ROOT_URL}/products/product`,
         GET_PRODUCT_BY_CATEGORY_ID: `${API_ENDPOINT_ROOT_URL}/products/categoryId`,
         CREATE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/add`,
         UPDATE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/update`,
         DELETE_PRODUCT: `${API_ENDPOINT_ROOT_URL}/products/delete`,
+    },
+    ORDER_ENDPOINTS: {
+        GET_ALL_ORDERS: `${API_ENDPOINT_ROOT_URL}/orders`,
+        GET_ORDER_BY_ID: `${API_ENDPOINT_ROOT_URL}/orders/order`,
+        CREATE_ORDER: `${API_ENDPOINT_ROOT_URL}/orders/add`,
     },
     USERS_ENDPOINTS: {
         GET_ALL_USERS: `${API_ENDPOINT_ROOT_URL}/users`,

@@ -21,12 +21,13 @@ const checkFileUploaded = async (_, { req }) => {
     return req.file.filename;
 };
 
-const checkCurrentPassword = async (value, { req }) => {
-    if (!value.trim()) {
+const checkCurrentPassword = async (currentPassword, { req }) => {
+    console.log(req.body);
+    if (!currentPassword.trim()) {
         createError(400, 'Current password is required');
     }
 
-    if (value.trim().length < 6) {
+    if (currentPassword.trim().length < 6) {
         createError(400, 'Current password is at least 6 chars');
     }
 
@@ -34,7 +35,13 @@ const checkCurrentPassword = async (value, { req }) => {
         _id: req.params.id
     });
 
-    return comparePassword(value, curUser.password);
+    const isMatched = await comparePassword(currentPassword, curUser.password);
+
+    if (!isMatched) {
+        createError(403, 'Your current password is incorrect.');
+    }
+
+    return currentPassword;
 };
 
 const userRegisterValidator = checkSchema({
@@ -123,7 +130,7 @@ const userUpdateProfileValidator = checkSchema({
 const userChangePasswordValidator = checkSchema({
     currentPassword: {
         customSanitizer: {
-            options: (value, { req }) => checkFileUploaded(value, { req })
+            options: (currentPassword, { req }) => checkCurrentPassword(currentPassword, { req })
         }
     },
     newPassword: {

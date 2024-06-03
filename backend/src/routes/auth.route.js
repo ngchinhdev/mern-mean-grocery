@@ -38,7 +38,19 @@ router.put(
     '/update-profile/:id',
     upload.single('avatar'),
     authValidator.userUpdateProfileValidator,
-    authController.updateUserProfile
+    authController.updateProfile
+);
+
+router.put(
+    '/change-password/:id',
+    authMiddleware.verifyToken,
+    authValidator.userChangePasswordValidator,
+    authController.changePassword
+);
+
+router.post(
+    '/refresh-token',
+    authController.refreshToken
 );
 
 router.post(

@@ -26,7 +26,6 @@ const passportMiddleWare = app => {
             callbackURL: '/api/v1/auth/google/callback',
             scope: ['profile', 'email']
         }, async (accessToken, refreshToken, profile, callback) => {
-            console.log(accessToken, refreshToken);
             let callbackProfile = null;
             const existedUser = await getExistingUserByEmail(profile._json.email);
             if (existedUser) {

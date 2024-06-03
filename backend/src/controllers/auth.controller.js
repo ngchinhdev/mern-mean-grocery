@@ -57,7 +57,7 @@ const login = async (req, res, next) => {
 
         user.refreshToken = {
             token: refreshToken,
-            expire: Date.now() + 604800000
+            expired: Date.now() + 48 * 60 * 60 * 1000
         };
 
         await user.save();
@@ -86,7 +86,6 @@ const logout = async (req, res, next) => {
             httpOnly: true,
             secure: false,
             sameSite: true,
-            maxAge: 604800000,
         });
 
         await UserModel.findByIdAndUpdate(
@@ -112,11 +111,11 @@ const refreshToken = async (req, res, next) => {
 
         const userToken = await UserModel.findOne({
             'refreshToken.token': refreshToken,
-            'refreshToken.expire': { $gt: Date.now() }
+            'refreshToken.expired': { $gt: Date.now() }
         });
 
         if (!userToken) {
-            createError(403, 'Invalid refresh token.');
+            createError(403, 'Refresh token is expired.');
         }
 
         const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
@@ -125,10 +124,16 @@ const refreshToken = async (req, res, next) => {
             createError(403, 'Invalid refresh token.');
         }
 
-        const newAccessToken = generateAccessToken(user);
-        const newRefreshToken = generateRefreshToken(user);
+        const { accessToken: newAccessToken, refreshToken: newRefreshToken } = generateAccessRefreshToken({ ...user, _id: user.id });
 
         saveRefreshToken(newRefreshToken, res);
+
+        userToken.refreshToken = {
+            token: newRefreshToken,
+            expired: Date.now() + 48 * 60 * 60 * 1000
+        };
+
+        await userToken.save();
 
         return res.status(200).json({
             newAccessToken
@@ -138,13 +143,13 @@ const refreshToken = async (req, res, next) => {
     }
 };
 
-const updateUserProfile = async (req, res, next) => {
+const updateProfile = async (req, res, next) => {
     try {
         const { id } = req.params;
 
         const updatedUser = await UserModel.findByIdAndUpdate(id, {
             ...req.body,
-        });
+        }, { new: true });
 
         if (!updatedUser) {
             createError(404, "User not found");
@@ -160,9 +165,40 @@ const updateUserProfile = async (req, res, next) => {
     }
 };
 
+const changePassword = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const hashedPassword = await hashPassword(req.body.newPassword);
+
+        const updatedUser = await UserModel.findByIdAndUpdate(id, {
+            password: hashedPassword
+        }, { new: true });
+
+        return res.status(200).json({
+            message: 'User password updated successfully.',
+            totalRecords: 1,
+            data: updatedUser
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const googleCallback = async (req, res, next) => {
     try {
         const { accessToken, refreshToken } = generateAccessRefreshToken(req.user);
+
+        const user = await UserModel.findOne({
+            email: req.user.email
+        });
+
+        user.refreshToken = {
+            token: refreshToken,
+            expired: Date.now() + 48 * 60 * 60 * 1000
+        };
+
+        await user.save();
 
         saveRefreshToken(refreshToken, res);
 
@@ -178,5 +214,6 @@ module.exports = {
     logout,
     refreshToken,
     googleCallback,
-    updateUserProfile
+    updateProfile,
+    changePassword
 };

@@ -1,28 +1,96 @@
-<div class="order-2 flex h-full flex-col sm:order-1 md:w-full lg:order-1 lg:w-3/5">
-    <div class="mt-5 md:col-span-2 md:mt-0">
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <h2 class="pb-3 text-base font-semibold text-gray-700">
-                    01. Personal Details
-                </h2>
-                <div class="flex items-center justify-between gap-5">
-                    <div class="flex-1">
-                        <Input label="First Name" placeholder="Nguyen" name="firstName" type="string" errors={errors}
-                            register={register} />
-                    </div>
-                    <div class="flex-1">
-                        <Input label="Last Name" placeholder="Chinh" name="lastName" type="string" errors={errors}
-                            register={register} />
+<div class="mt-5 md:col-span-2 md:mt-0">
+    <form (submit)="onSubmit()" [formGroup]="form">
+        <div>
+            <h2 class="pb-3 text-base font-semibold text-gray-700">
+                01. Personal Details
+            </h2>
+            <div class="flex justify-between gap-5">
+                <div class="flex-1">
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            First Name
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="Nguyen"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="firstName" />
+                            </div>
+                            @if(form.get('firstName')?.touched) {
+                            @if(form.get('firstName')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) First name is
+                                required</small>
+                            }
+                            }
+                        </div>
                     </div>
                 </div>
-                <div class="mt-6 flex items-center justify-between gap-5">
-                    <div class="flex-1">
-                        <Input label="Email Address" placeholder="youremail@gmail.com" name="email" type="string"
-                            errors={errors} register={register} />
+                <div class="flex-1">
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Last Name
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="Chinh"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="lastName" />
+                            </div>
+                            @if(form.get('lastName')?.touched) {
+                            @if(form.get('lastName')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Last name is
+                                required</small>
+                            }
+                            }
+                        </div>
                     </div>
-                    <div class="flex-1">
-                        <Input label="Phone Number" placeholder="0899234654" name="phone" type="string" errors={errors}
-                            register={register} />
+                </div>
+            </div>
+            <div class="mt-6 flex justify-between gap-5">
+                <div class="flex-1">
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Email
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="email@gmail.com"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="email" />
+                            </div>
+                            @if(form.get('email')?.touched) {
+                            @if(form.get('email')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Email is
+                                required</small>
+                            } @else if(form.get('email')?.hasError('email')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Email is
+                                invalid</small>
+                            }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Phone Number
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="0989887789"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="phone" />
+                            </div>
+                            @if(form.get('phone')?.touched) {
+                            @if(form.get('phone')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Phone number is
+                                required</small>
+                            } @else if(form.get('phone')?.hasError('phone')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Phone number is
+                                is invalid</small>
+                            }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
@@ -31,22 +99,89 @@
                     02. Shipping Details
                 </h2>
                 <div class="w-full">
-                    <Input label="Street Address" placeholder="123 Boulevard Rd, Beverley Hills" name="street"
-                        type="string" errors={errors} register={register} />
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Street Address
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="123 Boulevard Rd, Beverley Hills"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="street" />
+                            </div>
+                            @if(form.get('street')?.touched) {
+                            @if(form.get('street')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Street address is
+                                required</small>
+                            }
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mt-6 flex items-center justify-between gap-5">
+            <div class="mt-6 flex justify-between gap-5">
                 <div class="flex-1">
-                    <Input label="City" placeholder="Los Angeles" name="city" type="string" errors={errors}
-                        register={register} />
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            City
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="Los Angeles"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="city" />
+                            </div>
+                            @if(form.get('city')?.touched) {
+                            @if(form.get('city')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) City is
+                                required</small>
+                            }
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div class="flex-1">
-                    <Input label="Country" placeholder="United States" name="country" type="string" errors={errors}
-                        register={register} />
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Country
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="United States"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="country" />
+                            </div>
+                            @if(form.get('country')?.touched) {
+                            @if(form.get('country')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Country is
+                                required</small>
+                            }
+                            }
+                        </div>
+                    </div>
                 </div>
                 <div class="flex-1">
-                    <Input label="Zip Code" placeholder="2345" name="zip" type="string" errors={errors}
-                        register={register} />
+                    <div class="w-full">
+                        <label class="mb-2 block text-sm font-medium leading-none text-gray-500">
+                            Zip Code
+                        </label>
+                        <div>
+                            <div class="relative">
+                                <input type="text" placeholder="2345"
+                                    class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
+                                    formControlName="zipCode" />
+                            </div>
+                            @if(form.get('zipCode')?.touched) {
+                            @if(form.get('zipCode')?.hasError('required')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Zip code is
+                                required</small>
+                            }@else if(form.get('zipCode')?.hasError('zipCode')) {
+                            <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Zip code is
+                                is invalid</small>
+                            }
+                            }
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="mt-8">
@@ -58,40 +193,36 @@
                         <label class="label cursor-pointer">
                             <div class="item-center flex justify-between">
                                 <div class="flex items-center">
-                                    <span class="mr-3 text-xl text-gray-400">
-                                        <mat-icon>
-                                            <span class="material-symbols-outlined">
-                                                wallet
-                                            </span>
-                                        </mat-icon>
-                                    </span>
+                                    <mat-icon class="mr-3 text-xl text-gray-400">
+                                        <span class="material-symbols-outlined">
+                                            wallet
+                                        </span>
+                                    </mat-icon>
                                     <h6 class="text-sm font-medium text-gray-600">
                                         Cash On Delivery
                                     </h6>
                                 </div>
-                                <input name="paymentMethod" type="radio" checked
-                                    class="radio-css text-emerald-500 accent-primary-600" value="Cash" />
+                                <input name="paymentMethod" type="radio" checked class="accent-primary-600"
+                                    value="cash" />
                             </div>
                         </label>
                     </div>
-                    <div class="card flex-1 rounded-md border border-gray-200 bg-white px-3 py-4">
+                    <div class="card flex-1 rounded-md border border-gray-200 bg-white px-3 py-4"
+                        (click)="onWarningMethod()">
                         <label class="label cursor-pointer">
                             <div class="item-center flex justify-between">
                                 <div class="flex items-center">
-                                    <span class="mr-3 text-xl text-gray-400">
-                                        <mat-icon>
-                                            <span class="material-symbols-outlined">
-                                                credit_card
-                                            </span>
-                                        </mat-icon>
-                                    </span>
+                                    <mat-icon class="mr-3 text-xl text-gray-400">
+                                        <span class="material-symbols-outlined">
+                                            credit_card
+                                        </span>
+                                    </mat-icon>
                                     <h6 class="text-sm font-medium text-gray-600">
                                         Credit Card
                                     </h6>
                                 </div>
-                                <input name="paymentMethod" type="radio"
-                                    class="form-radio radio-css text-emerald-500 outline-none focus:ring-0"
-                                    value="Cash" />
+                                <input name="paymentMethod" type="radio" disabled
+                                    class="outline-none accent-primary-600 focus:ring-0" value="credit" />
                             </div>
                         </label>
                     </div>
@@ -99,34 +230,30 @@
             </div>
             <div class="mt-10 grid grid-cols-6 gap-4 lg:gap-6">
                 <div class="col-span-6 sm:col-span-3">
-                    <a class="flex w-full justify-center rounded border border-indigo-100 bg-indigo-50 py-3 text-center text-sm font-medium text-gray-700 transition-all hover:border-gray-300 hover:text-gray-800"
+                    <a class="flex w-full justify-center items-center rounded border border-indigo-100 bg-indigo-50 py-3 text-center text-sm font-medium text-gray-700 transition-all hover:border-gray-300 hover:text-gray-800"
                         href="/">
-                        <span class="mr-2 text-xl">
-                            <mat-icon>
-                                <span class="material-symbols-outlined">
-                                    keyboard_return
-                                </span>
-                            </mat-icon>
-                        </span>
+                        <mat-icon class="mr-2 text-xl">
+                            <span class="material-symbols-outlined">
+                                keyboard_return
+                            </span>
+                        </mat-icon>
                         Continue Shipping
                     </a>
                 </div>
                 <div class="col-span-6 sm:col-span-3">
                     <button type="submit"
                         class="flex w-full justify-center rounded border border-emerald-500 bg-emerald-500 py-3 text-center text-sm font-medium text-white transition-all hover:bg-emerald-600">
-                        <span class="flex justify-center text-center">
+                        <span class="flex justify-center items-center text-center">
                             Confirm Order
-                            <span class="ml-2 text-xl">
-                                <mat-icon>
-                                    <span class="material-symbols-outlined">
-                                        arrow_right_alt
-                                    </span>
-                                </mat-icon>
-                            </span>
+                            <mat-icon class="ml-2 text-xl">
+                                <span class="material-symbols-outlined">
+                                    arrow_right_alt
+                                </span>
+                            </mat-icon>
                         </span>
                     </button>
                 </div>
             </div>
-        </form>
-    </div>
+        </div>
+    </form>
 </div>

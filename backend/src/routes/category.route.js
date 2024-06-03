@@ -14,7 +14,7 @@ router.get(
 );
 
 router.get(
-    '/:id',
+    '/category/:id',
     helperMiddleware.checkValidId,
     categoryController.getCategoryById
 );

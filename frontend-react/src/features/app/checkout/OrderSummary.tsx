@@ -6,7 +6,7 @@ export default function OrderSummary() {
       <div className="order-1 rounded-lg border bg-white p-5 sm:order-2 lg:px-8 lg:py-8">
         <h2 className="pb-4 text-lg font-semibold">Order Summary</h2>
         <div className="scrollbar-hide block max-h-64 w-full overflow-y-scroll bg-gray-50">
-          {[1, 2, 3].map((_) => (
+          {[1, 2, 3].map(() => (
             <OrderItem />
           ))}
         </div>

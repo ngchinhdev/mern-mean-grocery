@@ -3,6 +3,7 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const createHttpError = require('http-errors');
+const bcrypt = require('bcrypt');
 
 const createError = (statusCode, message) => {
     throw new createHttpError(statusCode, message);
@@ -67,7 +68,7 @@ const generateAccessRefreshToken = user => {
             isAdmin: user.isAdmin
         },
         process.env.ACCESS_TOKEN_SECRET,
-        { expiresIn: '15m' }
+        { expiresIn: '10s' }
     );
 
     const refreshToken = jwt.sign(
@@ -76,20 +77,20 @@ const generateAccessRefreshToken = user => {
             isAdmin: user.isAdmin
         },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '7d' }
+        { expiresIn: '2d' }
     );
 
     return { accessToken, refreshToken };
 };
 
-const saveRefreshToken = async (refreshToken, res) => {
+const saveRefreshToken = (refreshToken, res) => {
     res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
         secure: false,
         sameSite: true,
+        maxAge: 48 * 60 * 60 * 1000
     });
 };
-
 
 const comparePassword = async (password, hashedPassword) => {
     const validPassword = await bcrypt.compare(password, hashedPassword);

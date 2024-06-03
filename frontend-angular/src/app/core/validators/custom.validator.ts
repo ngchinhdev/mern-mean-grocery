@@ -7,4 +7,20 @@ export class CustomValidators {
 
         return valid ? null : { email: true };
     }
+
+    static phone(control: AbstractControl): ValidationErrors | null {
+        const phoneRegex = /^[0-9\+]{1,}[0-9\-]{3,15}$/;
+
+        const valid = phoneRegex.test(control.value);
+
+        return valid ? null : { phone: true };
+    }
+
+    static zipCode(control: AbstractControl): ValidationErrors | null {
+        const zipCodeRegex = /^\d{5}(-\d{4})?$|^\d{6}$/;
+
+        const valid = zipCodeRegex.test(control.value);
+
+        return valid ? null : { zipCode: true };
+    }
 }

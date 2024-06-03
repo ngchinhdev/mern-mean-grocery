@@ -9,6 +9,8 @@ import { UserDetailComponent } from './pages/user/user-detail/user-detail.compon
 import { UserInformationComponent } from './features/user/user-detail/user-information/user-information.component';
 import { ChangePasswordComponent } from './features/user/user-detail/change-password/change-password.component';
 import { MyOrderComponent } from './features/user/user-detail/my-order/my-order.component';
+import { CheckoutComponent } from './pages/user/checkout/checkout.component';
+import { OrderDetailComponent } from './features/user/user-detail/order-detail/order-detail.component';
 
 // Admin Components
 import { AdminComponent } from './shared/layouts/admin/admin.component';
@@ -23,7 +25,7 @@ import { ProductEditorComponent } from './features/admin/products/product-editor
 import { UserListComponent } from './features/admin/users/user-list/user-list.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { authGuard } from './core/guards/auth.guard';
-import { CheckoutComponent } from './pages/user/checkout/checkout.component';
+
 
 export const routes: Routes = [
     {
@@ -43,6 +45,7 @@ export const routes: Routes = [
                     { path: 'orders', component: MyOrderComponent },
                 ]
             },
+            { path: 'order/:id', component: OrderDetailComponent },
             { path: 'checkout', component: CheckoutComponent },
         ]
     },

@@ -5,6 +5,7 @@ import { CartService } from '../../../../core/services/cart.service';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 import { ICartItem } from '../../../../core/models/carts.model';
 import { CurrencyPipe } from '../../../../core/pipes/currency.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -21,6 +22,7 @@ export class CartComponent implements OnInit {
   imageUrl = PUBLIC_ENDPOINTS.IMAGE_PRODUCTS;
 
   cartService = inject(CartService);
+  router = inject(Router);
 
   ngOnInit(): void {
     this.getCartItem();
@@ -32,10 +34,16 @@ export class CartComponent implements OnInit {
   }
 
   getTotalCartPrice() {
-    return this.cartItems.reduce((acc, cur) => acc + cur.quantity * cur.price, 0);
+    return this.cartService.getTotalCartPrice();
   }
 
   onCloseCart() {
     this.closeCart.emit();
+  }
+
+  onNavigateCheckout() {
+    if (this.cartItems.length) {
+      this.router.navigate(['/checkout']);
+    }
   }
 }

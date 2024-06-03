@@ -19,6 +19,10 @@ export class CartService {
     return this.cartItems;
   }
 
+  getTotalCartPrice() {
+    return this.cartItems.reduce((acc, cur) => acc + cur.quantity * cur.price, 0);
+  }
+
   addToCart(product: ICartItem) {
     const existingProduct = this.cartItems.find((item) => item.id === product.id);
 
@@ -54,5 +58,10 @@ export class CartService {
       }
     }
     this.setCartItems(this.cartItems);
+  }
+
+  clearCart() {
+    this.cartItems = [];
+    localStorage.setItem('cartItems', JSON.stringify([]));
   }
 }

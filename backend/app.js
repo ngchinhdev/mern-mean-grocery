@@ -3,6 +3,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const logger = require('morgan');
+
 const { createError } = require('./src/utils/helper.util');
 const passportMiddleWare = require('./src/middlewares/passport.middleware');
 
@@ -10,14 +11,15 @@ const authRoutes = require('./src/routes/auth.route');
 const categoryRoutes = require('./src/routes/category.route');
 const productRoutes = require('./src/routes/product.route');
 const userRoutes = require('./src/routes/user.route');
+const orderRoutes = require('./src/routes/order.route');
 
 const app = express();
 
-passportMiddleWare(app);
 app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", ["http://localhost:5173", "http://localhost:4200"]);
     next();
 });
+passportMiddleWare(app);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -33,6 +35,7 @@ app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/categories', categoryRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/orders', orderRoutes);
 
 app.use(function (req, res, next) {
     next(createError(404, 'Endpoint not found.'));

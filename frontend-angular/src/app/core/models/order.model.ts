@@ -23,6 +23,7 @@ interface IOrderItem {
     product: {
         name: string;
         price: number;
+        images: string[];
     };
 }
 

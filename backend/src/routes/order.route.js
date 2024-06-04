@@ -24,4 +24,9 @@ router.post(
     orderController.createOrder
 );
 
+router.get(
+    '/invoice',
+    orderController.createInvoice
+);
+
 module.exports = router;

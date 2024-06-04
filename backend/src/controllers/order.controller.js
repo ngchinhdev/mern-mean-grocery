@@ -1,6 +1,13 @@
+const PDFDocument = require('pdfkit');
+const blobStream = require('blob-stream');
+const puppeteer = require('puppeteer');
+
 const OrderModel = require('../models/order.model');
-const { createError } = require('../utils/helper.util');
+const { createError, buildPDF } = require('../utils/helper.util');
 const { validationError } = require('../utils/validation.util');
+
+const doc = new PDFDocument();
+const stream = doc.pipe(blobStream());
 
 const getAllOrders = async (req, res, next) => {
     try {
@@ -35,7 +42,7 @@ const getOrderById = async (req, res, next) => {
 
         const order = await OrderModel.findById(id).populate({
             path: 'orderItems.product',
-            select: 'name price'
+            select: 'name price images'
         });
 
         if (!order) {
@@ -66,8 +73,60 @@ const createOrder = async (req, res, next) => {
     }
 };
 
+// const createInvoice = async (req, res, next) => {
+//     try {
+//         const stream = res.writeHead(200, {
+//             'Content-Type': 'application/pdf',
+//             'Content-Disposition': 'attachment; filename="invoice.pdf"'
+//         });
+
+//         buildPDF((data) => {
+//             stream.write(`
+//             <div class="bg-white rounded-lg shadow-sm">
+//             <div>
+//                 hello
+//             </div>
+//         </div>
+//             `);
+//         }, () => {
+//             stream.end();
+//         });
+//     } catch (error) {
+//         next(error);
+//     }
+// };
+
+const createInvoice = async (req, res, next) => {
+    try {
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+
+        await page.setContent(`
+            <div class="bg-white rounded-lg shadow-sm">
+                <div>
+                    hello
+                </div>
+            </div>
+        `);
+
+        const pdf = await page.pdf({ format: 'A4' });
+
+        res.setHeader('Content-Type', 'application/pdf');
+        res.setHeader('Content-Disposition', 'attachment; filename="invoice.pdf"');
+
+        res.send(pdf);
+
+        await browser.close();
+    } catch (error) {
+        console.log(error);
+        next(error);
+    }
+};
+
+
 module.exports = {
     getAllOrders,
     getOrderById,
-    createOrder
+    createOrder,
+    createInvoice
 };

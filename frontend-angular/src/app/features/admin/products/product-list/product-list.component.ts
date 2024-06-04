@@ -39,9 +39,7 @@ export class ProductListComponent implements OnInit {
         this.products = response.data;
         this.totalRecords = response.totalRecords;
         console.log(response.totalRecords);
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 500);
+        this.isLoading = false;
       },
       error: (error) => {
         if (this.products.length === 0) {

@@ -41,9 +41,7 @@ export class CategoryListComponent implements OnInit {
       next: (response) => {
         this.categories = response.data;
         this.totalRecords = response.totalRecords;
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 500);
+        this.isLoading = false;
       },
       error: (error) => {
         if (this.categories.length === 0) {

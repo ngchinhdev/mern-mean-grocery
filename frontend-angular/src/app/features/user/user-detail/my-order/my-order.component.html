@@ -1,1 +1,73 @@
-<p>my-order works!</p>
+<div class="overflow-hidden rounded-md">
+    <div class="flex flex-col">
+        <h2 class="text-xl font-semibold mb-5">My Orders</h2>
+        <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="align-middle inline-block border border-gray-100 rounded-md min-w-full pb-2 sm:px-6 lg:px-8">
+                <div class="overflow-hidden border-b last:border-b-0 border-gray-100 rounded-md">
+                    <table class="table-auto min-w-full border border-gray-100 divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr class="bg-gray-100">
+                                <th scope="col"
+                                    class="text-left text-xs font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider">
+                                    ID</th>
+                                <th scope="col"
+                                    class="text-center text-xs font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider">
+                                    OrderTime</th>
+                                <th scope="col"
+                                    class="text-center text-xs font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider">
+                                    Method</th>
+                                <th scope="col"
+                                    class="text-center text-xs font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider">
+                                    Status</th>
+                                <th scope="col"
+                                    class="text-center text-xs font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider">
+                                    Total</th>
+                                <th scope="col"
+                                    class="text-right text-xs font-semibold px-6 py-2 text-gray-700 uppercase tracking-wider">
+                                    Action</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @for(order of allOrders; track order._id) {
+                            <tr>
+                                <td class="px-5 py-3 leading-6 whitespace-nowrap">
+                                    <span class="uppercase text-sm font-medium">#{{order.invoiceNo}}
+                                    </span>
+                                </td>
+                                <td class="px-5 py-3 leading-6 text-center whitespace-nowrap">
+                                    <span class="text-sm">
+                                        {{order.createdAt | date: 'dd/MM/yyyy'}}
+                                    </span>
+                                </td>
+                                <td class="px-5 py-3 leading-6 text-center whitespace-nowrap">
+                                    <span class="text-sm">
+                                        {{order.paymentInfo.paymentMethod}}
+                                    </span>
+                                </td>
+                                <td class="px-5 py-3 leading-6 text-center whitespace-nowrap font-medium text-sm">
+                                    <span class="text-orange-500">
+                                        {{order.status }}
+                                    </span>
+                                </td>
+                                <td class="px-5 py-3 leading-6 text-center whitespace-nowrap">
+                                    <span class="text-sm font-bold">
+                                        {{order.totalPrice | currency}}
+                                    </span>
+                                </td>
+                                <td class="px-5 py-3 whitespace-nowrap text-right text-sm">
+                                    <a class="px-3 py-1 bg-primary-100 text-xs text-primary-600 hover:bg-primary-500 hover:text-white transition-all font-semibold rounded-full"
+                                        routerLink="/order/{{order._id}}">Details
+                                    </a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div class="paginationOrder">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

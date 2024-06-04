@@ -1,20 +1,21 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { DatePipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
-import { OrderService } from '../../../../core/services/order.service';
 import { IOrder } from '../../../../core/models/order.model';
+import { OrderService } from '../../../../core/services/order.service';
 import { CurrencyPipe } from '../../../../core/pipes/currency.pipe';
 
 @Component({
-  selector: 'app-my-order',
+  selector: 'app-order-list',
   standalone: true,
-  imports: [DatePipe, CurrencyPipe, RouterLink],
-  templateUrl: './my-order.component.html',
-  styleUrl: './my-order.component.css'
+  imports: [MatIconModule, RouterLink, DatePipe, CurrencyPipe],
+  templateUrl: './order-list.component.html',
+  styleUrl: './order-list.component.css'
 })
 
-export class MyOrderComponent implements OnInit {
+export class OrderListComponent implements OnInit {
   allOrders!: IOrder[];
 
   private orderService = inject(OrderService);

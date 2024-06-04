@@ -10,7 +10,7 @@ import { UserInformationComponent } from './features/user/user-detail/user-infor
 import { ChangePasswordComponent } from './features/user/user-detail/change-password/change-password.component';
 import { MyOrderComponent } from './features/user/user-detail/my-order/my-order.component';
 import { CheckoutComponent } from './pages/user/checkout/checkout.component';
-import { OrderDetailComponent } from './features/user/user-detail/order-detail/order-detail.component';
+import { OrderDetailComponent as UserOrderDetailComponent } from './features/user/user-detail/order-detail/order-detail.component';
 
 // Admin Components
 import { AdminComponent } from './shared/layouts/admin/admin.component';
@@ -25,6 +25,9 @@ import { ProductEditorComponent } from './features/admin/products/product-editor
 import { UserListComponent } from './features/admin/users/user-list/user-list.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { authGuard } from './core/guards/auth.guard';
+import { OrderComponent as AdminOrderComponent } from './pages/admin/order/order.component';
+import { OrderListComponent } from './features/admin/order/order-list/order-list.component';
+import { OrderDetailComponent } from './features/admin/order/order-detail/order-detail.component';
 
 
 export const routes: Routes = [
@@ -45,7 +48,7 @@ export const routes: Routes = [
                     { path: 'orders', component: MyOrderComponent },
                 ]
             },
-            { path: 'order/:id', component: OrderDetailComponent },
+            { path: 'order/:id', component: UserOrderDetailComponent },
             { path: 'checkout', component: CheckoutComponent },
         ]
     },
@@ -78,6 +81,14 @@ export const routes: Routes = [
                 component: AdminUsersComponent,
                 children: [
                     { path: '', component: UserListComponent },
+                ]
+            },
+            {
+                path: 'orders',
+                component: AdminOrderComponent,
+                children: [
+                    { path: '', component: OrderListComponent },
+                    { path: 'order/:id', component: OrderDetailComponent },
                 ]
             },
         ]

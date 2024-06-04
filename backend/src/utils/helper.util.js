@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const createHttpError = require('http-errors');
 const bcrypt = require('bcrypt');
+const PDFDocument = require('pdfkit');
 
 const createError = (statusCode, message) => {
     throw new createHttpError(statusCode, message);
@@ -98,6 +99,16 @@ const comparePassword = async (password, hashedPassword) => {
     return validPassword;
 };
 
+const buildPDF = (dataCallback, endCallback) => {
+    const doc = new PDFDocument();
+
+    doc.on('data', dataCallback);
+    doc.on('end', endCallback);
+
+    doc.text("hello");
+
+    doc.end();
+};
 
 module.exports = {
     createError,
@@ -105,5 +116,6 @@ module.exports = {
     removeImage,
     generateAccessRefreshToken,
     saveRefreshToken,
-    comparePassword
+    comparePassword,
+    buildPDF
 };

@@ -40,9 +40,7 @@ export class UserListComponent implements OnInit {
       next: (response) => {
         this.users = response.data;
         this.totalRecords = response.data.length;
-        setTimeout(() => {
-          this.isLoading = false;
-        }, 500);
+        this.isLoading = false;
       },
       error: (error) => {
         if (this.users.length === 0) {

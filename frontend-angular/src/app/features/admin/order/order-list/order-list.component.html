@@ -1,0 +1,73 @@
+<div class="pb-10">
+    <div class="lg:flex items-center justify-between mb-4">
+        <h1 class="mb-4 lg:mb-0 text-2xl font-semibold text-stone-800">Orders</h1>
+        <div>
+            <!-- <a routerLink="add"
+                class="flex items-center gap-2 font-semibold text-base py-2 px-2 rounded-md bg-primary-600 text-white">
+                <mat-icon>
+                    <span class="material-symbols-outlined">
+                        add_circle
+                    </span>
+                </mat-icon>
+                Add Product
+            </a> -->
+        </div>
+    </div>
+    <!-- @if(isLoading) {
+    <app-loader></app-loader>
+    }
+    @if(!products.length && !isLoading) {
+    <app-not-found></app-not-found>
+    }
+    @if(!isLoading) { -->
+    <div>
+        <table class="w-full text-left text-gray-600">
+            <thead class="bg-[#f5f5f5] text-sm">
+                <tr>
+                    <th class="uppercase">ID</th>
+                    <th class="uppercase">Date</th>
+                    <th class="uppercase">Customer</th>
+                    <th class="uppercase">Status</th>
+                    <th class="uppercase">Payment Method</th>
+                    <th class="uppercase">Total</th>
+                    <th class="uppercase">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(order of allOrders; track order._id) {
+                <tr>
+                    <td class="flex items-center">
+                        #{{order.invoiceNo}}
+                    </td>
+                    <td>{{order.createdAt | date: 'dd/MM/yyyy'}}</td>
+                    <td>{{order.customerInfo.firstName + ' ' + order.customerInfo.lastName}}</td>
+                    <td>
+                        {{order.status}}
+                        <!-- @if(order.status) {
+                        <span class="text-primary-600">Yes</span>
+                        } @else {
+                        <span class="text-red-600">No</span>
+                        } -->
+                    </td>
+                    <td>{{order.paymentInfo.paymentMethod}}</td>
+                    <td>{{order.totalPrice | currency}}</td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <a routerLink="order/{{order._id}}" class="flex items-center">
+                                <mat-icon class="scale-110">
+                                    <span class="material-symbols-outlined">
+                                        visibility
+                                    </span>
+                                </mat-icon>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <!-- <app-paginator [totalRecords]="totalRecords" [first]="first" [rows]="rows"
+            (pageChangeEvent)="onPageChanged($event)"></app-paginator> -->
+    </div>
+    <!-- } -->
+</div>

@@ -1,6 +1,6 @@
 <div class="pb-10">
     <div class="lg:flex items-center justify-between mb-4">
-        <h1 class="mb-4 lg:mb-0 text-2xl font-medium text-stone-800">Users</h1>
+        <h1 class="mb-4 lg:mb-0 text-2xl font-semibold text-stone-800">Users</h1>
         <div>
             <!-- <a routerLink="add"
                 class="flex items-center gap-2 font-semibold text-base py-2 px-2 rounded-md bg-primary-600 text-white">
@@ -31,7 +31,7 @@
                     <th class="uppercase">Email</th>
                     <th class="uppercase">Phone</th>
                     <th class="uppercase">Address</th>
-                    <th class="uppercase">Actions</th>
+                    <!-- <th class="uppercase">Actions</th> -->
                 </tr>
             </thead>
             <tbody>
@@ -42,9 +42,9 @@
                         <img src="{{user.avatar}}" alt="{{user.name}}" class="w-10 h-10 rounded-md">
                     </td>
                     <td>{{user.email}}</td>
-                    <td>{{user.phone}}</td>
-                    <td>{{user.address}}</td>
-                    <td>
+                    <td>{{user.phone ? user.phone : 'Chưa có'}}</td>
+                    <td>{{user.address ? user.address : 'Chưa có'}}</td>
+                    <!-- <td>
                         <div class="flex items-center gap-3">
                             <button class="flex items-center">
                                 <mat-icon class="scale-110">
@@ -54,7 +54,7 @@
                                 </mat-icon>
                             </button>
                         </div>
-                    </td>
+                    </td> -->
                 </tr>
                 }
             </tbody>

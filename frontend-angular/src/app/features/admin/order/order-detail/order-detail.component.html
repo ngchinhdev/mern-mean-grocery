@@ -1,0 +1,135 @@
+<div class="container mx-auto h-full">
+    <div class="mb-6">
+        <div class="flex items-center mb-2">
+            <h3 class="font-semibold text-2xl">
+                <span>Order </span>
+                <span class="ltr:ml-2 rtl:mr-2">#95954</span>
+            </h3>
+        </div>
+        <span class="flex items-center">
+            <mat-icon>
+                <span class="material-symbols-outlined">
+                    date_range
+                </span>
+            </mat-icon>
+            <span class="ms-2 rtl:mr-1">Fri 04-Mar-2022, 07:15 PM</span>
+        </span>
+    </div>
+    <div class="xl:flex gap-6">
+        <div class="w-full">
+            <div class="mb-4 border-0 card-border" role="presentation">
+                <div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-start">
+                            <thead>
+                                <tr>
+                                    <th colspan="1">Product</th>
+                                    <th colspan="1">Price</th>
+                                    <th colspan="1">Quantity</th>
+                                    <th colspan="1">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(item of order.orderItems; track item.product.name) {
+                                <tr>
+                                    <td>
+                                        <div class="flex items-center gap-3">
+                                            <span class="avatar avatar-rounded"
+                                                style="width: 50px; height: 50px; min-width: 50px; line-height: 50px; font-size: 12px;">
+                                                <img class="avatar-img avatar-rounded"
+                                                    [src]="imageUrl + '/' + item.product.images[0]" loading="lazy">
+                                            </span>
+                                            <div class="ltr:ml-2 rtl:mr-2">
+                                                <h6>{{item.product.name}}</h6>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td><span>{{item.product.price | currency}}</span></td>
+                                    <td>{{item.quantity}}</td>
+                                    <td><span>{{(item.product.price * item.quantity) | currency}}</span></td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="xl:max-w-[360px] w-full">
+            <div class="card card-border" role="presentation">
+                <div class="card-body">
+                    <h5 class="mb-2 text-2xl font-semibold">Customer</h5>
+                    <a class="group flex items-center justify-between" href="/app/crm/customer-details?id=11">
+                        <div class="flex items-center">
+                            <div class="ltr:ml-2 rtl:mr-2">
+                                <div class="font-semibold group-hover:text-gray-900 group-hover:dark:text-gray-100">
+                                    Full Name: {{order.customerInfo.firstName + ' ' + order.customerInfo.lastName}}
+                                </div>
+                                <span>
+                                    <span class="font-semibold">11 </span>previous orders
+                                </span>
+                            </div>
+                        </div>
+                    </a>
+                    <hr class="my-5">
+                    <span class="flex text-gray-500 items-center gap-2 mb-4">
+                        <mat-icon>
+                            <span class="material-symbols-outlined">
+                                mail
+                            </span>
+                        </mat-icon>
+                        <span class="font-semibold">{{order.customerInfo.email}}</span>
+                    </span>
+                    <span class="flex text-gray-500 items-center gap-2">
+                        <mat-icon>
+                            <span class="material-symbols-outlined">
+                                call
+                            </span>
+                        </mat-icon>
+                        <span class="font-semibold">{{order.customerInfo.phone}}</span>
+                    </span>
+                    <hr class="my-5">
+                    <h6 class="mb-4 flex items-center gap-2 text-gray-500">
+                        <mat-icon>
+                            <span class="material-symbols-outlined">
+                                location_on
+                            </span>
+                        </mat-icon>
+                        <span>Shipping Address</span>
+                    </h6>
+                    <address class="not-italic text-gray-500">
+                        <div class="mb-1">Zip Code: {{order.shippingInfo.zipCode}}</div>
+                        <div class="mb-1">Street: {{order.shippingInfo.address}}</div>
+                        <div class="mb-1">City: {{order.shippingInfo.city}}</div>
+                        <div>Country: {{order.shippingInfo.country}}</div>
+                    </address>
+                    <div class="mt-4" role="presentation">
+                        <div class="card-body">
+                            <h5 class="mb-2 text-2xl font-semibold">Payment Summary</h5>
+                            <ul class="text-gray-500 pb-20">
+                                <li class="flex items-center justify-between mb-3">
+                                    <span>Discount: </span>
+                                    <span class="font-semibold">
+                                        <span>{{order.discount | currency}}</span>
+                                    </span>
+                                </li>
+                                <li class="flex items-center justify-between mb-3">
+                                    <span>Delivery fee: </span>
+                                    <span class="font-semibold">
+                                        <span>{{order.shippingInfo.cost! | currency}}</span>
+                                    </span>
+                                </li>
+                                <li class="flex items-center justify-between">
+                                    <span>Total: </span>
+                                    <span class="font-semibold">
+                                        <span>{{(order.totalPrice + order.shippingInfo.cost!) | currency}}</span>
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

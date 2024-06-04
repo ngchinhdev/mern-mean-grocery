@@ -1,1 +1,162 @@
-<p>Dashboard Page!</p>
+<div class="flex flex-col gap-4 h-full pb-20">
+    <div class="lg:flex items-center justify-between mb-4 gap-3">
+        <div class="mb-4 lg:mb-0">
+            <h3 class="text-2xl font-semibold">Sales Overview</h3>
+            <p>View your current sales &amp; summary</p>
+        </div>
+        <div class="flex flex-col lg:flex-row lg:items-center gap-3">
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="rounded-lg p-5 border-2 hover:border-orange-500 transition duration-150 ease-linear border-primary-500"
+            role="presentation">
+            <div class="card-body">
+                <h6 class="font-semibold mb-4 text-lg">Revenue</h6>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-2xl mb-2"><span>{{revenue | currency}}</span></h3>
+                        <p>Latest update <span class="font-semibold">21 Jan</span></p>
+                    </div>
+                    <div>
+                        <mat-icon class="scale-[200%] pe-10">
+                            <span class="material-symbols-outlined text-gray-500">
+                                payments
+                            </span>
+                        </mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg p-5 border-2 hover:border-orange-500 transition duration-150 ease-linear border-primary-500"
+            role="presentation">
+            <div class="card-body">
+                <h6 class="font-semibold mb-4 text-lg">Orders</h6>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-2xl mb-2"><span>{{orders.length}}</span></h3>
+                        <p>Latest update <span class="font-semibold">21 Jan</span></p>
+                    </div>
+                    <div>
+                        <mat-icon class="scale-[200%] pe-10">
+                            <span class="material-symbols-outlined text-gray-500">
+                                receipt_long
+                            </span>
+                        </mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="rounded-lg p-5 border-2 hover:border-orange-500 transition duration-150 ease-linear border-primary-500"
+            role="presentation">
+            <div class="card-body">
+                <h6 class="font-semibold mb-4 text-lg">Products</h6>
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-2xl mb-2"><span>{{products.length}}</span></h3>
+                        <p>Latest update <span class="font-semibold">21 Jan</span></p>
+                    </div>
+                    <div>
+                        <mat-icon class="scale-[200%] pe-10">
+                            <span class="material-symbols-outlined text-gray-500">
+                                egg
+                            </span>
+                        </mat-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="card lg:col-span-2 card-border" role="presentation">
+            <div
+                class="border-2 hover:border-orange-500 transition duration-150 ease-linear border-primary-500 rounded-lg p-5">
+                <div class="flex items-center justify-between mb-6">
+                    <h4 class="font-bold text-xl">Latest Orders</h4>
+                    <a routerLink="/admin/orders"
+                        class="hover:bg-gray-50 transition-all rounded-lg border-gray-300 border font-medium px-3 py-2">
+                        View Orders
+                    </a>
+                </div>
+                <div class="w-full">
+                    <table class="w-full">
+                        <thead class="bg-[#f5f5f5]">
+                            <tr>
+                                <th colspan="1">Order</th>
+                                <th colspan="1">Status</th>
+                                <th colspan="1">Date</th>
+                                <th colspan="1">Customer</th>
+                                <th colspan="1">Summary</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(order of orders.slice(0, 10); track order._id) {
+                            <tr>
+                                <td>
+                                    <span
+                                        class="cursor-pointer select-none font-semibold hover:text-indigo-600">#{{order.invoiceNo}}</span>
+                                </td>
+                                <td>
+                                    <div class="flex items-center">
+                                        @if(order.paymentInfo.isPaid) {
+                                        <span class="badge-dot bg-primary-600"></span>
+                                        <span class="ml-2 rtl:mr-2 capitalize font-semibold text-primary-600">
+                                            Paid
+                                        </span>
+                                        } @else {
+                                        <span class="badge-dot bg-orange-500"></span>
+                                        <span class="ml-2 rtl:mr-2 capitalize font-semibold text-orange-500">
+                                            Pending
+                                        </span>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <span>{{order.createdAt | date: 'dd/MM/yyyy'}}</span>
+                                </td>
+                                <td>{{order.customerInfo.firstName + ' ' + order.customerInfo.firstName}}</td>
+                                <td>
+                                    <span>{{order.totalPrice | currency}}</span>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="border-2 hover:border-orange-500 transition duration-150 ease-linear border-primary-500 rounded-lg p-5"
+            role="presentation">
+            <div class="card-body">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="font-bold text-xl">Top Selling</h4>
+                    <a routerLink="/admin/products"
+                        class="rounded-lg border-gray-300 hover:bg-gray-50 transition-all border font-medium px-3 py-2">View
+                        Products
+                    </a>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-[#f5f5f5]">
+                            <tr>
+                                <th colspan="1">Product</th>
+                                <th colspan="1">Sold</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="flex items-center gap-2"><span
+                                            class="avatar avatar-rounded avatar-md"><img
+                                                class="avatar-img avatar-rounded" src="/img/products/product-1.jpg"
+                                                loading="lazy"></span><span class="font-semibold">Luminaire Giotto
+                                            Headphones</span></div>
+                                </td>
+                                <td>252</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+thead>tr>th {
+    padding: 1.3rem 1.5rem;
+    line-height: 1rem;
+    font-weight: 600;
+    letter-spacing: .05em;
+    border-bottom: 1px solid #e5e5e5;
+    --tw-text-opacity: 1;
+    text-align: left;
+}
+
+tbody>tr>td {
+    padding: 1.1rem 1.5rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+tbody>tr:hover {
+    background-color: #f5f5f5;
+    transition: all 0.2s;
+}
+
+.badge-dot {
+    height: .5rem;
+    width: .5rem;
+    border-radius: 9999px;
+    --tw-bg-opacity: 1;
+    background-color: rgb(239 68 68 / var(--tw-bg-opacity));
+    font-size: .75rem;
+    line-height: 1rem;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+}

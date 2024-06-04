@@ -59,10 +59,10 @@
             <div class="card card-border" role="presentation">
                 <div class="card-body">
                     <h5 class="mb-2 text-2xl font-semibold">Customer</h5>
-                    <a class="group flex items-center justify-between" href="/app/crm/customer-details?id=11">
+                    <span class="group flex items-center justify-between">
                         <div class="flex items-center">
                             <div class="ltr:ml-2 rtl:mr-2">
-                                <div class="font-semibold group-hover:text-gray-900 group-hover:dark:text-gray-100">
+                                <div class="font-semibold">
                                     Full Name: {{order.customerInfo.firstName + ' ' + order.customerInfo.lastName}}
                                 </div>
                                 <span>
@@ -70,7 +70,7 @@
                                 </span>
                             </div>
                         </div>
-                    </a>
+                    </span>
                     <hr class="my-5">
                     <span class="flex text-gray-500 items-center gap-2 mb-4">
                         <mat-icon>

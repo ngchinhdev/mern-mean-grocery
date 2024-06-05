@@ -15,7 +15,7 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h3 class="font-bold text-2xl mb-2"><span>{{revenue | currency}}</span></h3>
-                        <p>Latest update <span class="font-semibold">21 Jan</span></p>
+                        <p>Latest update <span class="font-semibold">{{ currentDate | date: 'dd MMM'}}</span></p>
                     </div>
                     <div>
                         <mat-icon class="scale-[200%] pe-10">
@@ -34,7 +34,7 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h3 class="font-bold text-2xl mb-2"><span>{{orders.length}}</span></h3>
-                        <p>Latest update <span class="font-semibold">21 Jan</span></p>
+                        <p>Latest update <span class="font-semibold">{{currentDate | date: 'dd MMM'}}</span></p>
                     </div>
                     <div>
                         <mat-icon class="scale-[200%] pe-10">
@@ -53,7 +53,7 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h3 class="font-bold text-2xl mb-2"><span>{{products.length}}</span></h3>
-                        <p>Latest update <span class="font-semibold">21 Jan</span></p>
+                        <p>Latest update <span class="font-semibold">{{currentDate | date: 'dd MMM'}}</span></p>
                     </div>
                     <div>
                         <mat-icon class="scale-[200%] pe-10">
@@ -143,16 +143,22 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @for(item of bestSelling; track item._id) {
                             <tr>
                                 <td>
-                                    <div class="flex items-center gap-2"><span
-                                            class="avatar avatar-rounded avatar-md"><img
-                                                class="avatar-img avatar-rounded" src="/img/products/product-1.jpg"
-                                                loading="lazy"></span><span class="font-semibold">Luminaire Giotto
-                                            Headphones</span></div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="avatar avatar-rounded avatar-md w-[100px]">
+                                            <img class="avatar-img avatar-rounded pe-4"
+                                                [src]="productUrlImg + '/' + item.productDetails.images[0]"
+                                                loading="lazy">
+                                        </span>
+                                        <span class="font-semibold text-gray-500 text-lg">{{item.productDetails.name}}
+                                        </span>
+                                    </div>
                                 </td>
-                                <td>252</td>
+                                <td>{{item.totalQuantity}}</td>
                             </tr>
+                            }
                         </tbody>
                     </table>
                 </div>

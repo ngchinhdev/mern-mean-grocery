@@ -5,6 +5,7 @@ import { Pagination, Autoplay } from 'swiper/modules';
 
 import { SwiperDirective } from '../../../../../core/directives/swiper.directive';
 import { ButtonComponent } from '../../../../../shared/components/button/button.component';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home-hero-swiper',
@@ -13,7 +14,8 @@ import { ButtonComponent } from '../../../../../shared/components/button/button.
   imports: [
     CommonModule,
     SwiperDirective,
-    ButtonComponent
+    ButtonComponent,
+    RouterLink
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './hero-swiper.component.html',
@@ -24,19 +26,19 @@ export class HeroSwiperComponent {
   sliders = [
     {
       image: '../../../../assets/slider-2_o6aezc.webp',
-      title: 'Welcome to our store',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      title: 'Best Different Type of Grocery Store',
+      description: 'Quickly aggregate empowered networks after emerging products...'
     },
     {
-      image: '../../../../assets/slider-2_o6aezc.webp',
-      title: 'Welcome to our store',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+      image: '../../../../assets/slider-1_rl8qdc.webp',
+      title: 'The Best Quality Products Guaranteed!',
+      description: 'The Best Quality Products Guaranteed!'
     },
     {
-      image: '../../../../assets/slider-2_o6aezc.webp',
-      title: 'Welcome to our store',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-    }
+      image: '../../../../assets/slider-3_o6aezc.webp',
+      title: 'Quality Freshness Guaranteed!',
+      description: 'Intrinsicly fashion performance based products rather than accurate benefits...'
+    },
   ];
 
   public config: SwiperOptions = {

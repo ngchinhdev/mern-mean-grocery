@@ -58,6 +58,77 @@ const getOrderById = async (req, res, next) => {
     }
 };
 
+const getOrdersByUserId = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const order = await OrderModel.find({ userId: id }).populate({
+            path: 'orderItems.product',
+            select: 'name price images'
+        });
+
+        if (!order) {
+            createError(404, "Order not found");
+        }
+
+        return res.status(200).json({
+            message: 'Order retrieved successfully.',
+            data: order,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const getBestSellingProducts = async (req, res, next) => {
+    try {
+        const topSellingProducts = await OrderModel.aggregate([
+            { $match: { 'paymentInfo.isPaid': true } },
+            { $unwind: "$orderItems" },
+            {
+                $group: {
+                    _id: "$orderItems.product",
+                    totalQuantity: { $sum: "$orderItems.quantity" }
+                }
+            },
+            { $sort: { totalQuantity: -1 } },
+            { $limit: 10 },
+            {
+                $lookup: {
+                    from: 'products',
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'productDetails'
+                }
+            },
+            { $unwind: "$productDetails" },
+            {
+                $project: {
+                    _id: 1,
+                    totalQuantity: 1,
+                    productDetails: {
+                        name: 1,
+                        price: 1,
+                        images: 1
+                    }
+                }
+            }
+        ]);
+
+        if (!topSellingProducts.length) {
+            createError(404, "No products found");
+        }
+
+        return res.status(200).json({
+            message: 'Orders retrieved successfully.',
+            data: topSellingProducts,
+        });
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+};
+
 const createOrder = async (req, res, next) => {
     try {
         validationError(req, res);
@@ -67,6 +138,23 @@ const createOrder = async (req, res, next) => {
         return res.status(200).json({
             message: 'Order created successfully.',
             data: newOrder,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const cancelOrder = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+
+        const updatedOrder = await OrderModel.findByIdAndUpdate(id, {
+            status: "Cancelled"
+        }, { new: true });
+
+        return res.status(200).json({
+            message: 'Order updated successfully.',
+            data: updatedOrder,
         });
     } catch (error) {
         next(error);
@@ -127,6 +215,9 @@ const createInvoice = async (req, res, next) => {
 module.exports = {
     getAllOrders,
     getOrderById,
+    getOrdersByUserId,
     createOrder,
+    cancelOrder,
+    getBestSellingProducts,
     createInvoice
 };

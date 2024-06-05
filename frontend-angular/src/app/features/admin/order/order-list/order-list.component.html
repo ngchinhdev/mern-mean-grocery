@@ -13,13 +13,13 @@
             </a> -->
         </div>
     </div>
-    <!-- @if(isLoading) {
+    @if(isLoading) {
     <app-loader></app-loader>
     }
-    @if(!products.length && !isLoading) {
+    @if(!allOrders?.length && !isLoading) {
     <app-not-found></app-not-found>
     }
-    @if(!isLoading) { -->
+    @if(!isLoading) {
     <div>
         <table class="w-full text-left text-gray-600">
             <thead class="bg-[#f5f5f5] text-sm">
@@ -66,8 +66,8 @@
                 }
             </tbody>
         </table>
-        <!-- <app-paginator [totalRecords]="totalRecords" [first]="first" [rows]="rows"
-            (pageChangeEvent)="onPageChanged($event)"></app-paginator> -->
+        <app-paginator [totalRecords]="totalRecords" [first]="first" [rows]="rows"
+            (pageChangeEvent)="onPageChanged($event)"></app-paginator>
     </div>
-    <!-- } -->
+    }
 </div>

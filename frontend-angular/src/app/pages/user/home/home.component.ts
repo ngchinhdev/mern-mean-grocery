@@ -27,7 +27,12 @@ export class HomeComponent implements OnInit {
                 this.authService.getUserProfile().subscribe({
                     next: (res) => {
                         this.authService.setUserProfile(res.data);
-                        this.router.navigate(['/user/information']);
+                        if (res.data.isAdmin) {
+                            this.router.navigate(['/admin']);
+
+                        } else {
+                            this.router.navigate(['/user/information']);
+                        }
                     }
                 });
             }

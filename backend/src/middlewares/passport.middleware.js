@@ -35,7 +35,7 @@ const passportMiddleWare = app => {
                     name: profile._json.name,
                     email: profile._json.email,
                     avatar: profile._json.picture
-                }, '123456789');
+                }, Date.now().toString().slice(-10));
             }
             callback(null, callbackProfile);
         })

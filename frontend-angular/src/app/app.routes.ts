@@ -28,6 +28,7 @@ import { authGuard } from './core/guards/auth.guard';
 import { OrderComponent as AdminOrderComponent } from './pages/admin/order/order.component';
 import { OrderListComponent } from './features/admin/order/order-list/order-list.component';
 import { OrderDetailComponent } from './features/admin/order/order-detail/order-detail.component';
+import { adminGuard } from './core/guards/admin.guard';
 
 
 export const routes: Routes = [
@@ -46,14 +47,15 @@ export const routes: Routes = [
                     { path: 'information', component: UserInformationComponent },
                     { path: 'change-password', component: ChangePasswordComponent },
                     { path: 'orders', component: MyOrderComponent },
+                    { path: 'orders/order/:id', component: UserOrderDetailComponent },
                 ]
             },
-            { path: 'order/:id', component: UserOrderDetailComponent },
             { path: 'checkout', component: CheckoutComponent },
         ]
     },
     {
         path: 'admin',
+        canActivateChild: [adminGuard],
         component: AdminComponent,
         children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },

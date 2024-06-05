@@ -82,8 +82,13 @@ export class CheckoutFormComponent implements OnInit {
       this.orderService.createOrder(payload).subscribe({
         next: (res) => {
           this.cartService.clearCart();
-          this.toast.success("You have placed your order successfully");
-          this.router.navigate([`/order/${res.data._id}`]);
+          if (this.user) {
+            this.toast.success("You have placed your order successfully");
+            this.router.navigate([`/order/${res.data._id}`]);
+          } else {
+            this.toast.success("Order successfully. Please check your email to see the invoice.");
+            this.router.navigate([`/`]);
+          }
         }
       });
     }

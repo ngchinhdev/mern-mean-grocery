@@ -22,7 +22,10 @@ export const API_ENDPOINTS = {
     ORDER_ENDPOINTS: {
         GET_ALL_ORDERS: `${API_ENDPOINT_ROOT_URL}/orders`,
         GET_ORDER_BY_ID: `${API_ENDPOINT_ROOT_URL}/orders/order`,
+        GET_TOP_SELLING: `${API_ENDPOINT_ROOT_URL}/orders/bestselling`,
+        GET_ORDER_BY_USER_ID: `${API_ENDPOINT_ROOT_URL}/orders/user`,
         CREATE_ORDER: `${API_ENDPOINT_ROOT_URL}/orders/add`,
+        CANCEL_ORDER: `${API_ENDPOINT_ROOT_URL}/orders/cancel`,
     },
     USERS_ENDPOINTS: {
         GET_ALL_USERS: `${API_ENDPOINT_ROOT_URL}/users`,
@@ -32,6 +35,8 @@ export const API_ENDPOINTS = {
         LOGOUT_USER: `${API_ENDPOINT_ROOT_URL}/auth/logout`,
         UPDATE_USER_PROFILE: `${API_ENDPOINT_ROOT_URL}/auth/update-profile`,
         CHANGE_PASSWORD: `${API_ENDPOINT_ROOT_URL}/auth/change-password`,
+        CHANGE_ROLE: `${API_ENDPOINT_ROOT_URL}/auth/change-role`,
+        FORGOT_PASSWORD: `${API_ENDPOINT_ROOT_URL}/auth/forgot-password`,
         REFRESH_TOKEN: `${API_ENDPOINT_ROOT_URL}/auth/refresh-token`,
     }
 };

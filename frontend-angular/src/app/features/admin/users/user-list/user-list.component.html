@@ -31,7 +31,7 @@
                     <th class="uppercase">Email</th>
                     <th class="uppercase">Phone</th>
                     <th class="uppercase">Address</th>
-                    <!-- <th class="uppercase">Actions</th> -->
+                    <th class="uppercase">Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,22 +39,19 @@
                 <tr>
                     <td>{{user.name}}</td>
                     <td>
-                        <img src="{{user.avatar}}" alt="{{user.name}}" class="w-10 h-10 rounded-md">
+                        <img [src]="user.avatar.startsWith('https://') ? user.avatar : imageUrl + '/' + user.avatar"
+                            alt="{{user.name}}" class="w-10 h-10 rounded-md">
                     </td>
                     <td>{{user.email}}</td>
                     <td>{{user.phone ? user.phone : 'Not yet'}}</td>
                     <td>{{user.address ? user.address : 'Not yet'}}</td>
-                    <!-- <td>
-                        <div class="flex items-center gap-3">
-                            <button class="flex items-center">
-                                <mat-icon class="scale-110">
-                                    <span class="material-symbols-outlined text-red-500">
-                                        delete_forever
-                                    </span>
-                                </mat-icon>
-                            </button>
-                        </div>
-                    </td> -->
+                    <td>
+                        <select name="role" id="role" role="button" (change)="onChangeRole($event, user._id)"
+                            class="border border-primary-600 py-1 px-2 rounded-md active:border-primary-700">
+                            <option value="1" [selected]="user.isAdmin">Admin</option>
+                            <option value="0" [selected]="!user.isAdmin">User</option>
+                        </select>
+                    </td>
                 </tr>
                 }
             </tbody>

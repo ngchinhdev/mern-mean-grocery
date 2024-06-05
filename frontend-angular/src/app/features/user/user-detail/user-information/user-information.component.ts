@@ -6,6 +6,7 @@ import { InputComponent } from '../../../../shared/components/input/input.compon
 import { AuthService } from '../../../../core/services/auth.service';
 import { PUBLIC_ENDPOINTS } from '../../../../core/constants/urls';
 import { ToastrService } from 'ngx-toastr';
+import { CustomValidators } from '../../../../core/validators/custom.validator';
 
 @Component({
   selector: 'app-user-information',
@@ -28,14 +29,14 @@ export class UserInformationComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required]),
-      phone: new FormControl(),
+      phone: new FormControl('', [CustomValidators.phone]),
       address: new FormControl(),
       avatar: new FormControl(),
     });
 
     this.authService.userProfile$.subscribe(data => {
       if (data) {
-        this.userAvatar = PUBLIC_ENDPOINTS.IMAGE_USERS + '/' + data.avatar;
+        this.userAvatar = data.avatar.startsWith('https://') ? data.avatar : PUBLIC_ENDPOINTS.IMAGE_USERS + '/' + data.avatar;
         this.userId = data._id;
         this.form.patchValue(data);
       }

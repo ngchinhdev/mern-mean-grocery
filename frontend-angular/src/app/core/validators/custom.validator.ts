@@ -11,6 +11,10 @@ export class CustomValidators {
     static phone(control: AbstractControl): ValidationErrors | null {
         const phoneRegex = /^[0-9\+]{1,}[0-9\-]{3,15}$/;
 
+        if (!control.value) {
+            return null;
+        }
+
         const valid = phoneRegex.test(control.value);
 
         return valid ? null : { phone: true };

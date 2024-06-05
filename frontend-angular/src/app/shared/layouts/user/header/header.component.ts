@@ -40,25 +40,19 @@ export class HeaderComponent implements OnInit {
     ) { }
 
     ngOnInit(): void {
-        this.authService.initializeAccessToken();
-        this.getUserProfile();
-        this.authService.userProfile$.subscribe(data => this.userProfile = data);
+        this.authService.userProfile$.subscribe(data => {
+            this.userProfile = data;
+            if (data) {
+                this.avatarUrl = data.avatar.startsWith('https://') ? data.avatar : PUBLIC_ENDPOINTS.IMAGE_USERS + '/' + data.avatar;
+            }
+        });
         this.getAllCategories();
     }
 
     getAllCategories() {
         this.categoriesService.getAllCategories().subscribe({
             next: (response) => {
-                console.log(response.data);
                 this.categories = response.data;
-            }
-        });
-    }
-
-    getUserProfile() {
-        this.authService.getUserProfile().subscribe({
-            next: (res) => {
-                this.authService.setUserProfile(res.data);
             }
         });
     }

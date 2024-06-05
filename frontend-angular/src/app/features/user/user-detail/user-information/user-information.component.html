@@ -72,8 +72,8 @@
                         class="text-input placeholder-body h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 pl-5 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12"
                         formControlName="phone" />
                 </div>
-                @if(form.get('phone')?.hasError('required') && form.get('phone')?.touched) {
-                <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Phone number is required</small>
+                @if(form.get('phone')?.hasError('phone') && form.get('phone')?.touched) {
+                <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Phone number is not valid</small>
                 }
             </div>
         </div>

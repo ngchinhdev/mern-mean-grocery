@@ -129,6 +129,20 @@ export class AuthService {
     );
   }
 
+  changeRole(id: string, isAdmin: boolean): Observable<IResponseDataCommon<IUser>> {
+    return this.http.put<IResponseDataCommon<IUser>>(
+      API_ENDPOINTS.USERS_ENDPOINTS.CHANGE_ROLE + '/' + id,
+      { isAdmin },
+    );
+  }
+
+  forgotPassword(email: string): Observable<IResponseDataCommon<IUser>> {
+    return this.http.put<IResponseDataCommon<IUser>>(
+      API_ENDPOINTS.USERS_ENDPOINTS.FORGOT_PASSWORD + '/' + email,
+      {},
+    );
+  }
+
   refreshToken(): Observable<any> {
     return this.http.post(
       API_ENDPOINTS.USERS_ENDPOINTS.REFRESH_TOKEN,

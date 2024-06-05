@@ -42,10 +42,20 @@ router.put(
 );
 
 router.put(
-    '/change-password/:id',
+    '/change-password',
     authMiddleware.verifyToken,
     authValidator.userChangePasswordValidator,
     authController.changePassword
+);
+
+router.put(
+    '/change-role/:id',
+    authController.changeRole
+);
+
+router.put(
+    '/forgot-password/:email',
+    authController.forgotPassword
 );
 
 router.post(

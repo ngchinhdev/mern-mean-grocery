@@ -32,13 +32,25 @@ interface ICreateOrderItem {
     product: string;
 }
 
+export type TOrderStatus = 'Pending' | 'Confirmed' | 'Delivered' | 'Cancelled';
+
+export interface IBestSelling {
+    _id: string;
+    totalQuantity: number;
+    productDetails: {
+        name: string;
+        price: number;
+        images: string[];
+    };
+}
+
 export interface ICreateOrder {
     userId: string | null;
     customerInfo: ICustomerInfo;
     shippingInfo: IShippingInfo;
     paymentInfo: IPaymentInfo;
     discount?: number;
-    status?: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
+    status?: TOrderStatus;
     orderItems: ICreateOrderItem[];
     totalPrice: number;
 }

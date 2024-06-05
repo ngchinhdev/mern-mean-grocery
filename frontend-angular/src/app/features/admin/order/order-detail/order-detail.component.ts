@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { IOrder } from '../../../../core/models/order.model';
 import { OrderService } from '../../../../core/services/order.service';
@@ -10,7 +11,7 @@ import { CurrencyPipe } from '../../../../core/pipes/currency.pipe';
 @Component({
   selector: 'app-order-detail',
   standalone: true,
-  imports: [MatIconModule, CurrencyPipe],
+  imports: [MatIconModule, CurrencyPipe, DatePipe],
   templateUrl: './order-detail.component.html',
   styleUrl: './order-detail.component.css'
 })

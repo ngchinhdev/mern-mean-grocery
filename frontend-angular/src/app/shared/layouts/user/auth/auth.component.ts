@@ -91,7 +91,11 @@ export class AuthComponent implements OnInit {
         ).subscribe({
           next: (response) => {
             this.authService.setUserProfile(response.data);
-            this.router.navigate(['/user/information']);
+            if (response.data.isAdmin) {
+              this.router.navigate(['/admin']);
+            } else {
+              this.router.navigate(['/user/information']);
+            }
           },
           error: (error) => {
             console.error(error);
@@ -117,7 +121,15 @@ export class AuthComponent implements OnInit {
       }
 
       if (this.currentForm === AuthFormType.FORGOT_PASSWORD) {
-        // Forgot Password
+        this.authService.forgotPassword(this.form.value.email).subscribe({
+          next: (response) => {
+            console.log(response);
+            this.toast.success("Please check your email to recover your password");
+          },
+          error: (error) => {
+            console.error(error);
+          }
+        });
       }
     }
   }

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { CategorySwiperComponent } from '../../../features/user/products/category-swiper/category-swiper.component';
@@ -8,21 +8,22 @@ import { IProduct } from '../../../core/models/products.model';
 import { ProductsService } from '../../../core/services/products.service';
 import { ProductItemComponent } from '../../../shared/components/product-item/product-item.component';
 import { NotFoundComponent } from '../../../shared/components/not-found/not-found.component';
+import { CategoriesService } from '../../../core/services/categories.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CategorySwiperComponent, FilterBarComponent, ProductItemComponent, NotFoundComponent],
+  imports: [CategorySwiperComponent, FilterBarComponent, ProductItemComponent, NotFoundComponent, RouterLink],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css'
 })
 
 export class ProductsComponent implements OnInit, OnDestroy {
   productsFilter!: IProduct[];
+  private routeSub!: Subscription;
 
   private router = inject(ActivatedRoute);
   private productServices = inject(ProductsService);
-  private routeSub!: Subscription;
 
   ngOnInit(): void {
     this.routeSub = this.router.queryParams.subscribe(params => {
@@ -32,6 +33,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
       if (params['name']) {
         this.getProductBySearchName(params['name']);
+      }
+
+      if (!Object.keys(params).length) {
+        this.getAllProducts();
       }
     });
   }
@@ -63,4 +68,16 @@ export class ProductsComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  getAllProducts() {
+    this.productServices.getAllProducts().subscribe({
+      next: (response) => {
+        this.productsFilter = response.data;
+      },
+      error: () => {
+        this.productsFilter = [];
+      }
+    });
+  }
+
 }

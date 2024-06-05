@@ -28,6 +28,7 @@ const sendEmail = async (email, subject, text) => {
             text: text
         });
     } catch (error) {
+        console.log(error);
         createError(500, 'Email can not be sent.');
     }
 };
@@ -99,6 +100,13 @@ const comparePassword = async (password, hashedPassword) => {
     return validPassword;
 };
 
+const hashPassword = async (password) => {
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    return hashedPassword;
+};
+
 const buildPDF = (dataCallback, endCallback) => {
     const doc = new PDFDocument();
 
@@ -117,5 +125,6 @@ module.exports = {
     generateAccessRefreshToken,
     saveRefreshToken,
     comparePassword,
+    hashPassword,
     buildPDF
 };

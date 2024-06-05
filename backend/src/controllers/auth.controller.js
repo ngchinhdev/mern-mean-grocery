@@ -1,17 +1,8 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
 
 const UserModel = require('../models/user.model');
 const { validationError } = require('../utils/validation.util');
-const { createError, generateAccessToken, generateRefreshToken, saveRefreshToken, generateAccessRefreshToken, removeImage, comparePassword } = require('../utils/helper.util');
-
-const hashPassword = async (password) => {
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    return hashedPassword;
-};
+const { createError, saveRefreshToken, generateAccessRefreshToken, removeImage, comparePassword, hashPassword, sendEmail } = require('../utils/helper.util');
 
 const register = async (req, res, next) => {
     try {
@@ -167,7 +158,7 @@ const updateProfile = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        const { id } = req.user.id;
 
         const hashedPassword = await hashPassword(req.body.newPassword);
 
@@ -179,6 +170,53 @@ const changePassword = async (req, res, next) => {
             message: 'User password updated successfully.',
             totalRecords: 1,
             data: updatedUser
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const changeRole = async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { isAdmin } = req.body;
+
+        const updatedUser = await UserModel.findByIdAndUpdate(id, {
+            isAdmin: isAdmin
+        }, { new: true });
+
+        if (!updatedUser) {
+            createError(404, "User not found");
+        }
+
+        return res.status(200).json({
+            message: 'User role updated successfully.',
+            totalRecords: 1,
+            data: updatedUser
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+const forgotPassword = async (req, res, next) => {
+    try {
+        const { email } = req.params;
+
+        const passCode = Date.now().toString().slice(-10);
+        const hashedPassword = await hashPassword(passCode);
+
+        await sendEmail(
+            email,
+            "RECOVER YOUR PASSWORD",
+            "Your new password is here: " + passCode
+            + " .Please use it to change your password in profile."
+        );
+
+        await UserModel.findOneAndUpdate({ email: email }, { password: hashedPassword });
+
+        return res.status(200).json({
+            message: 'Email sent.',
         });
     } catch (error) {
         next(error);
@@ -215,5 +253,7 @@ module.exports = {
     refreshToken,
     googleCallback,
     updateProfile,
+    forgotPassword,
+    changeRole,
     changePassword
 };

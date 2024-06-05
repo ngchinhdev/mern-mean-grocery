@@ -1,13 +1,14 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 
-import { IOrder } from '../../../core/models/order.model';
+import { IBestSelling, IOrder } from '../../../core/models/order.model';
 import { IProduct } from '../../../core/models/products.model';
 import { OrderService } from '../../../core/services/order.service';
 import { ProductsService } from '../../../core/services/products.service';
 import { CurrencyPipe } from '../../../core/pipes/currency.pipe';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { PUBLIC_ENDPOINTS } from '../../../core/constants/urls';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,12 +22,16 @@ export class DashboardComponent implements OnInit {
   orders!: IOrder[];
   revenue!: number;
   products!: IProduct[];
+  bestSelling!: IBestSelling[];
+  currentDate = Date.now();
+  productUrlImg = PUBLIC_ENDPOINTS.IMAGE_PRODUCTS;
 
   orderService = inject(OrderService);
   productService = inject(ProductsService);
 
   ngOnInit(): void {
     this.getAllOrders();
+    this.getBestSelling();
     this.getAllProducts();
   }
 
@@ -49,5 +54,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
+  getBestSelling() {
+    this.orderService.getBestSelling().subscribe({
+      next: (res) => {
+        this.bestSelling = res.data;
+      }
+    });
+  }
 
 }

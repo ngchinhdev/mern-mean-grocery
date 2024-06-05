@@ -1,5 +1,5 @@
 const UserModel = require("../models/user.model");
-const { createError } = require("./helper.util");
+const { createError, hashPassword, sendEmail } = require("./helper.util");
 
 const getExistingUserByEmail = async email => {
     try {
@@ -16,10 +16,18 @@ const getExistingUserByEmail = async email => {
 
 const createUser = async (body, password) => {
     try {
+        const hashedPassword = await hashPassword(password);
+
         const newUser = await UserModel.create({
             ...body,
-            password: password,
+            password: hashedPassword,
         });
+
+        await sendEmail(
+            body.email,
+            "Your new password - KACHA Grocery Shop",
+            "Your password login with Google for email: " + body.email + " is: " + password,
+        );
 
         return newUser;
     } catch (error) {

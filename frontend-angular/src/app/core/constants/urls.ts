@@ -25,7 +25,9 @@ export const API_ENDPOINTS = {
         GET_TOP_SELLING: `${API_ENDPOINT_ROOT_URL}/orders/bestselling`,
         GET_ORDER_BY_USER_ID: `${API_ENDPOINT_ROOT_URL}/orders/user`,
         CREATE_ORDER: `${API_ENDPOINT_ROOT_URL}/orders/add`,
+        UPDATE_ORDER: `${API_ENDPOINT_ROOT_URL}/orders/update`,
         CANCEL_ORDER: `${API_ENDPOINT_ROOT_URL}/orders/cancel`,
+        SEND_INVOICE: `${API_ENDPOINT_ROOT_URL}/orders/invoice`,
     },
     USERS_ENDPOINTS: {
         GET_ALL_USERS: `${API_ENDPOINT_ROOT_URL}/users`,
@@ -38,7 +40,14 @@ export const API_ENDPOINTS = {
         CHANGE_ROLE: `${API_ENDPOINT_ROOT_URL}/auth/change-role`,
         FORGOT_PASSWORD: `${API_ENDPOINT_ROOT_URL}/auth/forgot-password`,
         REFRESH_TOKEN: `${API_ENDPOINT_ROOT_URL}/auth/refresh-token`,
-    }
+    },
+    COUPON_ENDPOINTS: {
+        GET_ALL_COUPONS: `${API_ENDPOINT_ROOT_URL}/coupons`,
+        GET_COUPON_BY_ID: `${API_ENDPOINT_ROOT_URL}/coupons/coupon`,
+        CREATE_COUPON: `${API_ENDPOINT_ROOT_URL}/coupons/add`,
+        UPDATE_COUPON: `${API_ENDPOINT_ROOT_URL}/coupons/update`,
+        DELETE_COUPON: `${API_ENDPOINT_ROOT_URL}/coupons/delete`,
+    },
 };
 
 export const PUBLIC_ENDPOINTS = {

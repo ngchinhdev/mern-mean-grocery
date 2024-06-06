@@ -53,7 +53,7 @@
                                 <label for="price" class="block text-gray-500 font-medium mb-2">Price</label>
                                 <input type="number"
                                     class="border focus:outline-primary-600 border-gray-300 rounded-lg py-3 px-5 w-full h-12"
-                                    formControlName="price" placeholder="Price" id="price">
+                                    min="1" step="0.001" formControlName="price" placeholder="Price" id="price">
                                 @if(editorForm.get('price')?.hasError('required') &&
                                 editorForm.get('price')?.touched) {
                                 <small class="text-red-600 text-[15px] pt-1 inline-block">(*) Price is required</small>
@@ -61,7 +61,7 @@
                             </div>
                             <div class="flex-1">
                                 <label for="orgPrice" class="block text-gray-500 font-medium mb-2">Origin Price</label>
-                                <input type="number" formControlName="orgPrice"
+                                <input type="number" formControlName="orgPrice" step="0.001" min="1"
                                     class="border focus:outline-primary-600 border-gray-300 rounded-lg py-3 px-5 w-full h-12"
                                     placeholder="Origin Price" id="orgPrice">
                                 @if(editorForm.get('orgPrice')?.hasError('required') &&

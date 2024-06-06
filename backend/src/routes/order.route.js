@@ -37,11 +37,16 @@ router.post(
 );
 
 router.post(
+    '/update/:id',
+    orderController.updateOrder
+);
+
+router.post(
     '/cancel/:id',
     orderController.cancelOrder
 );
 
-router.get(
+router.post(
     '/invoice',
     orderController.createInvoice
 );

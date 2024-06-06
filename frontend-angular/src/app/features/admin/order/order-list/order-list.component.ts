@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { DatePipe } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { IOrder } from '../../../../core/models/order.model';
 import { OrderService } from '../../../../core/services/order.service';
@@ -13,7 +13,7 @@ import { NotFoundComponent } from '../../../../shared/components/not-found/not-f
 @Component({
   selector: 'app-order-list',
   standalone: true,
-  imports: [MatIconModule, RouterLink, DatePipe, CurrencyPipe, PaginatorComponent, LoaderComponent, NotFoundComponent],
+  imports: [MatIconModule, RouterLink, DatePipe, CurrencyPipe, PaginatorComponent, LoaderComponent, NotFoundComponent, CommonModule],
   templateUrl: './order-list.component.html',
   styleUrl: './order-list.component.css'
 })

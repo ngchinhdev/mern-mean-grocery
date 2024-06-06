@@ -21,6 +21,22 @@ const checkFileUploaded = async (_, { req }) => {
     return req.file.filename;
 };
 
+const userEmailValidator = async (email) => {
+    if (!(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/).test(email)) {
+        createError(400, 'Invalid email.');
+    }
+
+    const user = await UserModel.findOne({
+        email,
+    });
+
+    if (user) {
+        createError(409, 'Email is already in use.');
+    }
+
+    return email;
+};
+
 const checkCurrentPassword = async (currentPassword, { req }) => {
     console.log(req.body);
     if (!currentPassword.trim()) {
@@ -61,7 +77,10 @@ const userRegisterValidator = checkSchema({
         isEmail: {
             errorMessage: 'Invalid email'
         },
-        trim: true
+        trim: true,
+        customSanitizer: {
+            options: userEmailValidator
+        }
     },
     password: {
         exists: {
@@ -118,7 +137,10 @@ const userUpdateProfileValidator = checkSchema({
         isEmail: {
             errorMessage: 'Invalid email'
         },
-        trim: true
+        trim: true,
+        customSanitizer: {
+            options: userEmailValidator
+        }
     },
     avatar: {
         customSanitizer: {

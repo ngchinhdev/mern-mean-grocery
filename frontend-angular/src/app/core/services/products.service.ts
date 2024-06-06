@@ -13,9 +13,9 @@ import { Observable } from 'rxjs';
 export class ProductsService {
   constructor(private http: HttpClient) { }
 
-  getAllProducts(page?: number, limit?: number) {
+  getAllProducts(page?: number, limit?: number, sort?: string) {
     return this.http.get<IResponseDataCommon<IProduct[]>>(
-      API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_ALL_PRODUCTS + `?page=${page || 1}&limit=${limit || 10}`
+      API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_ALL_PRODUCTS + `?page=${page || 1}&limit=${limit || 10}&sort=${sort || '-createdAt'}`
     );
   }
 

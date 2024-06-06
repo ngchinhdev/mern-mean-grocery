@@ -30,3 +30,19 @@ tbody>tr:hover {
     flex: 1 1 0 !important;
     justify-content: flex-end !important;
 }
+
+.pending-st {
+    color: orange;
+}
+
+.confirmed-st {
+    color: blue;
+}
+
+.delivered-st {
+    color: green;
+}
+
+.cancel-st {
+    color: red;
+}

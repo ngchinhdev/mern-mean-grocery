@@ -44,11 +44,9 @@ export class ProductEditorComponent implements OnInit, OnDestroy {
       name: new FormControl('', [Validators.required]),
       price: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]*$')
       ]),
       orgPrice: new FormControl('', [
         Validators.required,
-        Validators.pattern('^[0-9]*$')
       ]),
       quantity: new FormControl('', [
         Validators.required,
@@ -143,6 +141,7 @@ export class ProductEditorComponent implements OnInit, OnDestroy {
         return;
       }
       if (this.productData) {
+        console.log(this.editorForm.value);
         this.productsService.updateProduct(
           this.productData._id,
           {
@@ -158,6 +157,7 @@ export class ProductEditorComponent implements OnInit, OnDestroy {
             }
           });
       } else {
+        console.log(this.editorForm.value);
         this.productsService.createProduct({
           ...this.editorForm.value,
           hot: this.editorForm.value.hot === '1' ? true : false,

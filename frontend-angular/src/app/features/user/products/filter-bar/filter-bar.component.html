@@ -4,15 +4,12 @@
         Total <span class="font-bold">{{lengthProductFound}}</span> Items Found
     </h6>
     <span class="text-sm">
-        <select
+        <select (change)="onChange($event)"
             class="block w-full cursor-pointer rounded border-0 bg-white p-1 pr-10 text-sm font-medium focus:ring-0">
-            <option class="px-3" value="All">
-                Sort By Price
-            </option>
-            <option class="px-3" value="Low">
+            <option class="px-3" value="inc">
                 Low to High
             </option>
-            <option class="px-3" value="High">
+            <option class="px-3" value="dec">
                 High to Low
             </option>
         </select>

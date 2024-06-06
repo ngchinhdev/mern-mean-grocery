@@ -5,6 +5,23 @@
                 <span>Order </span>
                 <span class="ltr:ml-2 rtl:mr-2">#{{order.invoiceNo}}</span>
             </h3>
+            <select class="py-2 px-1 border w-[160px] rounded-md cursor-pointer ms-8 border-primary-600" name="status"
+                id="status" (change)="onChangeStatus($event, order._id)">
+                @if(order.status === 'Cancelled') {
+                <option value="Cancelled" [selected]="status === 'Cancelled'">Cancelled</option>
+                }
+                @if(order.status !== 'Cancelled') {
+                @if(order.status !== 'Delivered') {
+                @if(order.status !== 'Confirmed') {
+                <option value="Pending" [selected]="status === 'Pending'">Pending</option>
+                }
+                <option value="Confirmed" [selected]="status === 'Confirmed'">Confirmed</option>
+                }
+                @if(order.status === 'Confirmed' || order.status === 'Delivered') {
+                <option value="Delivered" [selected]="status === 'Delivered'">Delivered</option>
+                }
+                }
+            </select>
         </div>
         <span class="flex items-center">
             <mat-icon>
@@ -103,10 +120,10 @@
                         <div class="mb-1">City: {{order.shippingInfo.city}}</div>
                         <div>Country: {{order.shippingInfo.country}}</div>
                     </address>
-                    <div class="mt-4" role="presentation">
+                    <div class="mt-4 pb-20" role="presentation">
                         <div class="card-body">
                             <h5 class="mb-2 text-2xl font-semibold">Payment Summary</h5>
-                            <ul class="text-gray-500 pb-20">
+                            <ul class="text-gray-500">
                                 <li class="flex items-center justify-between mb-3">
                                     <span>Discount: </span>
                                     <span class="font-semibold">
@@ -126,6 +143,19 @@
                                     </span>
                                 </li>
                             </ul>
+                        </div>
+                        <div class="mt-2 text-center w-full">
+                            @if(order.paymentInfo.isPaid) {
+                            <span
+                                class="py-2 transition-all block text-white font-semibold w-full bg-red-600 rounded-lg">This
+                                order is paid.</span>
+                            }
+                            @else {
+                            <button (click)="onChangePaid(order._id)"
+                                class="py-2 hover:bg-primary-700 transition-all text-white font-semibold w-full bg-primary-600 rounded-lg">
+                                Paid ?
+                            </button>
+                            }
                         </div>
                     </div>
                 </div>

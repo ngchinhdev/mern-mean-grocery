@@ -13,7 +13,7 @@ export class CategoriesService {
 
   getAllCategories(page?: number, limit?: number): Observable<IResponseDataCommon<ICategory[]>> {
     return this.http.get<IResponseDataCommon<ICategory[]>>(
-      API_ENDPOINTS.CATEGORY_ENDPOINTS.GET_ALL_CATEGORIES + `?page=${page || 1}&limit=${limit || 10}`
+      API_ENDPOINTS.CATEGORY_ENDPOINTS.GET_ALL_CATEGORIES + `?page=${page || 1}&limit=${limit || 10}&sort=-createdAt`
     );
   }
 

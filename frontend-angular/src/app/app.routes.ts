@@ -29,6 +29,9 @@ import { OrderComponent as AdminOrderComponent } from './pages/admin/order/order
 import { OrderListComponent } from './features/admin/order/order-list/order-list.component';
 import { OrderDetailComponent } from './features/admin/order/order-detail/order-detail.component';
 import { adminGuard } from './core/guards/admin.guard';
+import { CouponComponent as AdminCouponComponent } from './pages/admin/coupon/coupon.component';
+import { CouponListComponent } from './features/admin/coupons/coupon-list/coupon-list.component';
+import { CouponEditorComponent } from './features/admin/coupons/coupon-editor/coupon-editor.component';
 
 
 export const routes: Routes = [
@@ -91,6 +94,15 @@ export const routes: Routes = [
                 children: [
                     { path: '', component: OrderListComponent },
                     { path: 'order/:id', component: OrderDetailComponent },
+                ]
+            },
+            {
+                path: 'coupons',
+                component: AdminCouponComponent,
+                children: [
+                    { path: '', component: CouponListComponent },
+                    { path: 'add', component: CouponEditorComponent },
+                    { path: 'edit/:id', component: CouponEditorComponent },
                 ]
             },
         ]

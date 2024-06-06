@@ -81,7 +81,7 @@
         </div>
     </div>
     <app-category-swiper></app-category-swiper>
-    <app-filter-bar [lengthProductFound]="productsFilter.length"></app-filter-bar>
+    <app-filter-bar (onSort)="onSortPrice($event)" [lengthProductFound]="productsFilter.length"></app-filter-bar>
     @if(productsFilter && productsFilter.length) {
     <ul class="mx-auto mt-8 grid max-w-screen-2xl grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-5">
         @for(product of productsFilter; track product._id) {

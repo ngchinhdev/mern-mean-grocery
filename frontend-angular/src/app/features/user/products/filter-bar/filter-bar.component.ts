@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-filter-bar',
@@ -10,4 +10,9 @@ import { Component, Input } from '@angular/core';
 
 export class FilterBarComponent {
   @Input() lengthProductFound: number = 0;
+  @Output() onSort = new EventEmitter<Event>();
+
+  onChange(event: Event) {
+    this.onSort.emit(event);
+  }
 }

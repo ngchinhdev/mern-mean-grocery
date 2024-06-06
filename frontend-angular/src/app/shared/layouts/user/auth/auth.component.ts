@@ -115,6 +115,11 @@ export class AuthComponent implements OnInit {
             this.onFormChange(AuthFormType.LOGIN);
           },
           error: (error) => {
+            if (error.status == 409) {
+              this.toast.error('Email already in use');
+              return;
+            }
+            this.toast.error('Failed to register');
             console.error(error);
           }
         });

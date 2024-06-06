@@ -19,7 +19,9 @@ import { CategoriesService } from '../../../core/services/categories.service';
 })
 
 export class ProductsComponent implements OnInit, OnDestroy {
+  initialProducts!: IProduct[];
   productsFilter!: IProduct[];
+  param!: string;
   private routeSub!: Subscription;
 
   private router = inject(ActivatedRoute);
@@ -28,15 +30,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.routeSub = this.router.queryParams.subscribe(params => {
       if (params['category']) {
+        this.param = 'category';
         this.getProductByCategoryId(params['category']);
       }
 
       if (params['name']) {
+        this.param = 'name';
         this.getProductBySearchName(params['name']);
       }
 
       if (!Object.keys(params).length) {
-        this.getAllProducts();
+        this.getAllProducts(1, 15, 'price');
       }
     });
   }
@@ -51,6 +55,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productServices.getProductsByCategoryId(id).subscribe({
       next: (response) => {
         this.productsFilter = response.data;
+        this.initialProducts = response.data;
       },
       error: () => {
         this.productsFilter = [];
@@ -62,6 +67,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.productServices.getSearchProducts(name).subscribe({
       next: (response) => {
         this.productsFilter = response.data;
+        this.initialProducts = response.data;
       },
       error: () => {
         this.productsFilter = [];
@@ -69,10 +75,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     });
   }
 
-  getAllProducts() {
-    this.productServices.getAllProducts().subscribe({
+  getAllProducts(page: number, limit: number, sort: string) {
+    this.productServices.getAllProducts(page, limit, sort).subscribe({
       next: (response) => {
         this.productsFilter = response.data;
+        this.initialProducts = response.data;
       },
       error: () => {
         this.productsFilter = [];
@@ -80,4 +87,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onSortPrice(event: Event) {
+    const target = event.target as HTMLSelectElement;
+
+    if (target.value === 'inc') {
+      this.productsFilter.sort((a, b) => a.price - b.price);
+    }
+    if (target.value === 'dec') {
+      this.productsFilter.sort((a, b) => b.price - a.price);
+    }
+  }
 }

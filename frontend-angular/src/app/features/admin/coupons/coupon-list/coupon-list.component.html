@@ -1,0 +1,73 @@
+<div class="pb-10">
+    <div class="lg:flex items-center justify-between mb-4">
+        <h1 class="mb-4 lg:mb-0 text-2xl font-semibold text-stone-800">Coupons</h1>
+        <div>
+            <a routerLink="add"
+                class="flex items-center gap-2 font-semibold text-base py-2 px-2 rounded-md bg-primary-600 text-white">
+                <mat-icon>
+                    <span class="material-symbols-outlined">
+                        add_circle
+                    </span>
+                </mat-icon>
+                Add Coupon
+            </a>
+        </div>
+    </div>
+    @if(isLoading) {
+    <app-loader></app-loader>
+    }
+    @if(!coupons.length && !isLoading) {
+    <app-not-found></app-not-found>
+    }
+    @if(coupons.length && !isLoading) {
+    <div>
+        <table class="w-full text-left text-gray-600">
+            <thead class="bg-[#f5f5f5] text-sm">
+                <tr>
+                    <th class="uppercase">Code</th>
+                    <th class="uppercase">Discount</th>
+                    <th class="uppercase">Start Date</th>
+                    <th class="uppercase">End Date</th>
+                    <th class="uppercase">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(coupon of coupons; track coupon._id) {
+                <tr>
+                    <td>{{coupon.code}}</td>
+                    <td>
+                        {{coupon.discount | currency}}
+                    </td>
+                    <td>
+                        {{coupon.startTime | date: 'dd/MM/yyy HH:mm:ss'}}
+                    </td>
+                    <td>
+                        {{coupon.endTime | date: 'dd/MM/yyy HH:mm:ss'}}
+                    </td>
+                    <td>
+                        <div class="flex items-center gap-3">
+                            <a class="flex items-center" routerLink="edit/{{coupon._id}}">
+                                <mat-icon class="scale-110">
+                                    <span class="material-symbols-outlined text-blue-500">
+                                        edit_square
+                                    </span>
+                                </mat-icon>
+                            </a>
+                            <button class="flex items-center" (click)="onDeleteCoupon(coupon._id)">
+                                <mat-icon class="scale-110">
+                                    <span class="material-symbols-outlined text-red-500">
+                                        delete_forever
+                                    </span>
+                                </mat-icon>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+        <app-paginator [totalRecords]="totalRecords" [first]="first" [rows]="rows"
+            (pageChangeEvent)="onPageChanged($event)"></app-paginator>
+    </div>
+    }
+</div>

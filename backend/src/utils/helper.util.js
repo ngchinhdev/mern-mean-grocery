@@ -10,7 +10,7 @@ const createError = (statusCode, message) => {
     throw new createHttpError(statusCode, message);
 };
 
-const sendEmail = async (email, subject, text) => {
+const sendEmail = async (email, subject, text, attachments = []) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -25,7 +25,8 @@ const sendEmail = async (email, subject, text) => {
             from: process.env.EMAIL_SEND,
             to: email,
             subject: subject,
-            text: text
+            text: text,
+            attachments: attachments
         });
     } catch (error) {
         console.log(error);
@@ -107,16 +108,19 @@ const hashPassword = async (password) => {
     return hashedPassword;
 };
 
-const buildPDF = (dataCallback, endCallback) => {
-    const doc = new PDFDocument();
+function convertToDateString(dateString) {
+    const date = new Date(dateString);
 
-    doc.on('data', dataCallback);
-    doc.on('end', endCallback);
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const year = date.getUTCFullYear();
 
-    doc.text("hello");
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
 
-    doc.end();
-};
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+}
 
 module.exports = {
     createError,
@@ -126,5 +130,5 @@ module.exports = {
     saveRefreshToken,
     comparePassword,
     hashPassword,
-    buildPDF
+    convertToDateString
 };

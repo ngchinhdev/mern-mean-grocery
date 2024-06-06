@@ -89,6 +89,17 @@ export class CheckoutFormComponent implements OnInit {
             this.toast.success("Order successfully. Please check your email to see the invoice.");
             this.router.navigate([`/`]);
           }
+          this.orderService.sendInvoice(res.data).subscribe({
+            next: (res) => {
+              console.log(res);
+            },
+            error: (err) => {
+              console.log(err);
+            }
+          });
+        },
+        error: (err) => {
+          this.toast.error("Order failed");
         }
       });
     }

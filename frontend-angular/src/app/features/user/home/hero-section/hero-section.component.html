@@ -18,10 +18,18 @@
                                     <span class="pe-1 text-lg font-bold text-red-500 md:text-xl lg:text-xl">
                                         <span>- {{coupon.discount | currency}}</span>
                                     </span>
+                                    @if(isActiveCoupon(coupon.endTime)) {
                                     <span
                                         class="ms-2 inline-block rounded-full bg-primary-100 px-4 py-1 text-xs font-medium text-primary-600">
                                         Active
                                     </span>
+                                    }
+                                    @else {
+                                    <span
+                                        class="ms-2 inline-block rounded-full bg-red-100 px-4 py-1 text-xs font-medium text-red-600">
+                                        Active
+                                    </span>
+                                    }
                                 </h6>
                                 <h2 class="mb-2 pl-1 text-base font-semibold leading-6 text-gray-700">
                                     Summer Gift Voucher
@@ -55,8 +63,7 @@
                                         <div
                                             class="block rounded-lg border border-dashed border-primary-400 bg-primary-100 py-1 text-center">
                                             <button class="block w-full">
-                                                <span
-                                                    class="text-sm font-semibold uppercase leading-7 text-primary-600">
+                                                <span class="text-sm font-semibold leading-7 text-primary-600">
                                                     {{coupon.code}}
                                                 </span>
                                             </button>

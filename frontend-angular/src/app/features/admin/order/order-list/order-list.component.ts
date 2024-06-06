@@ -9,6 +9,7 @@ import { CurrencyPipe } from '../../../../core/pipes/currency.pipe';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { LoaderComponent } from '../../../../shared/components/loader/loader.component';
 import { NotFoundComponent } from '../../../../shared/components/not-found/not-found.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-order-list',
@@ -19,6 +20,7 @@ import { NotFoundComponent } from '../../../../shared/components/not-found/not-f
 })
 
 export class OrderListComponent implements OnInit {
+  filterOrders!: IOrder[];
   allOrders!: IOrder[];
   totalRecords: number = 0;
   first: number = 0;
@@ -26,6 +28,7 @@ export class OrderListComponent implements OnInit {
   isLoading: boolean = false;
 
   private orderService = inject(OrderService);
+  private toast = inject(ToastrService);
 
   ngOnInit(): void {
     this.getAllOrders();
@@ -35,12 +38,13 @@ export class OrderListComponent implements OnInit {
     this.isLoading = true;
     this.orderService.getAllOrders(page, limit).subscribe({
       next: (res) => {
+        this.filterOrders = res.data;
         this.allOrders = res.data;
         this.totalRecords = res.totalRecords;
         this.isLoading = false;
       },
       error: (error) => {
-        if (this.allOrders.length === 0) {
+        if (this.filterOrders.length === 0) {
           this.isLoading = false;
         }
       }
@@ -52,5 +56,24 @@ export class OrderListComponent implements OnInit {
     this.first = event.first;
     this.rows = event.rows;
     this.getAllOrders(event.page + 1, event.rows);
+  }
+
+  onSelectStatus($event: Event) {
+    const target = $event.target as HTMLSelectElement;
+
+    if (target.value) {
+      this.filterOrders = this.allOrders.filter(order => order.status === target.value);
+    } else {
+      this.getAllOrders();
+    }
+  }
+
+  onConfirmed(id: string) {
+    this.orderService.updateOrder(id, { status: "Confirmed" }).subscribe({
+      next: (res) => {
+        this.toast.success('Order is confirmed');
+        this.filterOrders = this.filterOrders.filter(order => order._id !== res.data._id);;
+      }
+    });
   }
 }

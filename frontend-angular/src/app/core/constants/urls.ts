@@ -44,6 +44,7 @@ export const API_ENDPOINTS = {
     COUPON_ENDPOINTS: {
         GET_ALL_COUPONS: `${API_ENDPOINT_ROOT_URL}/coupons`,
         GET_COUPON_BY_ID: `${API_ENDPOINT_ROOT_URL}/coupons/coupon`,
+        GET_COUPON_BY_CODE: `${API_ENDPOINT_ROOT_URL}/coupons/coupon/code`,
         CREATE_COUPON: `${API_ENDPOINT_ROOT_URL}/coupons/add`,
         UPDATE_COUPON: `${API_ENDPOINT_ROOT_URL}/coupons/update`,
         DELETE_COUPON: `${API_ENDPOINT_ROOT_URL}/coupons/delete`,

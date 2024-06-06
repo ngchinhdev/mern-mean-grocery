@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { ToastrService } from 'ngx-toastr';
@@ -10,6 +10,7 @@ import { AuthService } from '../../../../core/services/auth.service';
 import { IUser } from '../../../../core/models/auth.model';
 import { CustomValidators } from '../../../../core/validators/custom.validator';
 import { OrderService } from '../../../../core/services/order.service';
+import { CouponService } from '../../../../core/services/coupon.service';
 
 @Component({
   selector: 'app-checkout-form',
@@ -22,6 +23,8 @@ import { OrderService } from '../../../../core/services/order.service';
 export class CheckoutFormComponent implements OnInit {
   form!: FormGroup;
   user!: IUser | null;
+
+  @Input() discount!: number;
 
   private formBuilder = inject(FormBuilder);
   private toast = inject(ToastrService);
@@ -43,6 +46,7 @@ export class CheckoutFormComponent implements OnInit {
     });
 
     this.authService.userProfile$.subscribe(user => this.user = user);
+    this.form.patchValue({ email: this.user?.email, phone: this.user?.phone });
   }
 
   onSubmit() {
@@ -72,8 +76,8 @@ export class CheckoutFormComponent implements OnInit {
           isPaid: false,
           paymentMethod: 'Cash'
         },
-        discount: 0,
-        totalPrice: this.cartService.getTotalCartPrice(),
+        discount: this.discount ? this.discount : 0,
+        totalPrice: this.cartService.getTotalCartPrice() - this.discount ? this.discount : 0,
         orderItems: this.cartService.getCartItems().map(item => ({
           quantity: item.quantity,
           product: item.id
@@ -84,7 +88,7 @@ export class CheckoutFormComponent implements OnInit {
           this.cartService.clearCart();
           if (this.user) {
             this.toast.success("You have placed your order successfully");
-            this.router.navigate([`/order/${res.data._id}`]);
+            this.router.navigate([`/user/orders/order/${res.data._id}`]);
           } else {
             this.toast.success("Order successfully. Please check your email to see the invoice.");
             this.router.navigate([`/`]);

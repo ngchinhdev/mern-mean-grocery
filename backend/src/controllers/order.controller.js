@@ -302,7 +302,7 @@ const createInvoice = async (req, res, next) => {
                                     ${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(order.shippingInfo.cost)}</span></div>
                             <div class="mb-3 md:mb-0 lg:mb-0  flex flex-col sm:flex-wrap"><span
                                     class="mb-1 font-bold text-xl uppercase text-gray-600 block">Discount</span><span
-                                    class="text-xl text-gray-500 font-semibold block">€0.00</span></div>
+                                    class="text-xl text-gray-500 font-semibold block">${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(order.discount)}</span></div>
                             <div class="flex flex-col sm:flex-wrap"><span
                                     class="mb-1 font-bold text-xl uppercase text-gray-600 block">Total
                                     Amount</span><span class="text-2xl font-bold text-red-500 block">${new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(order.totalPrice)}</span></div>

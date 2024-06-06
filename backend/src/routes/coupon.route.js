@@ -17,6 +17,11 @@ router.get(
     couponController.getCouponById
 );
 
+router.get(
+    '/coupon/code/:code',
+    couponController.getCouponByCode
+);
+
 router.post(
     '/add',
     couponController.createCoupon

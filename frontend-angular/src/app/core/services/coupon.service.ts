@@ -25,6 +25,12 @@ export class CouponService {
     );
   }
 
+  getCouponByCode(code: string): Observable<IResponseDataCommon<ICoupon>> {
+    return this.http.get<IResponseDataCommon<ICoupon>>(
+      API_ENDPOINTS.COUPON_ENDPOINTS.GET_COUPON_BY_CODE + '/' + code
+    );
+  }
+
   createCoupon(coupon: ICoupon): Observable<IResponseDataCommon<ICreateCoupon>> {
     return this.http.post<IResponseDataCommon<ICreateCoupon>>(
       API_ENDPOINTS.COUPON_ENDPOINTS.CREATE_COUPON,

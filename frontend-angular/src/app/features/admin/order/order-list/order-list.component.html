@@ -1,25 +1,22 @@
 <div class="pb-10">
     <div class="lg:flex items-center justify-between mb-4">
         <h1 class="mb-4 lg:mb-0 text-2xl font-semibold text-stone-800">Orders</h1>
-        <div>
-            <!-- <a routerLink="add"
-                class="flex items-center gap-2 font-semibold text-base py-2 px-2 rounded-md bg-primary-600 text-white">
-                <mat-icon>
-                    <span class="material-symbols-outlined">
-                        add_circle
-                    </span>
-                </mat-icon>
-                Add Product
-            </a> -->
-        </div>
+        <select name="filterStatus" id="filterStatus" (change)="onSelectStatus($event)"
+            class="py-2 px-1 border w-[160px] rounded-md cursor-pointer ms-8 border-primary-600">
+            <option value="">Status</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Cancelled">Cancelled</option>
+            <option value="Delivered">Delivered</option>
+        </select>
     </div>
     @if(isLoading) {
     <app-loader></app-loader>
     }
-    @if(!allOrders?.length && !isLoading) {
+    @if(!filterOrders?.length && !isLoading) {
     <app-not-found></app-not-found>
     }
-    @if(!isLoading) {
+    @if(filterOrders?.length && !isLoading) {
     <div>
         <table class="w-full text-left text-gray-600">
             <thead class="bg-[#f5f5f5] text-sm">
@@ -34,7 +31,7 @@
                 </tr>
             </thead>
             <tbody>
-                @for(order of allOrders; track order._id) {
+                @for(order of filterOrders; track order._id) {
                 <tr>
                     <td class="flex items-center">
                         #{{order.invoiceNo}}
@@ -65,6 +62,11 @@
                                     </span>
                                 </mat-icon>
                             </a>
+                            @if(order.status === 'Pending') {
+                            <div class="flex items-center gap-3">
+                                <input type="checkbox" class="w-5 h-5 cursor-pointer" (change)="onConfirmed(order._id)">
+                            </div>
+                            }
                         </div>
                     </td>
                 </tr>

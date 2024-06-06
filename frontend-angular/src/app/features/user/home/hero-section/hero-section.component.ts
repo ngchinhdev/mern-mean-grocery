@@ -28,4 +28,8 @@ export class HeroSectionComponent implements OnInit {
             }
         });
     }
+
+    isActiveCoupon(endDate: string) {
+        return new Date(endDate).getTime() > Date.now();
+    }
 }

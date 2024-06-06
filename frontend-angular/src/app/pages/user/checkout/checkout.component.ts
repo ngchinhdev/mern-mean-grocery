@@ -11,5 +11,9 @@ import { CheckoutSummaryComponent } from '../../../features/user/checkout/checko
 })
 
 export class CheckoutComponent {
+  coupon!: number;
 
+  receivedCoupon(coupon: number) {
+    this.coupon = coupon;
+  }
 }

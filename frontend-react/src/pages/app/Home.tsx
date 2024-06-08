@@ -1,9 +1,12 @@
 import axios from "axios";
-
-import HomeFeature from "../../features/app/home";
 import { useEffect } from "react";
 
+import HomeFeature from "../../features/app/home";
+import useScrollToTop from "src/hooks/useScrollToTop";
+
 export default function Home() {
+  useScrollToTop();
+
   const getUser = async () => {
     try {
       const response = await axios.get(

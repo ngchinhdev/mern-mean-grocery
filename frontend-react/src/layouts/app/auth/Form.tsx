@@ -182,7 +182,7 @@ export default function Form() {
           <div className="mt-2.5 text-gray-500">
             {authFormTexts[currentFormActive].link}
             <button
-              type="submit"
+              type="button"
               className="mx-2 font-bold text-gray-800 hover:text-primary-600"
               onClick={() =>
                 dispatch(

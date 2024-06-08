@@ -3,17 +3,31 @@ import { IoWalletSharp } from "react-icons/io5";
 import { FaRegCreditCard } from "react-icons/fa";
 import { PiArrowBendUpLeft } from "react-icons/pi";
 import { HiArrowRight } from "react-icons/hi2";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import Input from "src/ui/Input";
+import { checkoutSchema } from "src/zods/checkout";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store/store";
 
-export default function OrderForm() {
+interface OrderFormProps {
+  coupon: string;
+}
+
+export default function OrderForm({ coupon }: OrderFormProps) {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    resolver: zodResolver(checkoutSchema),
+  });
 
-  const onSubmit = () => {};
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   return (
     <div className="order-2 flex h-full flex-col sm:order-1 md:w-full lg:order-1 lg:w-3/5">
@@ -23,7 +37,7 @@ export default function OrderForm() {
             <h2 className="pb-3 text-base font-semibold text-gray-700">
               01. Personal Details
             </h2>
-            <div className="flex items-center justify-between gap-5">
+            <div className="flex justify-between gap-5">
               <div className="flex-1">
                 <Input
                   label="First Name"
@@ -45,7 +59,7 @@ export default function OrderForm() {
                 />
               </div>
             </div>
-            <div className="mt-6 flex items-center justify-between gap-5">
+            <div className="mt-6 flex justify-between gap-5">
               <div className="flex-1">
                 <Input
                   label="Email Address"
@@ -83,7 +97,7 @@ export default function OrderForm() {
               />
             </div>
           </div>
-          <div className="mt-6 flex items-center justify-between gap-5">
+          <div className="mt-6 flex justify-between gap-5">
             <div className="flex-1">
               <Input
                 label="City"
@@ -108,7 +122,7 @@ export default function OrderForm() {
               <Input
                 label="Zip Code"
                 placeholder="2345"
-                name="zip"
+                name="zipCode"
                 type="string"
                 errors={errors}
                 register={register}

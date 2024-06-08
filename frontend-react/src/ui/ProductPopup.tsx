@@ -63,7 +63,7 @@ export default function ProductPopup({
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex w-full max-w-3xl flex-col overflow-hidden md:flex-row lg:flex-row">
-        <a href="/product/lettuce">
+        <Link to={`/product/${product._id}`}>
           <div className="flex h-full flex-shrink-0 cursor-pointer items-center justify-center">
             {discount > 0 ? (
               <span className="text-dark absolute left-4 top-4 z-10 rounded bg-orange-500 px-2 py-1 text-sm font-medium text-white">
@@ -81,7 +81,7 @@ export default function ProductPopup({
               src={PUBLIC_ENDPOINTS.IMAGE_PRODUCTS + "/" + product.images[0]}
             />
           </div>
-        </a>
+        </Link>
         <div className="flex w-full flex-col px-5 text-left md:px-8">
           <div className="-mt-1.5 mb-2 block md:mb-2.5">
             <a href="/product/lettuce">

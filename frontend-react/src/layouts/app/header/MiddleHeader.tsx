@@ -1,5 +1,6 @@
+import { KeyboardEvent, useState } from "react";
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { GoSearch } from "react-icons/go";
 import { LuShoppingCart } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
@@ -7,7 +8,6 @@ import { FiBell } from "react-icons/fi";
 
 import logoLight from "../../../assets/logo-light_hls14v.svg";
 import { RootState } from "src/store/store";
-import { useState } from "react";
 import Modal from "src/ui/Modal";
 import Form from "../auth/Form";
 
@@ -17,9 +17,19 @@ interface MiddleHeaderProps {
 
 export default function MiddleHeader({ onOpenCart }: MiddleHeaderProps) {
   const [isOpened, setIsOpened] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const navigate = useNavigate();
 
   const handleClose = () => {
     setIsOpened(false);
+  };
+
+  const handleEnterSearch = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      navigate(`/products/search/${searchValue}`);
+      setSearchValue("");
+    }
   };
 
   const cart = useSelector((state: RootState) => state.cart.items);
@@ -38,6 +48,9 @@ export default function MiddleHeader({ onOpenCart }: MiddleHeaderProps) {
               id="search"
               placeholder="Search for products (e.g. fish, apple, oil)"
               className="w-full border-none text-sm focus:outline-none"
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+              onKeyDown={(e) => handleEnterSearch(e)}
             />
             <span className="ps-2">
               <GoSearch className="text-lg text-gray-500" />

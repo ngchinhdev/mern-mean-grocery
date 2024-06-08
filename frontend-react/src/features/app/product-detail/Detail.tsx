@@ -14,6 +14,7 @@ interface DetailProps {
 
 export default function Detail({ product }: DetailProps) {
   const [quantityAddCart, setQuantityAddCart] = useState(1);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     setQuantityAddCart(1);
@@ -68,12 +69,19 @@ export default function Detail({ product }: DetailProps) {
       <div>
         <div className="text-sm leading-6 text-gray-500 md:leading-7">
           <p
+            className={`${showMore ? "" : "line-clamp-5"}`}
             dangerouslySetInnerHTML={{
               __html: sanitizeHTML(product.description),
             }}
           />
+          <span
+            className="float-right text-orange-500"
+            role="button"
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? "Show less" : "More Info"}
+          </span>
           <br />
-          <span className="read-or-hide">More Info</span>
         </div>
         <AddToCartControl
           quantityAddCart={quantityAddCart}

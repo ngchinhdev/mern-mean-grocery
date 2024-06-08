@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import {
   getAllProducts,
   getProductsByCategoryId,
+  getProductsBySearch,
 } from "../../../services/apiProducts";
 
 import bannerImg1 from "../../../assets/cta-bg-1.webp";
@@ -23,35 +24,36 @@ export default function ProductFeature() {
     queryFn: getAllProducts,
   };
 
-  const { categoryId } = useParams();
+  const { categoryId, search } = useParams();
 
   if (categoryId) {
     queryOptions.queryKey = [`productsByCategory-${categoryId}`];
     queryOptions.queryFn = () => getProductsByCategoryId(categoryId);
   }
 
+  if (search) {
+    queryOptions.queryKey = [`productsBySearch-${search}`];
+    queryOptions.queryFn = () => getProductsBySearch(search);
+  }
+
   const { data: products, error, isLoading } = useQuery(queryOptions);
 
   return (
-    <>
+    <section className="bg-gray-50 px-3 pb-8 sm:px-10">
+      <div className="grid-col mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:gap-6">
+        <Banner image={bannerImg1} title="Fresh & Natural" />
+        <Banner image={bannerImg2} title="Fresh & Natural" />
+        <Banner image={bannerImg3} title="Fresh & Natural" />
+      </div>
+      <CategorySlider />
+      <FilterBar itemLength={products?.length} />
       {isLoading ? (
         <Loader />
+      ) : !products?.length || error ? (
+        <NotFound message="No products found" bigSize={false} />
       ) : (
-        <section className="bg-gray-50 px-3 pb-8 sm:px-10">
-          <div className="grid-col mx-auto grid w-full max-w-screen-2xl grid-cols-1 gap-4 py-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:gap-6">
-            <Banner image={bannerImg1} title="Fresh & Natural" />
-            <Banner image={bannerImg2} title="Fresh & Natural" />
-            <Banner image={bannerImg3} title="Fresh & Natural" />
-          </div>
-          <CategorySlider />
-          <FilterBar itemLength={products?.length} />
-          {!products?.length || error ? (
-            <NotFound message="No product found" bigSize={false} />
-          ) : (
-            <ProductList products={products} />
-          )}
-        </section>
+        <ProductList products={products} />
       )}
-    </>
+    </section>
   );
 }

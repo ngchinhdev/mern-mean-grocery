@@ -102,7 +102,7 @@ const getSearchProducts = async (req, res, next) => {
         const { name } = req.query;
 
         const products = await ProductModel
-            .find({ hot: true, isDeleted: false, name: { $regex: name, $options: 'i' } })
+            .find({ isDeleted: false, name: { $regex: name, $options: 'i' } })
             .populate('categoryId', 'name')
             .skip(skip)
             .limit(limitDocuments)

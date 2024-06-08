@@ -43,6 +43,10 @@ const router = createBrowserRouter([
             path: "/products/category/:categoryId",
             element: <Products />,
           },
+          {
+            path: "/products/search/:search",
+            element: <Products />,
+          },
         ],
       },
       {
@@ -123,6 +127,7 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 60 * 1000,
+      refetchOnWindowFocus: false,
     },
   },
 });

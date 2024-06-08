@@ -12,7 +12,7 @@ export const getAllProducts = async (): Promise<IProduct[]> => {
         return products;
     } catch (error) {
         console.error(error);
-        throw error;
+        return [];
     }
 };
 
@@ -24,7 +24,7 @@ export const getHotProducts = async (): Promise<IProduct[]> => {
         return products;
     } catch (error) {
         console.log(error);
-        throw error;
+        return [];
     }
 };
 
@@ -36,13 +36,25 @@ export const getProductsByCategoryId = async (categoryId: string): Promise<IProd
         return products;
     } catch (error) {
         console.error(error);
-        throw error;
+        return [];
+    }
+};
+
+export const getProductsBySearch = async (search: string): Promise<IProduct[]> => {
+    try {
+        const response: AxiosResponse = await axios.get(`${API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_SEARCH_PRODUCTS}?name=${search}`);
+
+        const products: IProduct[] = response.data.data;
+        return products;
+    } catch (error) {
+        console.error(error);
+        return [];
     }
 };
 
 export const getProductById = async (productId: string): Promise<IProduct> => {
     try {
-        const response: AxiosResponse = await axios.get(`${API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_ALL_PRODUCTS}/${productId}`);
+        const response: AxiosResponse = await axios.get(`${API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_PRODUCT_BY_ID}/${productId}`);
 
         const product: IProduct = response.data.data;
         return product;

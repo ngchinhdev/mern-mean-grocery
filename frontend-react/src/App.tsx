@@ -5,6 +5,8 @@ import {
 } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // App pages
 import AppLayout from "./layouts/app/AppLayout";
@@ -13,6 +15,11 @@ import Products from "./pages/app/Products";
 import About from "./pages/app/About";
 import Contact from "./pages/app/Contact";
 import ProductDetail from "./pages/app/ProductDetail";
+import Checkout from "./pages/app/Checkout";
+import User from "./pages/app/User";
+import UpdateProfile from "./features/app/user/UpdateProfile";
+import MyOrders from "./features/app/user/MyOrders";
+import ChangePassword from "./features/app/user/ChangePassword";
 
 // Admin pages
 import AdminLayout from "./layouts/admin/AdminLayout";
@@ -24,7 +31,6 @@ import AdminCategories from "./pages/admin/Categories";
 import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
-import Checkout from "./pages/app/Checkout";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +62,24 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/user",
+        element: <User />,
+        children: [
+          {
+            path: "/user/information",
+            element: <UpdateProfile />,
+          },
+          {
+            path: "/user/my-orders",
+            element: <MyOrders />,
+          },
+          {
+            path: "/user/change-password",
+            element: <ChangePassword />,
+          },
+        ],
       },
       {
         path: "/checkout",
@@ -137,6 +161,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />
       <RouterProvider router={router} />
+      <ToastContainer />
     </QueryClientProvider>
   );
 }

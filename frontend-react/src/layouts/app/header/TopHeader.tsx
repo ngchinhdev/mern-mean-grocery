@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 import { LuPhoneCall } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 
-export default function TopHeader() {
+interface TopHeaderProps {
+  onOpenForm: () => void;
+}
+
+export default function TopHeader({ onOpenForm }: TopHeaderProps) {
   return (
     <div className="hidden bg-gray-100 lg:block">
       <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
@@ -31,7 +35,10 @@ export default function TopHeader() {
               My Account
             </span>
             <span className="mx-2">|</span>
-            <span className="flex cursor-pointer items-center font-medium hover:text-primary-600">
+            <span
+              className="flex cursor-pointer items-center font-medium hover:text-primary-600"
+              onClick={onOpenForm}
+            >
               <span className="mr-1">
                 <FiUser />
               </span>

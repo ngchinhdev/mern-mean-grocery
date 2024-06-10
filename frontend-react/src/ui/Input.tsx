@@ -1,3 +1,4 @@
+import { HTMLInputTypeAttribute } from "react";
 import {
   FieldError,
   FieldErrors,
@@ -10,8 +11,10 @@ interface InputProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   icon?: React.ReactNode;
+  value?: string;
+  autocomplete?: string;
   placeholder: string;
-  type: string;
+  type: HTMLInputTypeAttribute;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
 }
@@ -20,15 +23,17 @@ export default function Input<T extends FieldValues>({
   name,
   label,
   icon,
+  autocomplete,
   placeholder,
   type,
   register,
   errors,
+  value,
 }: InputProps<T>) {
   const error = errors[name] as FieldError | undefined;
 
   return (
-    <div>
+    <div className="w-full">
       <label
         className="mb-2 block text-sm font-medium leading-none text-gray-500"
         htmlFor={name + "Input"}
@@ -47,6 +52,8 @@ export default function Input<T extends FieldValues>({
           <input
             {...register(name)}
             type={type}
+            value={value ? value : ""}
+            autoComplete={autocomplete ? autocomplete : ""}
             id={name + "Input"}
             placeholder={placeholder}
             className={`h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12 ${icon ? "px-10" : "px-5"}`}

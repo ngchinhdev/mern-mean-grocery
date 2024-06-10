@@ -203,6 +203,12 @@ const forgotPassword = async (req, res, next) => {
     try {
         const { email } = req.params;
 
+        const userFound = await UserModel.findOne({ email: email, isActivated: true });
+
+        if (!userFound) {
+            createError(404, "Email not found.");
+        }
+
         const passCode = Date.now().toString().slice(-10);
         const hashedPassword = await hashPassword(passCode);
 

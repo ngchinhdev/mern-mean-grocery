@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 import Detail from "./Detail";
 import Images from "./Images";
@@ -9,7 +10,6 @@ import {
   getProductById,
   getProductsByCategoryId,
 } from "src/services/apiProducts";
-import { useQuery } from "@tanstack/react-query";
 import NotFound from "src/ui/NotFound";
 import Loader from "src/ui/Loader";
 

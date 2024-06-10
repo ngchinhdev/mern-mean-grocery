@@ -12,18 +12,21 @@ import Modal from "src/ui/Modal";
 import Form from "../auth/Form";
 
 interface MiddleHeaderProps {
+  isOpenedForm: boolean;
   onOpenCart: () => void;
+  onCloseForm: () => void;
+  onOpenForm: () => void;
 }
 
-export default function MiddleHeader({ onOpenCart }: MiddleHeaderProps) {
-  const [isOpened, setIsOpened] = useState(false);
+export default function MiddleHeader({
+  onOpenCart,
+  onOpenForm,
+  onCloseForm,
+  isOpenedForm,
+}: MiddleHeaderProps) {
   const [searchValue, setSearchValue] = useState("");
 
   const navigate = useNavigate();
-
-  const handleClose = () => {
-    setIsOpened(false);
-  };
 
   const handleEnterSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -66,16 +69,13 @@ export default function MiddleHeader({ onOpenCart }: MiddleHeaderProps) {
                 {cart.length}
               </span>
             </span>
-            <span
-              className="cursor-pointer ps-5"
-              onClick={() => setIsOpened(true)}
-            >
+            <span className="cursor-pointer ps-5" onClick={onOpenForm}>
               <FiUser className="text-2xl text-white" />
             </span>
           </div>
         </div>
       </div>
-      <Modal isOpen={isOpened} onClose={handleClose}>
+      <Modal isOpen={isOpenedForm} onClose={onCloseForm}>
         <Form />
       </Modal>
     </>

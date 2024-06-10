@@ -18,6 +18,10 @@ body {
     accent-color: green !important;
 }
 
+.nav-item.active {
+    color: #10b981;
+}
+
 @layer utilities {
 
     /* Hide scrollbar for Chrome, Safari and Opera */

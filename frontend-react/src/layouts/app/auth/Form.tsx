@@ -1,16 +1,17 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { MdOutlineEmail } from "react-icons/md";
 import { RiLock2Line } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
+import { AxiosError } from "axios";
 
 import { AppDispatch, RootState } from "src/store/store";
 import { AuthFormType, authFormTexts } from "src/constants/constants";
 import { setCurrentFormActive } from "src/store/auth/authSlice";
-import { createUser, loginUser } from "src/services/apiAuth";
+import { createUser, forgotPassword, loginUser } from "src/services/apiAuth";
 import {
   FormForgotPasswordFields,
   FormLoginFields,
@@ -21,6 +22,15 @@ import {
 } from "src/zods/auth";
 import Input from "src/ui/Input";
 import ButtonSocial from "./ButtonSocial";
+import {
+  ICreateUser,
+  IForgotPassword,
+  ILoginUser,
+  IResponseLogin,
+} from "src/interfaces/auth";
+import { type IResponseDataCommon } from "src/interfaces/share";
+import { toastUI } from "src/utils/toast";
+import { setLocalStorage } from "src/utils/helpers";
 
 interface CurrentFormFields {
   [AuthFormType.LOGIN]: FormLoginFields;
@@ -51,20 +61,70 @@ export default function Form() {
   const isNotForgotPasswordForm =
     currentFormActive !== AuthFormType.FORGOT_PASSWORD;
 
+  const registerMutation = useMutation<
+    IResponseDataCommon<ICreateUser>,
+    Error,
+    ICreateUser
+  >({
+    mutationFn: (data) => createUser(data),
+    onSuccess(data, variables, context) {
+      console.log(data, variables, context);
+    },
+    onError(error, variables, context) {
+      console.log(error, variables, context);
+    },
+  });
+
+  const loginMutation = useMutation<
+    IResponseDataCommon<IResponseLogin>,
+    AxiosError,
+    ILoginUser
+  >({
+    mutationFn: (data) => loginUser(data),
+    onSuccess(data, variables, context) {
+      console.log(data, variables, context);
+      setLocalStorage("accessTokenReact", data.data.accessToken);
+      toastUI("Login successfully", "success");
+    },
+    onError(error) {
+      if (error.response?.status === 400) {
+        toastUI("Email or password incorrect!", "error");
+      }
+    },
+  });
+
+  const forgotPasswordMutation = useMutation<
+    IResponseDataCommon<unknown>,
+    AxiosError,
+    IForgotPassword
+  >({
+    mutationFn: (data) => forgotPassword(data),
+    onSuccess() {
+      toastUI("Please check your email for new password.", "success");
+    },
+    onError(error) {
+      if (error.response?.status === 404) {
+        toastUI("Email not found!", "error");
+      } else {
+        toastUI(error.message, "error");
+      }
+    },
+  });
+
   const onSubmit = async (
     data: CurrentFormFields[typeof currentFormActive],
   ) => {
     if (currentFormActive === AuthFormType.REGISTER) {
       console.log(data, errors);
-      await createUser(data as FormRegisterFields);
+      registerMutation.mutate(data as FormRegisterFields);
     }
 
     if (currentFormActive === AuthFormType.LOGIN) {
-      await loginUser(data as FormLoginFields);
+      loginMutation.mutate(data as FormLoginFields);
     }
 
     if (currentFormActive === AuthFormType.FORGOT_PASSWORD) {
-      console.log(data);
+      forgotPasswordMutation.mutate(data);
     }
   };
 
@@ -126,6 +186,7 @@ export default function Form() {
             />
             {isNotForgotPasswordForm && (
               <Input
+                autocomplete="current-password"
                 name="password"
                 label="Password"
                 icon={<RiLock2Line />}

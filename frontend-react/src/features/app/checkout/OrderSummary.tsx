@@ -7,10 +7,14 @@ import { getTotalPrice } from "src/store/cart/cartSlice";
 import { useState } from "react";
 
 interface OrderSummaryProps {
+  discount: number;
   onEnterCoupon: (coupon: string) => void;
 }
 
-export default function OrderSummary({ onEnterCoupon }: OrderSummaryProps) {
+export default function OrderSummary({
+  onEnterCoupon,
+  discount,
+}: OrderSummaryProps) {
   const [couponValue, setCouponValue] = useState("");
 
   const cartItems = useSelector((state: RootState) => state.cart.items);
@@ -55,14 +59,14 @@ export default function OrderSummary({ onEnterCoupon }: OrderSummaryProps) {
         <div className="flex w-full items-center py-2 text-sm font-semibold text-gray-500 last:border-b-0 last:pb-0 last:text-base">
           Discount
           <span className="ml-auto flex-shrink-0 font-bold text-orange-400">
-            €0.00
+            {formatCurrency(discount)}
           </span>
         </div>
         <div className="mt-4 border-t">
           <div className="flex items-center justify-between pt-5 text-sm font-bold uppercase">
             TOTAL COST
             <span className="text-lg font-extrabold">
-              {formatCurrency(totalPrice)}
+              {formatCurrency(totalPrice + 10 - discount)}
             </span>
           </div>
         </div>

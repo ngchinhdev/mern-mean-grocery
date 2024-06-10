@@ -18,7 +18,7 @@ const getAllUsers = async (req, res, next) => {
         }
 
         const resUsers = users.map(user => {
-            const { __v, ...data } = user._doc;
+            const { __v, password, ...data } = user._doc;
             return data;
         });
 
@@ -44,7 +44,7 @@ const getUserById = async (req, res, next) => {
             createError(404, 'User not found.');
         }
 
-        const { __v, ...data } = user._doc;
+        const { __v, refreshToken, resetPasswordToken, isAdmin, password, isActivated, ...data } = user._doc;
 
         return res.status(200).json({
             message: 'User retrieved successfully.',

@@ -1,6 +1,6 @@
 
 import { z } from "zod";
-import { authShareSchema } from "./share";
+import { authShareSchemaOptional } from "./share";
 
 export const registerSchema = z.object({
     name: z.string().min(1, "Name is required!").trim(),
@@ -19,9 +19,9 @@ export type FormRegisterFields = z.infer<typeof registerSchema>;
 export type FormLoginFields = z.infer<typeof loginSchema>;
 export type FormForgotPasswordFields = z.infer<typeof forgotPasswordSchema>;
 
-export const updateUserSchema = authShareSchema.extend({
+export const updateUserSchema = authShareSchemaOptional.extend({
     name: z.string().min(1, "Name is required!").trim(),
-    address: z.string().min(1, "Address is required!").trim(),
+    address: z.string().trim(),
 });
 
 export const changePasswordSchema = z.object({

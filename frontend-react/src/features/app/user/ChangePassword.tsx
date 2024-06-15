@@ -8,6 +8,9 @@ import { changePasswordSchema } from "src/zods/auth";
 import Input from "src/ui/Input";
 import Loader from "src/ui/Loader";
 import { toastUI } from "src/utils/toast";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { changePassword } from "src/services/apiAuth";
 
 export default function ChangePassword() {
   const currentUser = useSelector((state: RootState) => state.auth.user);
@@ -18,6 +21,25 @@ export default function ChangePassword() {
     formState: { isSubmitting, errors },
   } = useForm<IChangePassword>({
     resolver: zodResolver(changePasswordSchema),
+    defaultValues: {
+      email: currentUser?.email,
+    },
+  });
+
+  const { mutate: changePasswordMutation, isPending } = useMutation<
+    unknown,
+    // eslint-disable-next-line
+    AxiosError<any, any>,
+    IChangePassword
+  >({
+    mutationFn: (data) => changePassword(data),
+    onSuccess: (res) => {
+      console.log(res);
+      toastUI("Your password updated successfully", "success");
+    },
+    onError: (err) => {
+      toastUI(err.response?.data.error, "error");
+    },
   });
 
   if (!currentUser) {
@@ -26,7 +48,7 @@ export default function ChangePassword() {
   }
 
   const onSubmit = (data: IChangePassword) => {
-    console.log(data);
+    changePasswordMutation(data);
   };
 
   return (
@@ -41,13 +63,13 @@ export default function ChangePassword() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mt-5">
               <Input
+                disabled={true}
                 register={register}
                 errors={errors}
                 label="Email"
                 name="email"
-                placeholder="Your full name"
+                placeholder="Your email"
                 type="text"
-                value={currentUser.email}
               />
             </div>
             <div className="mt-5">

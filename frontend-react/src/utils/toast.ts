@@ -3,7 +3,8 @@ import { type ToastOptions, toast } from "react-toastify";
 const options: ToastOptions = {
     position: 'top-center',
     closeOnClick: true,
-    pauseOnHover: false
+    pauseOnHover: false,
+
 };
 
 export const toastUI = (message: string, type: 'success' | 'error' | 'warning') => {

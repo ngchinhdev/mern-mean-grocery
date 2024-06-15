@@ -161,7 +161,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />
       <RouterProvider router={router} />
-      <ToastContainer />
+      <ToastContainer className="w-auto" />
     </QueryClientProvider>
   );
 }

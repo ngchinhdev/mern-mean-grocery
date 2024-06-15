@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from "src/constants/url";
-import { ICreateUser, IForgotPassword, ILoginUser, IRefreshTokenResponse, IResponseLogin, IUser } from "src/interfaces/auth";
+import { IChangePassword, ICreateUser, IForgotPassword, ILoginUser, IRefreshTokenResponse, IResponseLogin, IUpdateUser, IUser } from "src/interfaces/auth";
 import { IResponseDataCommon } from "src/interfaces/share";
 import { axiosInstance } from "src/utils/axiosInstance";
 
@@ -61,10 +61,39 @@ export const loginUser = async ({ email, password }: ILoginUser) => {
 
 export const forgotPassword = async ({ email }: IForgotPassword) => {
     try {
-        const formData = new FormData();
-        formData.append('email', email);
-
         const response = await axiosInstance.put(API_ENDPOINTS.USERS_ENDPOINTS.FORGOT_PASSWORD + '/' + email,
+            {},
+            {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const updateProfile = async ({ email, address, name, phone, avatar }: IUpdateUser) => {
+    try {
+        const formData = new FormData();
+
+        formData.append("name", name);
+        formData.append("email", email);
+        if (phone) {
+            formData.append("phone", phone);
+        }
+        if (address) {
+            formData.append("address", address);
+        }
+        if (avatar) {
+            formData.append("avatar", avatar);
+        }
+
+        const response = await axiosInstance.put(API_ENDPOINTS.USERS_ENDPOINTS.UPDATE_USER_PROFILE,
             formData,
             {
                 headers: {
@@ -72,6 +101,19 @@ export const forgotPassword = async ({ email }: IForgotPassword) => {
                 }
             }
         );
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
+export const changePassword = async ({ currentPassword, newPassword }: IChangePassword) => {
+    try {
+        const response = await axiosInstance.put(API_ENDPOINTS.USERS_ENDPOINTS.CHANGE_PASSWORD, {
+            currentPassword, newPassword
+        });
 
         return response.data;
     } catch (error) {

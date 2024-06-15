@@ -7,6 +7,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { RiLock2Line } from "react-icons/ri";
 import { FiUser } from "react-icons/fi";
 import { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 import { AppDispatch, RootState } from "src/store/store";
 import { AuthFormType, authFormTexts } from "src/constants/constants";
@@ -41,6 +42,8 @@ interface CurrentFormFields {
 export default function Form() {
   const { currentFormActive } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
+
+  const navigate = useNavigate();
 
   const schema =
     currentFormActive === AuthFormType.REGISTER
@@ -81,10 +84,10 @@ export default function Form() {
     ILoginUser
   >({
     mutationFn: (data) => loginUser(data),
-    onSuccess(data, variables, context) {
-      console.log(data, variables, context);
+    onSuccess(data) {
       setLocalStorage("accessTokenReact", data.data.accessToken);
       toastUI("Login successfully", "success");
+      navigate("/user/information");
     },
     onError(error) {
       if (error.response?.status === 400) {

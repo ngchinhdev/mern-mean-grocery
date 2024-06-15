@@ -11,12 +11,12 @@ interface InputProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
   icon?: React.ReactNode;
-  value?: string;
   autocomplete?: string;
   placeholder: string;
   type: HTMLInputTypeAttribute;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
+  disabled?: boolean;
 }
 
 export default function Input<T extends FieldValues>({
@@ -28,7 +28,7 @@ export default function Input<T extends FieldValues>({
   type,
   register,
   errors,
-  value,
+  disabled = false,
 }: InputProps<T>) {
   const error = errors[name] as FieldError | undefined;
 
@@ -52,7 +52,7 @@ export default function Input<T extends FieldValues>({
           <input
             {...register(name)}
             type={type}
-            value={value ? value : ""}
+            disabled={disabled}
             autoComplete={autocomplete ? autocomplete : ""}
             id={name + "Input"}
             placeholder={placeholder}

@@ -19,7 +19,11 @@ export interface IUser extends ICreateUser {
     updatedAt: string;
 }
 
-export interface IUpdateUser extends Pick<IUser, 'name' | 'address' | 'phone' | 'email'> { }
+export interface IUpdateUser extends Pick<IUser, 'name' | 'email'> {
+    avatar?: File;
+    phone?: string;
+    address?: string;
+}
 
 export interface IChangePassword {
     email: string;

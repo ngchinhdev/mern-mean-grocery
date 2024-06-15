@@ -6,7 +6,6 @@ export const axiosInstance = axios.create({});
 
 axiosInstance.interceptors.request.use((config) => {
     const accessToken = getLocalStorage('accessTokenReact');
-    console.log(accessToken);
     if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
         config.withCredentials = true;
@@ -18,16 +17,21 @@ axiosInstance.interceptors.request.use((config) => {
 });
 
 axiosInstance.interceptors.response.use(res => res, async err => {
-    if (err.response && err.response.status === 401) {
-        const originalRequest = err.config;
+    const originalRequest = err.config;
+    if (err.response && err.response.status === 401 && !originalRequest._retry) {
+        originalRequest._retry = true;
 
-        const response = await refreshToken();
+        try {
+            const response = await refreshToken();
 
-        setLocalStorage("accessTokenReact", response.newAccessToken);
-        originalRequest.headers["Authorization"] = 'Bearer ' + response.newAccessToken;
+            setLocalStorage("accessTokenReact", response.newAccessToken);
+            originalRequest.headers["Authorization"] = 'Bearer ' + response.newAccessToken;
 
-        return;
+            return axiosInstance(originalRequest);
+        } catch (error) {
+            return Promise.reject(err);
+        }
     }
 
-    return Promise.reject(err);
+    throw err;
 });

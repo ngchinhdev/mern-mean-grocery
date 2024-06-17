@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 import { ICartItem, ICartState } from "src/interfaces/cart";
-import { getLocalStorage, setLocalStorage } from "src/utils/helpers";
+import { getLocalStorage, removeItemLocalStorage, setLocalStorage } from "src/utils/helpers";
 
 const cartStorage: ICartItem[] = getLocalStorage('cart') || [];
 
@@ -48,11 +48,15 @@ const cartSlice = createSlice({
             const id = action.payload;
             state.items = state.items.filter(item => item.id !== id);
             setLocalStorage('cart', state.items);
+        },
+        clearCartItems: (state) => {
+            state.items = [];
+            removeItemLocalStorage('cart');
         }
     }
 });
 
-export const { addItem, increaseQuantity, decreaseQuantity, deleteItem } = cartSlice.actions;
+export const { addItem, increaseQuantity, decreaseQuantity, deleteItem, clearCartItems } = cartSlice.actions;
 
 export const getTotalPrice = (state: ICartState) => {
     return state.items.reduce((total, cur) => total + cur.price * cur.quantity, 0);

@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { createPortal } from "react-dom";
 import { LiaTimesSolid } from "react-icons/lia";
+import { useLocation } from "react-router-dom";
+
 import useOutsideClick from "src/hooks/useOutsideClick";
 
 interface ModalProps {
@@ -10,6 +12,12 @@ interface ModalProps {
 }
 
 export default function Modal({ children, isOpen, onClose }: ModalProps) {
+  const location = useLocation();
+
+  // useEffect(() => {
+  //   onClose();
+  // }, [location, onClose]);
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";

@@ -7,9 +7,9 @@ import { axiosInstance } from "src/utils/axiosInstance";
 
 export const getAllCoupons = async (): Promise<ICoupon[]> => {
     try {
-        const response: AxiosResponse = await axiosInstance.get(API_ENDPOINTS.COUPON_ENDPOINTS.GET_ALL_COUPONS);
+        const response = await axiosInstance.get<AxiosResponse<ICoupon[]>>(API_ENDPOINTS.COUPON_ENDPOINTS.GET_ALL_COUPONS);
 
-        const coupons: ICoupon[] = response.data.data;
+        const coupons = response.data.data;
         return coupons;
     } catch (error) {
         console.error(error);
@@ -19,10 +19,9 @@ export const getAllCoupons = async (): Promise<ICoupon[]> => {
 
 export const getCouponByCode = async (code: string): Promise<ICoupon> => {
     try {
-        const response: AxiosResponse = await axiosInstance.get(API_ENDPOINTS.COUPON_ENDPOINTS.GET_COUPON_BY_CODE + '/' + code);
+        const response = await axiosInstance.get<AxiosResponse<ICoupon>>(API_ENDPOINTS.COUPON_ENDPOINTS.GET_COUPON_BY_CODE + '/' + code);
 
-        const coupon: ICoupon = response.data.data;
-
+        const coupon = response.data.data;
         return coupon;
     } catch (error) {
         console.log(error);

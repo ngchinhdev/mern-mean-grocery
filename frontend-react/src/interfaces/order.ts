@@ -61,3 +61,14 @@ export interface IOrder extends Required<Omit<ICreateOrder, 'orderItems'>> {
     invoiceNo: number;
     orderItems: IOrderItem[];
 }
+
+export interface ICheckoutForm {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    country: string;
+    zipCode: string;
+}

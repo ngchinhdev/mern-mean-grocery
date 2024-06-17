@@ -1,12 +1,22 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { LuPhoneCall } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
+import { MdOutlineLockOpen } from "react-icons/md";
+
+import { RootState } from "src/store/store";
+import useLogoutUser from "src/hooks/useLogoutUser";
 
 interface TopHeaderProps {
   onOpenForm: () => void;
 }
 
 export default function TopHeader({ onOpenForm }: TopHeaderProps) {
+  const currentUser = useSelector((state: RootState) => state.auth.user);
+  const navigate = useNavigate();
+
+  const logoutUser = useLogoutUser();
+
   return (
     <div className="hidden bg-gray-100 lg:block">
       <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
@@ -31,18 +41,23 @@ export default function TopHeader({ onOpenForm }: TopHeaderProps) {
               </Link>
               <span className="mx-2">|</span>
             </div>
-            <span className="cursor-pointer font-medium hover:text-primary-600">
+            <span
+              className="cursor-pointer font-medium hover:text-primary-600"
+              onClick={
+                currentUser ? () => navigate("/user/information") : onOpenForm
+              }
+            >
               My Account
             </span>
             <span className="mx-2">|</span>
             <span
               className="flex cursor-pointer items-center font-medium hover:text-primary-600"
-              onClick={onOpenForm}
+              onClick={currentUser ? logoutUser : onOpenForm}
             >
               <span className="mr-1">
-                <FiUser />
+                {currentUser ? <MdOutlineLockOpen /> : <FiUser />}
               </span>
-              Login
+              {currentUser ? "Logout" : "Login"}
             </span>
           </div>
         </div>

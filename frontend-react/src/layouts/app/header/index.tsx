@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import BottomHeader from "./BottomHeader";
 import MiddleHeader from "./MiddleHeader";
@@ -15,9 +15,9 @@ export default function Header({ onOpenCart }: HeaderProps) {
     setIsOpenedForm(true);
   };
 
-  const handleCloseForm = () => {
+  const handleCloseForm = useCallback(() => {
     setIsOpenedForm(false);
-  };
+  }, []);
 
   return (
     <header className="" style={{ display: "unset" }}>

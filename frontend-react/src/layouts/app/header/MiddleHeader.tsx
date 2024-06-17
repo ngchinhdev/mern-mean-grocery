@@ -8,8 +8,9 @@ import { FiBell } from "react-icons/fi";
 
 import logoLight from "../../../assets/logo-light_hls14v.svg";
 import { RootState } from "src/store/store";
-import Modal from "src/ui/Modal";
 import Form from "../auth/Form";
+import { PUBLIC_ENDPOINTS } from "src/constants/url";
+import DialogPopup from "src/ui/Dialog";
 
 interface MiddleHeaderProps {
   isOpenedForm: boolean;
@@ -25,8 +26,10 @@ export default function MiddleHeader({
   isOpenedForm,
 }: MiddleHeaderProps) {
   const [searchValue, setSearchValue] = useState("");
-
   const navigate = useNavigate();
+
+  const currentUser = useSelector((state: RootState) => state.auth.user);
+  const cart = useSelector((state: RootState) => state.cart.items);
 
   const handleEnterSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
@@ -34,8 +37,6 @@ export default function MiddleHeader({
       setSearchValue("");
     }
   };
-
-  const cart = useSelector((state: RootState) => state.cart.items);
 
   return (
     <>
@@ -69,15 +70,37 @@ export default function MiddleHeader({
                 {cart.length}
               </span>
             </span>
-            <span className="cursor-pointer ps-5" onClick={onOpenForm}>
-              <FiUser className="text-2xl text-white" />
-            </span>
+            {currentUser ? (
+              <Link to={"/user/information"} className="ps-5">
+                <img
+                  src={
+                    currentUser.avatar.startsWith("https://") ||
+                    currentUser.avatar.startsWith("data:")
+                      ? currentUser.avatar
+                      : PUBLIC_ENDPOINTS.IMAGE_USERS + "/" + currentUser.avatar
+                  }
+                  className="rounded-full"
+                  alt="Avatar"
+                  width="31"
+                  height="31"
+                />
+              </Link>
+            ) : (
+              <span className="cursor-pointer ps-5" onClick={onOpenForm}>
+                <FiUser className="text-2xl text-white" />
+              </span>
+            )}
           </div>
         </div>
       </div>
-      <Modal isOpen={isOpenedForm} onClose={onCloseForm}>
+      <DialogPopup
+        widthSet="500px"
+        isConfirmation={false}
+        isOpen={isOpenedForm}
+        onClose={onCloseForm}
+      >
         <Form />
-      </Modal>
+      </DialogPopup>
     </>
   );
 }

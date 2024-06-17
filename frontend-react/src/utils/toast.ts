@@ -4,7 +4,7 @@ const options: ToastOptions = {
     position: 'top-center',
     closeOnClick: true,
     pauseOnHover: false,
-
+    toastId: 'id-t'
 };
 
 export const toastUI = (message: string, type: 'success' | 'error' | 'warning') => {

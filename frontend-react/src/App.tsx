@@ -31,6 +31,7 @@ import AdminCategories from "./pages/admin/Categories";
 import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
+import OrderDetail from "./features/app/user/OrderDetail";
 
 const router = createBrowserRouter([
   {
@@ -78,6 +79,10 @@ const router = createBrowserRouter([
           {
             path: "/user/change-password",
             element: <ChangePassword />,
+          },
+          {
+            path: "/user/order/:id",
+            element: <OrderDetail />,
           },
         ],
       },
@@ -161,7 +166,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={true} />
       <RouterProvider router={router} />
-      <ToastContainer className="w-auto" />
+      <ToastContainer className="w-auto min-w-[280px]" />
     </QueryClientProvider>
   );
 }

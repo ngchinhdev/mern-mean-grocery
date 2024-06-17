@@ -3,8 +3,11 @@ import { IoIosList } from "react-icons/io";
 import { FiUser } from "react-icons/fi";
 import { LuKeyRound } from "react-icons/lu";
 import { MdOutlineLockOpen } from "react-icons/md";
+import useLogoutUser from "src/hooks/useLogoutUser";
 
 export default function UserFeature() {
+  const logoutUser = useLogoutUser();
+
   return (
     <div className="bg-gray-50">
       <div className="mx-auto max-w-screen-2xl px-3 sm:px-10">
@@ -41,6 +44,7 @@ export default function UserFeature() {
               <span
                 role="button"
                 className="nav-item inline-flex w-full items-center gap-2 rounded-md px-2 py-3 font-medium hover:bg-gray-50 hover:text-primary-600"
+                onClick={logoutUser}
               >
                 <span className="flex items-center rounded-md">
                   <MdOutlineLockOpen />

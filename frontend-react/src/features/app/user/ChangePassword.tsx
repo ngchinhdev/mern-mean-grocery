@@ -10,10 +10,13 @@ import Loader from "src/ui/Loader";
 import { toastUI } from "src/utils/toast";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
+
 import { changePassword } from "src/services/apiAuth";
+import useLogoutUser from "src/hooks/useLogoutUser";
 
 export default function ChangePassword() {
   const currentUser = useSelector((state: RootState) => state.auth.user);
+  const logoutUser = useLogoutUser();
 
   const {
     register,
@@ -36,6 +39,7 @@ export default function ChangePassword() {
     onSuccess: (res) => {
       console.log(res);
       toastUI("Your password updated successfully", "success");
+      logoutUser();
     },
     onError: (err) => {
       toastUI(err.response?.data.error, "error");
@@ -43,7 +47,7 @@ export default function ChangePassword() {
   });
 
   if (!currentUser) {
-    toastUI("Something went wrong! No user found.", "error");
+    // toastUI("Something went wrong! No user found.", "error");
     return;
   }
 
@@ -93,7 +97,10 @@ export default function ChangePassword() {
               />
             </div>
             <div className="mt-5 text-right">
-              <button className="mt-1 h-12 w-full cursor-pointer justify-center rounded-md border-0 border-transparent bg-primary-600 px-5 py-2 text-center text-sm font-medium leading-5 text-white placeholder-white transition duration-300 ease-in-out hover:bg-primary-700 hover:text-white focus:outline-none focus-visible:outline-none sm:w-auto md:px-6 md:py-3 md:text-sm lg:px-8 lg:py-3 lg:text-sm">
+              <button
+                disabled={isPending || isSubmitting}
+                className="mt-1 h-12 w-full cursor-pointer justify-center rounded-md border-0 border-transparent bg-primary-600 px-5 py-2 text-center text-sm font-medium leading-5 text-white placeholder-white transition duration-300 ease-in-out hover:bg-primary-700 hover:text-white focus:outline-none focus-visible:outline-none sm:w-auto md:px-6 md:py-3 md:text-sm lg:px-8 lg:py-3 lg:text-sm"
+              >
                 Update Password
               </button>
             </div>

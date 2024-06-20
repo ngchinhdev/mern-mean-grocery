@@ -46,7 +46,7 @@ export default function Detail({ product }: DetailProps) {
   };
 
   return (
-    <div className="w-3/5 md:w-2/3 md:pr-6 xl:pr-6">
+    <div className="md:w-2/3 md:pr-6 xl:pr-6">
       <div className="mb-6">
         <h1 className="mb-1 text-lg font-semibold leading-7 text-gray-800 md:text-xl lg:text-2xl">
           {product.name}

@@ -145,7 +145,7 @@ export default function UpdateProfile() {
             />
           </div>
         )}
-        <div className="mt-5 flex w-full gap-4">
+        <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
           <Input
             register={register}
             errors={errors}
@@ -163,7 +163,7 @@ export default function UpdateProfile() {
             type="text"
           />
         </div>
-        <div className="mt-5 flex w-full gap-4">
+        <div className="mt-5 flex w-full flex-col gap-4 md:flex-row">
           <Input
             register={register}
             errors={errors}

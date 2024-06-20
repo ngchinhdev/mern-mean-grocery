@@ -8,12 +8,14 @@ import { useState } from "react";
 
 interface OrderSummaryProps {
   discount: number;
+  isLoadingCoupon: boolean;
   onEnterCoupon: (coupon: string) => void;
 }
 
 export default function OrderSummary({
   onEnterCoupon,
   discount,
+  isLoadingCoupon,
 }: OrderSummaryProps) {
   const [couponValue, setCouponValue] = useState("");
 
@@ -43,9 +45,10 @@ export default function OrderSummary({
               />
               <button
                 onClick={() => onEnterCoupon(couponValue)}
+                disabled={isLoadingCoupon}
                 className="mt-3 inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-md border border-gray-200 px-5 py-3 text-center text-sm font-semibold leading-4 placeholder-white transition duration-300 ease-in-out hover:bg-emerald-500 hover:text-white focus:outline-none focus-visible:outline-none sm:ml-3 sm:mt-0 sm:w-auto md:ml-3 md:mt-0 md:px-6 md:py-3.5 md:text-sm lg:ml-3 lg:mt-0 lg:px-8 lg:py-3 lg:text-base"
               >
-                Apply
+                {isLoadingCoupon ? "Loading..." : "Apply"}
               </button>
             </div>
           </div>

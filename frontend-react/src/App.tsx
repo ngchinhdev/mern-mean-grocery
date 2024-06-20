@@ -69,6 +69,10 @@ const router = createBrowserRouter([
         element: <User />,
         children: [
           {
+            path: "/user",
+            element: <Navigate to="/user/information" />,
+          },
+          {
             path: "/user/information",
             element: <UpdateProfile />,
           },
@@ -164,7 +168,7 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={true} />
+      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
       <RouterProvider router={router} />
       <ToastContainer className="w-auto min-w-[280px]" />
     </QueryClientProvider>

@@ -1,25 +1,19 @@
 import { ReactNode } from "react";
-import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
+import { LiaTimesSolid } from "react-icons/lia";
 
 interface DialogPopup {
   widthSet: string;
   isConfirmation: boolean;
   isOpen: boolean;
   children: ReactNode;
-  setIsConfirm?: (isConfirm: boolean) => void;
-  callback: () => unknown;
   onClose: () => void;
 }
 
 export default function DialogPopup({
-  isConfirmation,
   widthSet,
   isOpen,
   onClose,
@@ -27,14 +21,6 @@ export default function DialogPopup({
 }: DialogPopup) {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
-  const handleDisagree = () => {
-    onClose();
-  };
-
-  const handleAgree = () => {
-    onClose();
-  };
 
   return (
     <>
@@ -48,30 +34,28 @@ export default function DialogPopup({
             "& .MuiPaper-root": {
               width: "100%",
               padding: "1.5rem",
-              paddingRight: "1.5rem",
               maxWidth: widthSet,
               borderRadius: "20px",
+              height: "auto",
             },
           },
         }}
+        className=""
       >
+        <button
+          className="absolute right-5 top-5 flex items-center justify-center rounded-full bg-white p-2"
+          onClick={onClose}
+        >
+          <LiaTimesSolid className="text-xl text-gray-700" />
+        </button>
         <DialogContent
           sx={{
             "&::-webkit-scrollbar": { display: "none" },
+            "&": { padding: 0 },
           }}
         >
           {children}
         </DialogContent>
-        {isConfirmation && (
-          <DialogActions>
-            <Button autoFocus onClick={handleDisagree}>
-              Disagree
-            </Button>
-            <Button onClick={handleAgree} autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        )}
       </Dialog>
     </>
   );

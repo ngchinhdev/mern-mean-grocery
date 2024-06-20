@@ -45,7 +45,7 @@ export default function ProductDetailFeature() {
               <div className="w-full rounded-lg bg-white p-3 lg:p-12">
                 <div className="flex flex-col xl:flex-row">
                   <Images images={product.images} />
-                  <div className="w-full">
+                  <div className="mt-4 w-full lg:mt-4">
                     <div className="flex flex-col md:flex-row">
                       <Detail product={product} />
                       <Promotion />

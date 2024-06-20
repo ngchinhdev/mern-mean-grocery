@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import Pagination from "@mui/material/Pagination";
 import { Link } from "react-router-dom";
 
@@ -13,37 +13,17 @@ import DialogPopup from "src/ui/Dialog";
 
 interface OrderItemProps {
   order: IOrder;
-  isConfirmCancel: boolean;
   onOpen: () => void;
+  onSetId: (id: string) => void;
 }
 
 const PER_PAGE = 10;
 
-function OrderItem({ order, isConfirmCancel, onOpen }: OrderItemProps) {
-  const queryClient = useQueryClient();
-
-  const { mutate: cancelOrderMutate } = useMutation({
-    mutationFn: (id: string) => cancelOrder(id),
-    onSuccess: () => {
-      toastUI("Order is cancelled", "success");
-      // onChangeStatus();
-      queryClient.invalidateQueries({ queryKey: ["ordersUser"] });
-    },
-    onError: () => {
-      toastUI("Failed to cancel order", "error");
-    },
-  });
-
-  const handleCancelOrder = (id: string) => {
+function OrderItem({ order, onOpen, onSetId }: OrderItemProps) {
+  const handleOpen = () => {
     onOpen();
-    // if (isConfirmCancel) {
-    //   cancelOrderMutate(id);
-    // }
+    onSetId(order._id);
   };
-
-  // useEffect(() => {
-  //   cancelOrderMutate(order._id);
-  // }, [cancelOrderMutate, isConfirmCancel, order._id]);
 
   return (
     <tr>
@@ -76,7 +56,7 @@ function OrderItem({ order, isConfirmCancel, onOpen }: OrderItemProps) {
         {order.status === "Pending" && (
           <span
             role="button"
-            onClick={onOpen}
+            onClick={handleOpen}
             className="rounded-full bg-red-50 px-3 py-1 text-xs font-semibold text-red-600 transition-all hover:bg-red-500 hover:text-white"
           >
             Cancel
@@ -90,10 +70,11 @@ function OrderItem({ order, isConfirmCancel, onOpen }: OrderItemProps) {
 export default function MyOrders() {
   const [curPage, setCurPage] = useState(1);
   const [isOpen, setIsOpen] = useState(false);
-  const [confirmCancel, setConfirmCancel] = useState(false);
+  const [idCancel, setIdCancel] = useState("");
 
   const start = (curPage - 1) * PER_PAGE;
   const end = curPage * PER_PAGE;
+  const queryClient = useQueryClient();
 
   const {
     data: orders,
@@ -102,6 +83,17 @@ export default function MyOrders() {
   } = useQuery({
     queryKey: ["ordersUser"],
     queryFn: getOrdersByUser,
+  });
+
+  const { mutate: cancelOrderMutate } = useMutation({
+    mutationFn: (id: string) => cancelOrder(id),
+    onSuccess: () => {
+      toastUI("Order is cancelled", "success");
+      queryClient.invalidateQueries({ queryKey: ["ordersUser"] });
+    },
+    onError: () => {
+      toastUI("Failed to cancel order", "error");
+    },
   });
 
   const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
@@ -114,6 +106,13 @@ export default function MyOrders() {
 
   const handleOpenPopup = () => {
     setIsOpen(true);
+  };
+
+  const handleAgreeCancel = () => {
+    if (idCancel) {
+      cancelOrderMutate(idCancel);
+      handleClosePopup();
+    }
   };
 
   if (isLoading) {
@@ -179,9 +178,9 @@ export default function MyOrders() {
                     ?.slice(start, end)
                     .map((order) => (
                       <OrderItem
+                        onSetId={setIdCancel}
                         onOpen={handleOpenPopup}
                         key={order._id}
-                        isConfirmCancel={confirmCancel}
                         order={order}
                       />
                     ))}
@@ -201,13 +200,30 @@ export default function MyOrders() {
         </div>
       </div>
       <DialogPopup
-        setIsConfirm={setConfirmCancel}
         isOpen={isOpen}
         onClose={handleClosePopup}
-        widthSet="200px"
+        widthSet="450px"
         isConfirmation={true}
       >
-        ok?
+        <h2 className="mb-4 text-lg font-semibold">
+          Are you sure you want to cancel this order?
+        </h2>
+        <div className="text-right">
+          <button
+            className="me-4 text-red-500"
+            autoFocus
+            onClick={handleClosePopup}
+          >
+            Disagree
+          </button>
+          <button
+            onClick={handleAgreeCancel}
+            className="text-primary-600"
+            autoFocus
+          >
+            Agree
+          </button>
+        </div>
       </DialogPopup>
     </div>
   );

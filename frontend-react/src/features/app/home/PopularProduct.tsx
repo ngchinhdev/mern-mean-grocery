@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getHotProducts } from "../../../services/apiProducts";
-
 import ProductList from "../../../ui/ProductList";
 import NotFound from "src/ui/NotFound";
 
@@ -26,7 +25,7 @@ export default function PopularProduct() {
       {error || !products?.length ? (
         <NotFound bigSize={false} message="No products found" />
       ) : (
-        <ProductList products={products} />
+        <ProductList products={products.slice(0, 10)} />
       )}
     </>
   );

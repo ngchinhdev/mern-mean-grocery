@@ -1,6 +1,7 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
 import Drawer, { type DrawerProps } from "@mui/material/Drawer";
+import { useLocation } from "react-router-dom";
 
 type CloseReason = "backdropClick" | "escapeKeyDown" | "closeButtonClick";
 
@@ -16,6 +17,12 @@ export default function DrawerOverlay({
   onClose,
   anchor,
 }: DrawerOverlayProps) {
+  const location = useLocation();
+
+  useEffect(() => {
+    onClose("closeButtonClick");
+  }, [location, onClose]);
+
   return (
     <Drawer
       open={open}

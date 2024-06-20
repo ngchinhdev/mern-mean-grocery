@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { MdOutlinePhoneCallback } from "react-icons/md";
 import { BiHomeAlt } from "react-icons/bi";
 import { FiUser } from "react-icons/fi";
+import { TbBrandProducthunt } from "react-icons/tb";
 
 export default function MenuPages() {
   return (
@@ -22,7 +23,17 @@ export default function MenuPages() {
           </Link>
         </li>
         <li>
-          <Link to={"/"} className="flex items-center">
+          <Link to={"/products"} className="flex items-center">
+            <span>
+              <TbBrandProducthunt className="text-2xl" />
+            </span>
+            <h3 className="line-clamp-1 ps-5 text-sm font-semibold leading-tight text-gray-600">
+              Products
+            </h3>
+          </Link>
+        </li>
+        <li>
+          <Link to={"/user/information"} className="flex items-center">
             <span>
               <FiUser className="text-2xl" />
             </span>
@@ -32,7 +43,7 @@ export default function MenuPages() {
           </Link>
         </li>
         <li>
-          <Link to={"/"} className="flex items-center">
+          <Link to={"/contact-us"} className="flex items-center">
             <span>
               <MdOutlinePhoneCallback className="text-2xl" />
             </span>

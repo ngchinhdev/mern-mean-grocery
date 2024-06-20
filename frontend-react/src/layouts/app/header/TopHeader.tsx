@@ -30,13 +30,19 @@ export default function TopHeader({ onOpenForm }: TopHeaderProps) {
           </span>
           <div className="navBar flex items-center lg:text-right">
             <div>
-              <Link to={"/"} className="font-medium hover:text-primary-600">
+              <Link
+                to={"/about-us"}
+                className="font-medium hover:text-primary-600"
+              >
                 About Us
               </Link>
               <span className="mx-2">|</span>
             </div>
             <div>
-              <Link to={"/"} className="font-medium hover:text-primary-600">
+              <Link
+                to={"/contact-us"}
+                className="font-medium hover:text-primary-600"
+              >
                 Contact Us
               </Link>
               <span className="mx-2">|</span>

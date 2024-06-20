@@ -34,7 +34,7 @@ export default function AddToCartControl({
           </button>
         </div>
         <button
-          className="ml-4 inline-flex h-12 w-full cursor-pointer items-center justify-center rounded-md border-0 border-transparent bg-primary-600 px-4 py-4 text-center text-sm font-semibold leading-4 text-white transition duration-300 ease-in-out hover:bg-primary-700 hover:text-white focus:outline-none focus-visible:outline-none md:px-6 md:py-3.5 lg:px-8 lg:py-4"
+          className="ml-4 inline-flex h-12 w-full cursor-pointer items-center justify-center text-nowrap rounded-md border-0 border-transparent bg-primary-600 px-4 py-4 text-center text-sm font-semibold leading-4 text-white transition duration-300 ease-in-out hover:bg-primary-700 hover:text-white focus:outline-none focus-visible:outline-none md:px-6 md:py-3.5 lg:px-8 lg:py-4"
           onClick={onAddToCart}
         >
           Add to Cart

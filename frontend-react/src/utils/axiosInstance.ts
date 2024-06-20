@@ -2,13 +2,14 @@ import axios from "axios";
 import { getLocalStorage, setLocalStorage } from "./helpers";
 import { refreshToken } from "src/services/apiAuth";
 
-export const axiosInstance = axios.create({});
+export const axiosInstance = axios.create({
+    withCredentials: true
+});
 
 axiosInstance.interceptors.request.use((config) => {
     const accessToken = getLocalStorage('accessTokenReact');
     if (accessToken) {
         config.headers.Authorization = `Bearer ${accessToken}`;
-        config.withCredentials = true;
     }
 
     return config;

@@ -99,7 +99,7 @@ export default function MiddleHeader({
         isOpen={isOpenedForm}
         onClose={onCloseForm}
       >
-        <Form />
+        <Form onCloseForm={onCloseForm} />
       </DialogPopup>
     </>
   );

@@ -6,7 +6,7 @@ import { HiArrowRight } from "react-icons/hi2";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import Input from "src/ui/Input";
 import { checkoutFormSchema } from "src/zods/checkout";
@@ -255,15 +255,15 @@ export default function OrderForm({ discount }: OrderFormProps) {
           </div>
           <div className="mt-10 grid grid-cols-6 gap-4 lg:gap-6">
             <div className="col-span-6 sm:col-span-3">
-              <a
+              <Link
                 className="flex w-full justify-center rounded border border-indigo-100 bg-indigo-50 py-3 text-center text-sm font-medium text-gray-700 transition-all hover:border-gray-300 hover:text-gray-800"
-                href="/"
+                to="/"
               >
                 <span className="mr-2 text-xl">
                   <PiArrowBendUpLeft />
                 </span>
                 Continue Shipping
-              </a>
+              </Link>
             </div>
             <div className="col-span-6 sm:col-span-3">
               <button

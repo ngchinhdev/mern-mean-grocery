@@ -6,17 +6,21 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { RootState } from "src/store/store";
+import { PUBLIC_ENDPOINTS } from "src/constants/url";
 
 interface FooterMobileProps {
   onOpenCart: () => void;
+  onOpenForm: () => void;
   onOpenMenuMobile: () => void;
 }
 
 export default function FooterMobile({
   onOpenCart,
+  onOpenForm,
   onOpenMenuMobile,
 }: FooterMobileProps) {
   const cart = useSelector((state: RootState) => state.cart.items);
+  const currentUser = useSelector((state: RootState) => state.auth.user);
 
   return (
     <div className="fixed bottom-0 z-30 flex h-16 w-full items-center justify-between bg-primary-600 px-3 sm:px-10 lg:hidden">
@@ -32,9 +36,26 @@ export default function FooterMobile({
           {cart.length}
         </span>
       </span>
-      <span className="cursor-pointer">
-        <FiUser className="text-2xl text-white" />
-      </span>
+      {currentUser ? (
+        <Link to={"/user/information"} className="">
+          <img
+            src={
+              currentUser.avatar.startsWith("https://") ||
+              currentUser.avatar.startsWith("data:")
+                ? currentUser.avatar
+                : PUBLIC_ENDPOINTS.IMAGE_USERS + "/" + currentUser.avatar
+            }
+            className="rounded-full"
+            alt="Avatar"
+            width="31"
+            height="31"
+          />
+        </Link>
+      ) : (
+        <span className="cursor-pointer" onClick={onOpenForm}>
+          <FiUser className="text-2xl text-white" />
+        </span>
+      )}
     </div>
   );
 }

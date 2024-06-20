@@ -41,5 +41,6 @@ export interface IRefreshTokenResponse {
 
 export interface IAuthState {
     currentFormActive: AuthFormType;
+    isLoggedIn: boolean;
     user: IUser | null;
 }

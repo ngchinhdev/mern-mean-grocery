@@ -4,6 +4,7 @@ import { IAuthState, IUser } from "src/interfaces/auth";
 
 const initialState: IAuthState = {
     currentFormActive: AuthFormType.LOGIN,
+    isLoggedIn: false,
     user: null
 };
 
@@ -14,6 +15,9 @@ const authSlice = createSlice({
         setCurrentFormActive: (state, action: PayloadAction<AuthFormType>) => {
             state.currentFormActive = action.payload;
         },
+        setIsLogged: (state) => {
+            state.isLoggedIn = true;
+        },
         setUserLogged: (state, action: PayloadAction<IUser>) => {
             state.user = action.payload;
         },
@@ -23,6 +27,6 @@ const authSlice = createSlice({
     }
 });
 
-export const { setCurrentFormActive, setUserLogged, logout } = authSlice.actions;
+export const { setCurrentFormActive, setIsLogged, setUserLogged, logout } = authSlice.actions;
 
 export default authSlice.reducer;

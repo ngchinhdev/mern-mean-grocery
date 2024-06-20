@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/store";
 
-import Modal from "./Modal";
 import { IProduct } from "src/interfaces/product";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import {
@@ -13,6 +12,7 @@ import {
 } from "src/utils/helpers";
 import { addItem } from "src/store/cart/cartSlice";
 import AddToCartControl from "./AddToCartControl";
+import DialogPopup from "./Dialog";
 
 interface ProductPopupProps {
   isOpen: boolean;
@@ -61,7 +61,12 @@ export default function ProductPopup({
     ((product.orgPrice - product.price) / product.orgPrice) * 100;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <DialogPopup
+      widthSet="48rem"
+      isConfirmation={false}
+      isOpen={isOpen}
+      onClose={onClose}
+    >
       <div className="flex w-full max-w-3xl flex-col overflow-hidden md:flex-row lg:flex-row">
         <Link to={`/product/${product._id}`}>
           <div className="flex h-full flex-shrink-0 cursor-pointer items-center justify-center">
@@ -84,11 +89,11 @@ export default function ProductPopup({
         </Link>
         <div className="flex w-full flex-col px-5 text-left md:px-8">
           <div className="-mt-1.5 mb-2 block md:mb-2.5">
-            <a href="/product/lettuce">
+            <Link to={`/product/${product._id}`}>
               <h1 className="text-heading cursor-pointer text-lg font-semibold hover:text-black md:text-xl lg:text-2xl">
                 {product.name}
               </h1>
-            </a>
+            </Link>
             <div className="relative">
               <span className="inline-flex items-center justify-center rounded-full bg-primary-100 px-2 py-0 text-xs font-semibold text-primary-500">
                 Stock :
@@ -158,6 +163,6 @@ export default function ProductPopup({
           </div>
         </div>
       </div>
-    </Modal>
+    </DialogPopup>
   );
 }

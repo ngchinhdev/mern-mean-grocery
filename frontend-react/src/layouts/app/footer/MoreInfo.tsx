@@ -25,7 +25,7 @@ export default function MoreInfo() {
               daily necessary product from our KachaBazar shop and get some
               special offers.
             </p>
-            <div className="flex items-center justify-center gap-2">
+            <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
               <img src={appStoreImage} alt="App store image" />
               <img src={playStoreImage} alt="Play store image" />
             </div>

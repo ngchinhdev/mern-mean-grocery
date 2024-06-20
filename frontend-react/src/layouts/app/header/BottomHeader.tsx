@@ -68,18 +68,18 @@ export default function BottomHeader() {
           </Link>
         </div>
         <div className="transition-all hover:text-primary-700">
-          <Link to="/about-us" className="">
+          <Link to="/contact-us" className="">
             Contact Us
           </Link>
         </div>
         <div className="transition-all hover:text-primary-700">
-          <Link to="/about-us" className="">
+          <Link to="/user/my-orders" className="">
             Orders
           </Link>
         </div>
         <Link
           className="text-md relative inline-flex items-center rounded bg-red-100 px-2 py-0 font-medium text-red-500 transition-all hover:text-primary-700"
-          to="/offer"
+          to="/offers"
         >
           Offers
           <div className="absolute -right-1 -top-1 left-auto flex h-2 w-2">

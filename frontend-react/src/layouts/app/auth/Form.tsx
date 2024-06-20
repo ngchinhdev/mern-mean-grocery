@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 import { AppDispatch, RootState } from "src/store/store";
 import { AuthFormType, authFormTexts } from "src/constants/constants";
-import { setCurrentFormActive } from "src/store/auth/authSlice";
+import { setCurrentFormActive, setIsLogged } from "src/store/auth/authSlice";
 import { createUser, forgotPassword, loginUser } from "src/services/apiAuth";
 import {
   FormForgotPasswordFields,
@@ -39,7 +39,11 @@ interface CurrentFormFields {
   [AuthFormType.FORGOT_PASSWORD]: FormForgotPasswordFields;
 }
 
-export default function Form() {
+interface FormProps {
+  onCloseForm: () => void;
+}
+
+export default function Form({ onCloseForm }: FormProps) {
   const { currentFormActive } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
 
@@ -85,9 +89,11 @@ export default function Form() {
   >({
     mutationFn: (data) => loginUser(data),
     onSuccess(data) {
+      dispatch(setIsLogged());
       setLocalStorage("accessTokenReact", data.data.accessToken);
       toastUI("Login successfully", "success");
       navigate("/user/information");
+      onCloseForm();
     },
     onError(error) {
       if (error.response?.status === 400) {
@@ -104,6 +110,7 @@ export default function Form() {
     mutationFn: (data) => forgotPassword(data),
     onSuccess() {
       toastUI("Please check your email for new password.", "success");
+      onCloseForm();
     },
     onError(error) {
       if (error.response?.status === 404) {

@@ -34,9 +34,17 @@ router.post(
     authController.login
 );
 
+// router.put(
+//     '/update-profile/:id',
+//     upload.single('avatar'),
+//     authValidator.userUpdateProfileValidator,
+//     authController.updateProfile
+// );
+
 router.put(
-    '/update-profile/:id',
+    '/update-profile',
     upload.single('avatar'),
+    authMiddleware.verifyToken,
     authValidator.userUpdateProfileValidator,
     authController.updateProfile
 );

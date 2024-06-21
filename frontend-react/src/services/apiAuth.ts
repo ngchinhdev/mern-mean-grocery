@@ -1,5 +1,14 @@
 import { API_ENDPOINTS } from "src/constants/url";
-import { IChangePassword, ICreateUser, IForgotPassword, ILoginUser, IRefreshTokenResponse, IResponseLogin, IUpdateUser, IUser } from "src/interfaces/auth";
+import {
+    IChangePassword,
+    ICreateUser,
+    IForgotPassword,
+    ILoginUser,
+    IRefreshTokenResponse,
+    IResponseLogin,
+    IUpdateUser,
+    IUser
+} from "src/interfaces/auth";
 import { IResponseDataCommon } from "src/interfaces/share";
 import { axiosInstance } from "src/utils/axiosInstance";
 

@@ -38,7 +38,7 @@ const getCouponById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const coupon = await CouponModel.findById(id);
+        const coupon = await CouponModel.find({ _id: id, endTime: { $gt: new Date().toISOString() } });
 
         if (!coupon) {
             createError(404, 'Coupon not found.');
@@ -59,7 +59,7 @@ const getCouponByCode = async (req, res, next) => {
     try {
         const { code } = req.params;
 
-        const coupon = await CouponModel.findOne({ code: code });
+        const coupon = await CouponModel.findOne({ code: code, endTime: { $gt: new Date().toISOString() } });
 
         if (!coupon) {
             createError(404, 'Coupon not found.');

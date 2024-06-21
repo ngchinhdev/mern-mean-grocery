@@ -45,3 +45,20 @@ export const sanitizeHTML = (value: string) => {
     const purify = DOMPurify(window);
     return purify.sanitize(value);
 };
+
+// Countdown function with time
+export const countDownTime = (time: number) => {
+    const formatTime = (unit: number) => (unit < 10 ? `0${unit}` : `${unit}`);
+
+    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((time % (1000 * 60)) / 1000);
+
+    return {
+        days: formatTime(days),
+        hours: formatTime(hours),
+        minutes: formatTime(minutes),
+        seconds: formatTime(seconds),
+    };
+};

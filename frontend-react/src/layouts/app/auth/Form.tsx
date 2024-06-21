@@ -125,7 +125,6 @@ export default function Form({ onCloseForm }: FormProps) {
     data: CurrentFormFields[typeof currentFormActive],
   ) => {
     if (currentFormActive === AuthFormType.REGISTER) {
-      console.log(data, errors);
       registerMutation.mutate(data as FormRegisterFields);
     }
 

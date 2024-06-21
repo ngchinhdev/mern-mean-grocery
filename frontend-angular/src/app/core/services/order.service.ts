@@ -49,7 +49,7 @@ export class OrderService {
   }
 
   updateOrder(id: string, body: any): Observable<IResponseDataCommon<IOrder>> {
-    return this.http.post<IResponseDataCommon<IOrder>>(
+    return this.http.put<IResponseDataCommon<IOrder>>(
       API_ENDPOINTS.ORDER_ENDPOINTS.UPDATE_ORDER + '/' + id,
       body,
       {
@@ -61,7 +61,7 @@ export class OrderService {
   }
 
   cancelOrder(id: string): Observable<IResponseDataCommon<IOrder>> {
-    return this.http.post<IResponseDataCommon<IOrder>>(
+    return this.http.put<IResponseDataCommon<IOrder>>(
       API_ENDPOINTS.ORDER_ENDPOINTS.CANCEL_ORDER + '/' + id,
       {},
       {

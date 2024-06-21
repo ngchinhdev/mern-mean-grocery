@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "src/store/store";
@@ -27,6 +27,7 @@ export default function ProductPopup({
 }: ProductPopupProps) {
   const [quantityAddCart, setQuantityAddCart] = useState(1);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setQuantityAddCart(1);
@@ -55,6 +56,11 @@ export default function ProductPopup({
         category: product.categoryId.name,
       }),
     );
+  };
+
+  const handleNavigate = () => {
+    navigate("/products/category/" + product.categoryId._id);
+    onClose();
   };
 
   const discount =
@@ -133,14 +139,13 @@ export default function ProductPopup({
               <div>
                 <span className="d-block py-1 text-sm font-semibold">
                   <span className="text-gray-700">Category:</span>
-                  <Link to={"products/category/" + product.categoryId._id}>
-                    <button
-                      type="button"
-                      className="ml-2 font-medium text-gray-600 underline hover:text-primary-600"
-                    >
-                      {product.categoryId.name}
-                    </button>
-                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleNavigate}
+                    className="ml-2 font-medium text-gray-600 underline hover:text-primary-600"
+                  >
+                    {product.categoryId.name}
+                  </button>
                 </span>
               </div>
               <div>

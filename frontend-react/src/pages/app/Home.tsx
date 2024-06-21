@@ -1,32 +1,27 @@
-import axios from "axios";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import HomeFeature from "../../features/app/home";
+import HomeFeature from "src/features/app/home";
 import useScrollToTop from "src/hooks/useScrollToTop";
+import { setIsLogged } from "src/store/auth/authSlice";
+import { AppDispatch } from "src/store/store";
+import { setLocalStorage } from "src/utils/helpers";
 
 export default function Home() {
   useScrollToTop();
+  const dispatch = useDispatch<AppDispatch>();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get(
-        "http://localhost:3500/api/v1/auth/login/success",
-        {
-          withCredentials: true,
-        },
-      );
-
-      console.log(response.data);
-      console.log(99);
-    } catch (error) {
-      console.log(9);
-      console.log(error);
-    }
-  };
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getUser();
-  }, []);
+    if (searchParams.get("accessToken")) {
+      dispatch(setIsLogged());
+      setLocalStorage("accessTokenReact", searchParams.get("accessToken"));
+      navigate("/user/information");
+    }
+  });
 
   return <HomeFeature />;
 }

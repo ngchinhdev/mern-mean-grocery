@@ -56,14 +56,15 @@ const getOrderById = async (req, res, next) => {
 
 const getOrdersByUserId = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const { id } = req.user;
 
         const order = await OrderModel.find({ userId: id }).populate({
             path: 'orderItems.product',
             select: 'name price images'
         });
 
-        if (!order) {
+        if (!order.length) {
             createError(404, "Order not found");
         }
 

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const helperMiddleware = require('../middlewares/helper.middleware');
+const authMiddleware = require('../middlewares/auth.middleware');
 const orderController = require('../controllers/order.controller');
 const orderValidator = require('../validations/order.validation');
 
@@ -25,8 +26,8 @@ router.get(
 );
 
 router.get(
-    '/user/:id',
-    helperMiddleware.checkValidId,
+    '/user',
+    authMiddleware.verifyToken,
     orderController.getOrdersByUserId
 );
 
@@ -36,12 +37,12 @@ router.post(
     orderController.createOrder
 );
 
-router.post(
+router.put(
     '/update/:id',
     orderController.updateOrder
 );
 
-router.post(
+router.put(
     '/cancel/:id',
     orderController.cancelOrder
 );

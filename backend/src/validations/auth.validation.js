@@ -5,7 +5,7 @@ const { removeImage, createError, comparePassword } = require("../utils/helper.u
 
 const checkFileUploaded = async (_, { req }) => {
     const oldUser = await UserModel.findOne({
-        _id: req.params.id
+        _id: req.user.id
     });
 
     if (!oldUser) {
@@ -21,24 +21,36 @@ const checkFileUploaded = async (_, { req }) => {
     return req.file.filename;
 };
 
-const userEmailValidator = async (email) => {
+const userEmailValidator = async (email, id = null) => {
     if (!(/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/).test(email)) {
         createError(400, 'Invalid email.');
     }
 
-    const user = await UserModel.findOne({
-        email,
-    });
+    if (!id) {
+        const user = await UserModel.findOne({
+            email,
+        });
 
-    if (user) {
-        createError(409, 'Email is already in use.');
+        if (user) {
+            createError(409, 'Email is already in use.');
+        }
+    }
+
+    if (id) {
+        const user = await UserModel.findOne({
+            email,
+            _id: { $ne: id }
+        });
+
+        if (user) {
+            createError(409, 'Email is already in use.');
+        }
     }
 
     return email;
 };
 
 const checkCurrentPassword = async (currentPassword, { req }) => {
-    console.log(req.body);
     if (!currentPassword.trim()) {
         createError(400, 'Current password is required');
     }
@@ -48,7 +60,7 @@ const checkCurrentPassword = async (currentPassword, { req }) => {
     }
 
     const curUser = await UserModel.findOne({
-        _id: req.params.id
+        _id: req.user.id
     });
 
     const isMatched = await comparePassword(currentPassword, curUser.password);
@@ -139,7 +151,7 @@ const userUpdateProfileValidator = checkSchema({
         },
         trim: true,
         customSanitizer: {
-            options: userEmailValidator
+            options: (email, { req }) => userEmailValidator(email, req.user.id)
         }
     },
     avatar: {

@@ -147,7 +147,7 @@ export default function OrderDetail() {
                     </thead>
                     <tbody className="text-serif divide-y divide-gray-100 bg-white text-sm">
                       {order.orderItems.map((item, index) => (
-                        <tr>
+                        <tr key={index}>
                           <th className="whitespace-nowrap px-6 py-1 text-left font-normal text-gray-500">
                             {index + 1}
                           </th>

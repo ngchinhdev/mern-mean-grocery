@@ -9,7 +9,7 @@ export default function Banner({ image, title }: BannerProps) {
   return (
     <div className="duration-400 relative mx-auto w-full transform overflow-hidden rounded-lg transition delay-150 ease-out hover:shadow-xl">
       <div className="">
-        <Link to="/product/1">
+        <Link to="/products">
           <img src={image} alt={title} />
           <div className="p-r-16 absolute left-0 top-0 z-10 flex w-full flex-col justify-center text-center">
             <div className="pt-4">

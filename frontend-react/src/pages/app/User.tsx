@@ -4,7 +4,7 @@ import { useEffect } from "react";
 
 import useScrollToTop from "src/hooks/useScrollToTop";
 import { RootState } from "src/store/store";
-import UserFeature from "../../features/app/user";
+import UserFeature from "src/features/app/user";
 
 export default function User() {
   const navigate = useNavigate();

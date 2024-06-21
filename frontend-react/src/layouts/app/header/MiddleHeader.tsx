@@ -33,6 +33,7 @@ export default function MiddleHeader({
 
   const handleEnterSearch = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      if (!searchValue) return;
       navigate(`/products/search/${searchValue}`);
       setSearchValue("");
     }

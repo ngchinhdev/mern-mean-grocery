@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const createHttpError = require('http-errors');
 const bcrypt = require('bcrypt');
-const PDFDocument = require('pdfkit');
 
 const createError = (statusCode, message) => {
     throw new createHttpError(statusCode, message);

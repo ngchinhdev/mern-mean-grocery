@@ -25,7 +25,7 @@ export default function Button({
 
   if (type === "secondary") typeCss = "border-lime-900 border py-2 px-5";
 
-  const className = `inline-flex items-center justify-center text-center font-medium ${typeCss} rounded-${rounded || "sm"}`;
+  const className = `inline-flex items-center justify-center text-center font-medium ${typeCss} rounded-${rounded || "lg"}`;
 
   if (to) {
     return (

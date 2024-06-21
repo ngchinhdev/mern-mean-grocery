@@ -136,7 +136,8 @@ const refreshToken = async (req, res, next) => {
 
 const updateProfile = async (req, res, next) => {
     try {
-        const { id } = req.params;
+        // const { id } = req.params;
+        const { id } = req.user;
 
         const updatedUser = await UserModel.findByIdAndUpdate(id, {
             ...req.body,
@@ -158,18 +159,17 @@ const updateProfile = async (req, res, next) => {
 
 const changePassword = async (req, res, next) => {
     try {
-        const { id } = req.user.id;
+        const { id } = req.user;
 
         const hashedPassword = await hashPassword(req.body.newPassword);
 
-        const updatedUser = await UserModel.findByIdAndUpdate(id, {
+        await UserModel.findByIdAndUpdate(id, {
             password: hashedPassword
         }, { new: true });
 
         return res.status(200).json({
             message: 'User password updated successfully.',
             totalRecords: 1,
-            data: updatedUser
         });
     } catch (error) {
         next(error);

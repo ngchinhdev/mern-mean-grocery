@@ -6,7 +6,7 @@ import { LuShoppingCart } from "react-icons/lu";
 import { FiUser } from "react-icons/fi";
 import { FiBell } from "react-icons/fi";
 
-import logoLight from "../../../assets/logo-light_hls14v.svg";
+import logoLight from "../../../assets/logo-no-background.png";
 import { RootState } from "src/store/store";
 import Form from "../auth/Form";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
@@ -43,7 +43,10 @@ export default function MiddleHeader({
     <>
       <div className="bg-primary-600">
         <div className="mx-auto flex max-w-screen-2xl items-center justify-between p-3 sm:px-10 lg:py-4">
-          <Link to={"/"} className="relative hidden h-10 w-32 lg:block">
+          <Link
+            to={"/"}
+            className="relative hidden h-10 w-40 items-center lg:flex"
+          >
             <img src={logoLight} className="w-full" alt="Logo" />
           </Link>
           <div className="flex w-full items-center rounded-md bg-white px-4 py-3 transition-all duration-200 ease-in-out md:mx-12 lg:mx-4 lg:flex lg:max-w-[520px] xl:mx-0 xl:max-w-[750px] 2xl:max-w-[900px]">

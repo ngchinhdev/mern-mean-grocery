@@ -6,7 +6,7 @@ import { FaShoppingBag } from "react-icons/fa";
 import HeaderCustom from "./header";
 import SidebarMenu from "./SidebarMenu";
 
-import logoAdmin from "../../assets/logo-light_hls14v.svg";
+import logoAdmin from "../../assets/logo-no-background.png";
 
 const { Sider, Content } = Layout;
 
@@ -18,7 +18,7 @@ export default function AdminLayout() {
   };
 
   return (
-    <Layout>
+    <Layout className="tb-admin">
       <Sider
         trigger={null}
         collapsed={collapsed}

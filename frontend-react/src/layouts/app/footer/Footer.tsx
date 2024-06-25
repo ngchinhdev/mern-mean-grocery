@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-import logoShop from "../../../assets/logo-shop.svg";
+import logoShop from "../../../assets/logo-has-color.png";
 import facebookLogo from "../../../assets/fb.svg";
 import instagramLogo from "../../../assets/ins.webp";
 import linkedinLogo from "../../../assets/lnk.png";
@@ -69,7 +69,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <img src={logoShop} alt="Logo" className="mb-4" />
+            <img width={200} src={logoShop} alt="Logo" className="mb-4" />
             <ul>
               <li className="inline-block w-full text-sm text-gray-600 hover:text-primary-600">
                 <Link to="/">

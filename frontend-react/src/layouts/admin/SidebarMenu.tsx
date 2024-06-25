@@ -2,56 +2,45 @@ import { useNavigate } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 
-import { RxDashboard } from "react-icons/rx";
-import { FiLayers } from "react-icons/fi";
-import { BsBox } from "react-icons/bs";
+import { IoLayers } from "react-icons/io5";
+import { MdDashboard } from "react-icons/md";
+import { GiFruitBowl } from "react-icons/gi";
+import { IoBagCheck } from "react-icons/io5";
+import { FaUserGroup } from "react-icons/fa6";
+import { RiCoupon2Fill } from "react-icons/ri";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
 const items: MenuItem[] = [
   {
     key: "/admin/dashboard",
-    icon: <RxDashboard />,
+    icon: <MdDashboard className="!text-[18px]" />,
     label: "Dashboard",
   },
   {
-    key: "2",
-    icon: <FiLayers />,
+    key: "/admin/categories/list",
+    icon: <IoLayers className="!text-[18px]" />,
     label: "Categories",
-    children: [
-      { key: "/admin/categories/list", label: "All Categories" },
-      { key: "/admin/categories/add", label: "Add Category" },
-    ],
   },
   {
-    key: "/admin/products",
-    icon: <BsBox />,
+    key: "/admin/products/list",
+    icon: <GiFruitBowl className="!text-[18px]" />,
     label: "Products",
-    children: [
-      {
-        key: "/admin/products/list",
-        label: "All Products",
-      },
-      { key: "/admin/products/add", label: "Add Product" },
-    ],
-  },
-  {
-    key: "4",
-    icon: <BsBox />,
-    label: "Orders",
-    children: [
-      { key: "4.1", label: "All Orders" },
-      { key: "4.2", label: "Add Order" },
-    ],
   },
   {
     key: "5",
-    icon: <BsBox />,
+    icon: <FaUserGroup className="!text-[18px]" />,
     label: "Users",
-    children: [
-      { key: "5.1", label: "All Users" },
-      { key: "5.2", label: "Add User" },
-    ],
+  },
+  {
+    key: "4",
+    icon: <IoBagCheck className="!text-[18px]" />,
+    label: "Orders",
+  },
+  {
+    key: "5",
+    icon: <RiCoupon2Fill className="!text-[18px]" />,
+    label: "Coupons",
   },
 ];
 

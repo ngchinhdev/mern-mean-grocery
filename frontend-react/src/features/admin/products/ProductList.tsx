@@ -6,27 +6,25 @@ import { FaRegTrashAlt } from "react-icons/fa";
 
 export default function ProductList() {
   return (
-    <div>
+    <div className="pb-10">
       <div className="mb-4 items-center justify-between lg:flex">
         <h1 className="mb-4 text-2xl font-semibold text-stone-800 lg:mb-0">
           Products
         </h1>
         <div>
           <Link
-            to="/admin/products/add"
+            to="add"
             className="flex items-center gap-2 rounded-md bg-primary-600 px-3 py-2 text-base font-semibold text-white"
           >
-            <span>
-              <FaCirclePlus />
-            </span>
+            <FaCirclePlus />
             Add Product
           </Link>
         </div>
       </div>
       <div>
-        <table className="w-full text-left text-sm text-gray-600">
-          <thead className="bg-[#f5f5f5]">
-            <tr className="table-header-admin">
+        <table className="w-full text-left text-gray-600">
+          <thead className="bg-[#f5f5f5] text-sm">
+            <tr>
               <th className="uppercase">Name</th>
               <th className="uppercase">Category</th>
               <th className="uppercase">Quantity</th>
@@ -36,7 +34,7 @@ export default function ProductList() {
             </tr>
           </thead>
           <tbody>
-            <tr className="table-body-admin">
+            <tr>
               <td className="flex items-center">
                 <div>
                   <img
@@ -45,22 +43,22 @@ export default function ProductList() {
                     alt="{{product.name}}"
                   />
                 </div>
-                <span>name</span>
+                <span>asdad</span>
               </td>
-              <td>name</td>
-              <td>name</td>
+              <td>asdasd</td>
+              <td>asdad</td>
               <td>
                 <span className="text-primary-600">Yes</span>
                 <span className="text-red-600">No</span>
               </td>
-              <td>name</td>
+              <td>asdad</td>
               <td>
-                <div className="flex items-center gap-5">
-                  <button className="flex items-center text-xl">
-                    <LuPencil />
-                  </button>
-                  <button className="flex items-center text-xl">
-                    <FaRegTrashAlt />
+                <div className="flex items-center gap-4">
+                  <Link className="flex items-center" to="edit/">
+                    <LuPencil className="text-xl text-blue-500" />
+                  </Link>
+                  <button className="flex items-center">
+                    <FaRegTrashAlt className="text-xl text-red-500" />
                   </button>
                 </div>
               </td>

@@ -39,63 +39,63 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <Home />,
       },
       {
-        path: "/products",
+        path: "products",
         element: <Products />,
         children: [
           {
-            path: "/products/category/:categoryId",
+            path: "category/:categoryId",
             element: <Products />,
           },
           {
-            path: "/products/search/:search",
+            path: "search/:search",
             element: <Products />,
           },
         ],
       },
       {
-        path: "/about",
+        path: "about",
         element: <About />,
       },
       {
-        path: "/contact",
+        path: "contact",
         element: <Contact />,
       },
       {
-        path: "/user",
+        path: "user",
         element: <User />,
         children: [
           {
-            path: "/user",
-            element: <Navigate to="/user/information" />,
+            path: "",
+            element: <Navigate to="information" />,
           },
           {
-            path: "/user/information",
+            path: "information",
             element: <UpdateProfile />,
           },
           {
-            path: "/user/my-orders",
+            path: "my-orders",
             element: <MyOrders />,
           },
           {
-            path: "/user/change-password",
+            path: "change-password",
             element: <ChangePassword />,
           },
           {
-            path: "/user/order/:id",
+            path: "order/:id",
             element: <OrderDetail />,
           },
         ],
       },
       {
-        path: "/checkout",
+        path: "checkout",
         element: <Checkout />,
       },
       {
-        path: "/product/:productId",
+        path: "product/:productId",
         element: <ProductDetail />,
       },
       {
@@ -109,45 +109,53 @@ const router = createBrowserRouter([
     element: <AdminLayout />,
     children: [
       {
-        path: "/admin",
-        element: <Navigate to="/admin/dashboard" />,
+        path: "",
+        element: <Navigate to="dashboard" />,
       },
       {
-        path: "/admin/dashboard",
+        path: "dashboard",
         element: <AdminDashboard />,
       },
       {
-        path: "/admin/products",
+        path: "products",
         element: <AdminProducts />,
         children: [
           {
-            path: "/admin/products/list",
+            path: "",
             element: <AdminProductList />,
           },
           {
-            path: "/admin/products/add",
+            path: "list",
+            element: <AdminProductList />,
+          },
+          {
+            path: "add",
             element: <AdminProductEditor />,
           },
           {
-            path: "/admin/products/edit",
+            path: "edit",
             element: <AdminProductEditor />,
           },
         ],
       },
       {
-        path: "/admin/categories",
+        path: "categories",
         element: <AdminCategories />,
         children: [
           {
-            path: "/admin/categories/list",
+            path: "",
             element: <AdminCategoryList />,
           },
           {
-            path: "/admin/categories/add",
+            path: "list",
+            element: <AdminCategoryList />,
+          },
+          {
+            path: "add",
             element: <AdminCategoryEditor />,
           },
           {
-            path: "/admin/categories/edit",
+            path: "edit",
             element: <AdminCategoryEditor />,
           },
         ],
@@ -155,7 +163,6 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

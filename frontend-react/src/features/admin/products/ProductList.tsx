@@ -54,7 +54,10 @@ export default function ProductList() {
               <td>asdad</td>
               <td>
                 <div className="flex items-center gap-4">
-                  <Link className="flex items-center" to="edit/">
+                  <Link
+                    className="flex items-center"
+                    to="/admin/products/edit/"
+                  >
                     <LuPencil className="text-xl text-blue-500" />
                   </Link>
                   <button className="flex items-center">

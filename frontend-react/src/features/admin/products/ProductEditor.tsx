@@ -1,11 +1,38 @@
+import { ChangeEvent, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import classNameNameicEditor from "@ckeditor/ckeditor5-build-classNameNameic";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
-
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { IoSaveSharp } from "react-icons/io5";
-import { IoMdImages } from "react-icons/io";
+
+import Input from "src/ui/Input";
+import SelectOption from "src/ui/SelectOptions";
+import ImagePicker from "src/ui/ImagePicker";
+import { PUBLIC_ENDPOINTS } from "src/constants/url";
 
 export default function ProductEditor() {
+  const [selectedFile, setSelectedFile] = useState<File[]>([]);
+  const [productImages, setProductImages] = useState<string[]>([]);
+
+  const {
+    register,
+    formState: { errors },
+  } = useForm();
+
+  const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImages((prevImages) => [
+          ...prevImages,
+          reader.result as string,
+        ]);
+      };
+      reader.readAsDataURL(files[0]);
+      setSelectedFile((prevFiles) => [...prevFiles, files[0]]);
+    }
+  };
+
   return (
     <>
       <div>
@@ -24,41 +51,22 @@ export default function ProductEditor() {
                   </h2>
                   <div className="mb-3 flex gap-3">
                     <div className="flex-[3]">
-                      <label
-                        htmlFor="name"
-                        className="mb-2 block font-medium text-gray-500"
-                      >
-                        Product Name
-                      </label>
-                      <input
+                      <Input
+                        label="Product Name"
+                        name="name"
+                        placeholder="Name of products"
                         type="text"
-                        className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
-                        placeholder="Name"
-                        id="name"
+                        errors={errors}
+                        register={register}
                       />
-
-                      <small className="inline-block pt-1 text-[15px] text-red-600">
-                        (*) Name is required
-                      </small>
                     </div>
                     <div className="flex-1">
-                      <label
-                        htmlFor="hot"
-                        className="mb-2 block font-medium text-gray-500"
-                      >
-                        Hot
-                      </label>
-                      <select
+                      <SelectOption
+                        label="Hot"
                         name="hot"
-                        className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 text-gray-400 focus:outline-primary-600"
-                        id="hot"
-                      >
-                        <option value="0">No</option>
-                        <option value="1">Yes</option>
-                      </select>
-                      <small className="inline-block pt-1 text-[15px] text-red-600">
-                        (*) Hot is required
-                      </small>
+                        errors={errors}
+                        register={register}
+                      />
                     </div>
                   </div>
                   <div>
@@ -68,52 +76,52 @@ export default function ProductEditor() {
                     >
                       Description
                     </label>
-                    editor
-                    <small className="inline-block pt-1 text-[15px] text-red-600">
-                      (*) Description is required
-                    </small>
+                    <CKEditor
+                      editor={ClassicEditor}
+                      {...register("description")}
+                      data="<p>Hello from CKEditor&nbsp;5!</p>"
+                      onReady={(editor) => {
+                        console.log("Editor is ready to use!", editor);
+                      }}
+                      onChange={(event) => {
+                        console.log(event);
+                      }}
+                      onBlur={(event, editor) => {
+                        console.log("Blur.", editor);
+                      }}
+                      onFocus={(event, editor) => {
+                        console.log("Focus.", editor);
+                      }}
+                    />
+                    {errors["description"] && (
+                      <small className="text-sm text-red-500">
+                        {errors["description"].message as string}
+                      </small>
+                    )}
                   </div>
                 </div>
                 <div className="mb-5">
                   <h2 className="mb-1 text-xl font-medium">Pricing</h2>
                   <div className="flex gap-3">
                     <div className="flex-1">
-                      <label
-                        htmlFor="price"
-                        className="mb-2 block font-medium text-gray-500"
-                      >
-                        Price
-                      </label>
-                      <input
+                      <Input
+                        label="Price"
+                        name="price"
+                        placeholder="Price of products"
                         type="number"
-                        className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
-                        min="1"
-                        step="0.001"
-                        placeholder="Price"
-                        id="price"
+                        errors={errors}
+                        register={register}
                       />
-                      <small className="inline-block pt-1 text-[15px] text-red-600">
-                        (*) Price is required
-                      </small>
                     </div>
                     <div className="flex-1">
-                      <label
-                        htmlFor="orgPrice"
-                        className="mb-2 block font-medium text-gray-500"
-                      >
-                        Origin Price
-                      </label>
-                      <input
+                      <Input
+                        label="Origin Price"
+                        name="orgPrice"
+                        placeholder="Origin price "
                         type="number"
-                        step="0.001"
-                        min="1"
-                        className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
-                        placeholder="Origin Price"
-                        id="orgPrice"
+                        errors={errors}
+                        register={register}
                       />
-                      <small className="inline-block pt-1 text-[15px] text-red-600">
-                        (*) Origin price is required
-                      </small>
                     </div>
                   </div>
                 </div>
@@ -121,40 +129,23 @@ export default function ProductEditor() {
                   <h2 className="mb-2 text-xl font-medium">Organization</h2>
                   <div className="flex gap-3">
                     <div className="flex-1">
-                      <label
-                        htmlFor="quantity"
-                        className="mb-2 block font-medium text-gray-500"
-                      >
-                        Quantity
-                      </label>
-                      <input
+                      <Input
+                        label="Quantity"
+                        name="quantity"
+                        placeholder="Remaining quantity"
                         type="number"
-                        className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
-                        placeholder="Quantity"
-                        id="quantity"
+                        errors={errors}
+                        register={register}
                       />
-                      <small className="inline-block pt-1 text-[15px] text-red-600">
-                        (*) Quantity is required
-                      </small>
                     </div>
                     <div className="flex-1">
-                      <label
-                        htmlFor="category"
-                        className="mb-2 block font-medium text-gray-500"
-                      >
-                        Category
-                      </label>
-                      <select
-                        name="categoryId"
-                        className="h-12 w-full rounded-lg border border-gray-300 px-5 py-3 text-gray-400 focus:outline-primary-600"
-                        id="categoryId"
-                      >
-                        <option value="asdad">asdad</option>
-                      </select>
-
-                      <small className="inline-block pt-1 text-[15px] text-red-600">
-                        (*) Category is required
-                      </small>
+                      <SelectOption
+                        defaultSelect="Choose Category"
+                        errors={errors}
+                        register={register}
+                        label="Category"
+                        name="category"
+                      />
                     </div>
                   </div>
                 </div>
@@ -162,11 +153,19 @@ export default function ProductEditor() {
               <div>
                 <h2 className="text-xl font-medium">Product Images</h2>
                 <p className="mb-2">Add or change images of the product</p>
-                <div className="flex flex-wrap items-center gap-3">image</div>
+                <div className="flex flex-wrap items-center gap-3">
+                  <ImagePicker
+                    name="imagesInput"
+                    register={register}
+                    imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_USERS}
+                    onSetSelectedFile={handleSelectImages}
+                    images={[]}
+                  />
+                </div>
               </div>
             </div>
           </div>
-          <div className="sticky bottom-0 -mx-8 flex items-center justify-between border-t border-gray-200 bg-white px-8 py-4">
+          <div className="sticky bottom-0 -mx-8 flex items-center justify-between border-t border-gray-200 bg-white px-8 py-4 pb-6">
             <div></div>
             <div className="items-center gap-3 md:flex">
               <button

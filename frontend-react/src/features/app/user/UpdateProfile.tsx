@@ -108,7 +108,7 @@ export default function UpdateProfile() {
       </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         {avatar ? (
-          <div className="image-small-admin relative h-24 w-24 overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all hover:border-primary-600">
+          <div className="image-picker-small relative h-24 w-24 overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all hover:border-primary-600">
             <img
               src={
                 avatar.startsWith("https://") || avatar.startsWith("data:")

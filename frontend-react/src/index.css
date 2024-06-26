@@ -28,11 +28,11 @@ body {
     color: #10b981;
 }
 
-.image-small-admin:hover {
+.image-picker-small:hover {
     @apply bg-gray-200;
 }
 
-.image-small-admin:hover .trash {
+.image-picker-small:hover .trash {
     @apply inline-block
 }
 

@@ -10,6 +10,7 @@ export interface ICreateProduct {
     orgPrice: number,
     quantity: number,
     categoryId: string,
+    hot: boolean;
     images: string[],
 }
 

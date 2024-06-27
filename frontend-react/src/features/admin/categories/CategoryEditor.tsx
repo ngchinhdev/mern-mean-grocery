@@ -1,7 +1,75 @@
-import { IoMdImages } from "react-icons/io";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import { AxiosError } from "axios";
+import { ChangeEvent, useState } from "react";
+import { useForm } from "react-hook-form";
 import { IoSaveSharp } from "react-icons/io5";
 
+import { PUBLIC_ENDPOINTS } from "src/constants/url";
+import { ICreateCategory } from "src/interfaces/category";
+import { createCategory } from "src/services/apiCategories";
+import ImagePicker from "src/ui/ImagePicker";
+import Input from "src/ui/Input";
+import { toastUI } from "src/utils/toast";
+import { createCategorySchema } from "src/zods/category";
+
 export default function CategoryEditor() {
+  const [selectedFile, setSelectedFile] = useState<File[]>([]);
+  const [productImages, setProductImages] = useState<string[]>([]);
+  const [emptyImage, setEmptyImage] = useState("");
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ICreateCategory>({
+    resolver: zodResolver(createCategorySchema),
+  });
+
+  const { mutate: createCategoryMutate, isPending } = useMutation<
+    unknown,
+    // eslint-disable-next-line
+    AxiosError<any, any>,
+    ICreateCategory
+  >({
+    mutationFn: (data: ICreateCategory) => createCategory(data),
+    onSuccess: () => {
+      toastUI("Create new category successfully.", "success");
+    },
+    onError: (err) => {
+      toastUI(err.response?.data.error, "error");
+    },
+  });
+
+  const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
+    const files = e.target.files;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProductImages((prevImages) => [
+          ...prevImages,
+          reader.result as string,
+        ]);
+      };
+      reader.readAsDataURL(files[0]);
+      setSelectedFile((prevFiles) => [...prevFiles, files[0]]);
+    }
+  };
+
+  const handleDeleteImage = (index: number) => {
+    setProductImages((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const onSubmit = (data: ICreateCategory) => {
+    if (!selectedFile.length) {
+      setEmptyImage("(*) Image is required");
+      return;
+    }
+
+    createCategoryMutate({ ...data, image: selectedFile[0] });
+  };
+
   return (
     <div>
       <div className="mb-4 items-center justify-between lg:flex">
@@ -10,55 +78,32 @@ export default function CategoryEditor() {
         </h1>
       </div>
       <div className="w-full">
-        <form encType="multipart/form-data">
+        <form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
           <div className="flex w-full gap-6 pb-16">
             <div className="w-3/5">
               <div>
                 <h2 className="mb-2 text-xl font-medium">Basic Information</h2>
-                <label
-                  htmlFor="name"
-                  className="mb-2 block font-medium text-gray-500"
-                >
-                  Category Name
-                </label>
-                <input
+                <Input
+                  errors={errors}
+                  label="Category Name"
+                  name="name"
+                  placeholder="Enter category name"
+                  register={register}
                   type="text"
-                  className="h-11 w-full rounded-lg border border-gray-300 px-5 py-3 focus:outline-primary-600"
-                  placeholder="Name"
-                  id="name"
                 />
-                <small className="inline-block pt-1 text-[15px] text-red-600">
-                  (*) Name is required
-                </small>
               </div>
             </div>
             <div>
               <h2 className="text-xl font-medium">Category Image</h2>
               <p className="mb-2">Add or change image of the category</p>
-              <div className="flex items-center gap-3">
-                <div className="image-small-admin relative h-24 w-24 overflow-hidden rounded-lg border-2 border-dashed border-gray-300 p-3 transition-all hover:border-primary-600">
-                  <img
-                    src="{{imagePicked}}"
-                    className="h-full w-full"
-                    alt="{{data!.name}}"
-                  />
-                  <span className="trash hidden">sdfsdf</span>
-                </div>
-                <div className="relative h-24 w-24 overflow-hidden rounded-lg border-2 border-dashed border-gray-300 transition-all hover:border-primary-600">
-                  <label
-                    htmlFor="image"
-                    className="z-10 mb-2 flex h-full w-full flex-col items-center justify-center gap-2 p-3 font-medium text-gray-500"
-                  >
-                    fsdfsdf
-                    <span>Upload</span>
-                  </label>
-                  <input
-                    type="file"
-                    id="image"
-                    className="absolute inset-0 h-full w-full cursor-pointer opacity-0"
-                  />
-                </div>
-              </div>
+              <ImagePicker
+                emptyImage={emptyImage}
+                maxLength={1}
+                imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_CATEGORIES}
+                onSetSelectedFile={handleSelectImages}
+                images={productImages}
+                onDeleteImage={handleDeleteImage}
+              />
             </div>
           </div>
           <div className="sticky bottom-0 -mx-8 flex items-center justify-between border-t border-gray-200 bg-white px-8 py-4">

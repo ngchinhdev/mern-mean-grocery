@@ -60,7 +60,9 @@ export default function Input<T extends FieldValues>({
           />
         </div>
         {error && (
-          <small className="text-sm text-red-500">{error.message}</small>
+          <small className="mt-1 inline-block text-sm text-red-500">
+            {error.message}
+          </small>
         )}
       </div>
     </div>

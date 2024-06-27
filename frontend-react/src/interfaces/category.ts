@@ -1,6 +1,6 @@
 export interface ICreateCategory {
     name: string,
-    image: string,
+    image: File,
 }
 
 export interface ICategory extends ICreateCategory {

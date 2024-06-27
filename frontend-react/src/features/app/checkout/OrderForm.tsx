@@ -39,7 +39,7 @@ export default function OrderForm({ discount }: OrderFormProps) {
     resolver: zodResolver(checkoutFormSchema),
   });
 
-  const { mutate: createOrderMutation, isPending } = useMutation<
+  const { mutate: createOrderMutate, isPending } = useMutation<
     unknown,
     // eslint-disable-next-line
     AxiosError<any, any>,
@@ -98,7 +98,7 @@ export default function OrderForm({ discount }: OrderFormProps) {
       status: "Pending",
     };
 
-    createOrderMutation(dataCreateOrder);
+    createOrderMutate(dataCreateOrder);
   };
 
   return (

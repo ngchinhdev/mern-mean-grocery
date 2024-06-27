@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { IoSaveSharp } from "react-icons/io5";
@@ -19,6 +19,7 @@ export default function ProductEditor() {
   } = useForm();
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.files);
     const files = e.target.files;
     if (files && files[0]) {
       const reader = new FileReader();
@@ -31,6 +32,10 @@ export default function ProductEditor() {
       reader.readAsDataURL(files[0]);
       setSelectedFile((prevFiles) => [...prevFiles, files[0]]);
     }
+  };
+
+  const handleDeleteImage = (index: number) => {
+    setProductImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -153,15 +158,13 @@ export default function ProductEditor() {
               <div>
                 <h2 className="text-xl font-medium">Product Images</h2>
                 <p className="mb-2">Add or change images of the product</p>
-                <div className="flex flex-wrap items-center gap-3">
-                  <ImagePicker
-                    name="imagesInput"
-                    register={register}
-                    imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_USERS}
-                    onSetSelectedFile={handleSelectImages}
-                    images={[]}
-                  />
-                </div>
+                <ImagePicker
+                  maxLength={4}
+                  imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_PRODUCTS}
+                  onSetSelectedFile={handleSelectImages}
+                  images={productImages}
+                  onDeleteImage={handleDeleteImage}
+                />
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { API_ENDPOINTS } from "../constants/url";
 
-import { ICategory } from "../interfaces/category";
+import { ICategory, ICreateCategory } from "../interfaces/category";
 import { axiosInstance } from "src/utils/axiosInstance";
 
 export const getAllCategories = async (): Promise<ICategory[]> => {
@@ -12,6 +12,29 @@ export const getAllCategories = async (): Promise<ICategory[]> => {
         return categories;
     } catch (error) {
         console.error(error);
-        return [];
+        throw error;
+    }
+};
+
+export const createCategory = async ({ name, image }: ICreateCategory) => {
+    try {
+        const formData = new FormData();
+
+        formData.append('name', name);
+        formData.append('image', image);
+
+        const response = await axiosInstance.post(API_ENDPOINTS.CATEGORY_ENDPOINTS.CREATE_CATEGORY,
+            formData,
+            {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
 };

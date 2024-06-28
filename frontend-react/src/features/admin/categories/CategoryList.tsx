@@ -1,16 +1,55 @@
+import { Pagination } from "@mui/material";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { FaCirclePlus } from "react-icons/fa6";
 import { LuPencil } from "react-icons/lu";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
-import { getAllCategories } from "src/services/apiCategories";
+import { deleteCategory, getAllCategories } from "src/services/apiCategories";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
+import { toastUI } from "src/utils/toast";
+import { AxiosError } from "axios";
+
+const PER_PAGE = 10;
 
 export default function CategoryList() {
+  const [curPage, setCurPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const queryClient = useQueryClient();
+
+  const start = (curPage - 1) * PER_PAGE;
+  const end = curPage * PER_PAGE;
+
+  const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
+    setCurPage(page);
+  };
+
   const { data: categories, error } = useQuery({
     queryKey: ["allCategories"],
     queryFn: getAllCategories,
+  });
+
+  useEffect(() => {
+    if (categories) {
+      setTotalPages(Math.ceil(categories.length / PER_PAGE));
+    }
+  }, [categories]);
+
+  const { mutate: deleteMutate, isPending } = useMutation<
+    unknown,
+    // eslint-disable-next-line
+    AxiosError<any, any>,
+    string
+  >({
+    mutationFn: (id: string) => deleteCategory(id),
+    onSuccess: () => {
+      toastUI("Delete category successfully", "success");
+      queryClient.invalidateQueries({ queryKey: ["allCategories"] });
+    },
+    onError: (err) => {
+      toastUI(err.response?.data.error, "error");
+    },
   });
 
   return (
@@ -39,7 +78,7 @@ export default function CategoryList() {
             </tr>
           </thead>
           <tbody>
-            {categories?.map((c) => (
+            {categories?.slice(start, end).map((c) => (
               <tr key={c._id}>
                 <td>{c.name}</td>
                 <td>
@@ -58,7 +97,10 @@ export default function CategoryList() {
                       <LuPencil className="text-xl text-blue-500" />
                     </Link>
                     <button className="flex items-center">
-                      <FaRegTrashAlt className="text-xl text-red-500" />
+                      <FaRegTrashAlt
+                        className="text-xl text-red-500"
+                        onClick={() => deleteMutate(c._id)}
+                      />
                     </button>
                   </div>
                 </td>
@@ -66,6 +108,15 @@ export default function CategoryList() {
             ))}
           </tbody>
         </table>
+        <div className="float-end mt-4">
+          <Pagination
+            count={totalPages}
+            variant="outlined"
+            shape="rounded"
+            page={curPage}
+            onChange={handleChangePage}
+          />
+        </div>
       </div>
     </div>
   );

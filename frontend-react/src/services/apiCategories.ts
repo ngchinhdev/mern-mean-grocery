@@ -73,3 +73,16 @@ export const updateCategory = async (categoryUpdate: ICreateCategory, id: string
         throw error;
     }
 };
+
+export const deleteCategory = async (id: string) => {
+    try {
+        const response = await axiosInstance.delete(API_ENDPOINTS.CATEGORY_ENDPOINTS.DELETE_CATEGORY + '/' + id,
+            {},
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};

@@ -1,18 +1,39 @@
+import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { FaCirclePlus } from "react-icons/fa6";
 import { LuPencil } from "react-icons/lu";
 import { FaRegTrashAlt } from "react-icons/fa";
+import { Pagination } from "@mui/material";
 
 import { getAllProducts } from "src/services/apiProducts";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import { formatCurrency } from "src/utils/helpers";
 
+const PER_PAGE = 10;
+
 export default function ProductList() {
+  const [curPage, setCurPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const queryClient = useQueryClient();
+
+  const start = (curPage - 1) * PER_PAGE;
+  const end = curPage * PER_PAGE;
+
+  const handleChangePage = (event: ChangeEvent<unknown>, page: number) => {
+    setCurPage(page);
+  };
+
   const { data: products, error } = useQuery({
     queryKey: ["allProducts"],
     queryFn: getAllProducts,
   });
+
+  useEffect(() => {
+    if (products) {
+      setTotalPages(Math.ceil(products.length / PER_PAGE));
+    }
+  }, [products]);
 
   return (
     <div>
@@ -43,7 +64,7 @@ export default function ProductList() {
             </tr>
           </thead>
           <tbody>
-            {products?.map((p) => (
+            {products?.slice(start, end).map((p) => (
               <tr key={p._id}>
                 <td className="flex items-center">
                   <div>
@@ -69,7 +90,7 @@ export default function ProductList() {
                   <div className="flex items-center gap-4">
                     <Link
                       className="flex items-center"
-                      to="/admin/products/edit/"
+                      to={`/admin/products/edit/${p._id}`}
                     >
                       <LuPencil className="text-xl text-blue-500" />
                     </Link>
@@ -82,6 +103,15 @@ export default function ProductList() {
             ))}
           </tbody>
         </table>
+        <div className="float-end mt-4">
+          <Pagination
+            count={totalPages}
+            variant="outlined"
+            shape="rounded"
+            page={curPage}
+            onChange={handleChangePage}
+          />
+        </div>
       </div>
     </div>
   );

@@ -23,7 +23,7 @@ export default function ProductList() {
         <div>
           <Link
             to="/admin/products/add"
-            className="flex items-center gap-2 rounded-md bg-primary-600 px-3 py-2 text-base font-semibold text-white"
+            className="flex items-center gap-2 rounded-md bg-primary-600 px-3 py-2 text-base font-semibold text-white hover:text-white"
           >
             <FaCirclePlus />
             Add Product
@@ -44,7 +44,7 @@ export default function ProductList() {
           </thead>
           <tbody>
             {products?.map((p) => (
-              <tr>
+              <tr key={p._id}>
                 <td className="flex items-center">
                   <div>
                     <img

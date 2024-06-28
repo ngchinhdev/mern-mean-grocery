@@ -1,13 +1,18 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoSaveSharp } from "react-icons/io5";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
-import { ICreateCategory } from "src/interfaces/category";
-import { createCategory } from "src/services/apiCategories";
+import { ICategory, ICreateCategory } from "src/interfaces/category";
+import {
+  createCategory,
+  getCategoryById,
+  updateCategory,
+} from "src/services/apiCategories";
 import ImagePicker from "src/ui/ImagePicker";
 import Input from "src/ui/Input";
 import { toastUI } from "src/utils/toast";
@@ -15,26 +20,59 @@ import { createCategorySchema } from "src/zods/category";
 
 export default function CategoryEditor() {
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
-  const [productImages, setProductImages] = useState<string[]>([]);
+  const [categoryImage, setCategoryImage] = useState<string[]>([]);
   const [emptyImage, setEmptyImage] = useState("");
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const { id } = useParams();
+
+  const {
+    data: category,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["category", id],
+    queryFn: () => getCategoryById(id as string),
+    enabled: !!id,
+  });
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<ICreateCategory>({
     resolver: zodResolver(createCategorySchema),
+    defaultValues: {
+      name: "",
+    },
   });
 
-  const { mutate: createCategoryMutate, isPending } = useMutation<
+  useEffect(() => {
+    if (category) {
+      setValue("name", category.name);
+      setCategoryImage([category.image]);
+    }
+  }, [category, setValue]);
+
+  const { mutate: categoryMutate, isPending } = useMutation<
     unknown,
     // eslint-disable-next-line
     AxiosError<any, any>,
     ICreateCategory
   >({
-    mutationFn: (data: ICreateCategory) => createCategory(data),
+    mutationFn: (data: ICreateCategory) =>
+      id ? updateCategory(data, id) : createCategory(data),
     onSuccess: () => {
-      toastUI("Create new category successfully.", "success");
+      toastUI(
+        `${id ? "Edit" : "Create new"} category successfully.`,
+        "success",
+      );
+      queryClient.invalidateQueries({ queryKey: ["category", id] });
+      queryClient.invalidateQueries({ queryKey: ["allCategories"] });
+      navigate("/admin/categories/list");
     },
     onError: (err) => {
       toastUI(err.response?.data.error, "error");
@@ -47,7 +85,7 @@ export default function CategoryEditor() {
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProductImages((prevImages) => [
+        setCategoryImage((prevImages) => [
           ...prevImages,
           reader.result as string,
         ]);
@@ -58,23 +96,23 @@ export default function CategoryEditor() {
   };
 
   const handleDeleteImage = (index: number) => {
-    setProductImages((prev) => prev.filter((_, i) => i !== index));
+    setCategoryImage((prev) => prev.filter((_, i) => i !== index));
   };
 
   const onSubmit = (data: ICreateCategory) => {
-    if (!selectedFile.length) {
+    if (!selectedFile.length && !id) {
       setEmptyImage("(*) Image is required");
       return;
     }
 
-    createCategoryMutate({ ...data, image: selectedFile[0] });
+    categoryMutate({ ...data, image: selectedFile[0] });
   };
 
   return (
     <div>
       <div className="mb-4 items-center justify-between lg:flex">
         <h1 className="mb-4 text-2xl font-medium text-stone-800 lg:mb-0">
-          {0 ? "Edit Category" : "Add New Category"}
+          {id ? "Edit Category" : "Add New Category"}
         </h1>
       </div>
       <div className="w-full">
@@ -101,7 +139,7 @@ export default function CategoryEditor() {
                 maxLength={1}
                 imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_CATEGORIES}
                 onSetSelectedFile={handleSelectImages}
-                images={productImages}
+                images={categoryImage}
                 onDeleteImage={handleDeleteImage}
               />
             </div>

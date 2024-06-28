@@ -133,7 +133,7 @@ const router = createBrowserRouter([
             element: <AdminProductEditor />,
           },
           {
-            path: "edit",
+            path: "edit/:id",
             element: <AdminProductEditor />,
           },
         ],
@@ -155,7 +155,7 @@ const router = createBrowserRouter([
             element: <AdminCategoryEditor />,
           },
           {
-            path: "edit",
+            path: "edit/:id",
             element: <AdminCategoryEditor />,
           },
         ],

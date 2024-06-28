@@ -22,7 +22,7 @@ export default function CategoryList() {
         <div>
           <Link
             to="/admin/categories/add"
-            className="flex items-center gap-2 rounded-md bg-primary-600 px-3 py-2 text-base font-semibold text-white"
+            className="flex items-center gap-2 rounded-md bg-primary-600 px-3 py-2 text-base font-semibold text-white hover:text-white"
           >
             <FaCirclePlus />
             Add Category
@@ -40,7 +40,7 @@ export default function CategoryList() {
           </thead>
           <tbody>
             {categories?.map((c) => (
-              <tr>
+              <tr key={c._id}>
                 <td>{c.name}</td>
                 <td>
                   <img
@@ -53,7 +53,7 @@ export default function CategoryList() {
                   <div className="flex items-center gap-4">
                     <Link
                       className="flex items-center"
-                      to="/admin/categories/edit"
+                      to={`/admin/categories/edit/${c._id}`}
                     >
                       <LuPencil className="text-xl text-blue-500" />
                     </Link>

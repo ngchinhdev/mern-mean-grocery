@@ -3,8 +3,9 @@ export interface ICreateCategory {
     image: File,
 }
 
-export interface ICategory extends ICreateCategory {
+export interface ICategory extends Pick<ICreateCategory, 'name'> {
     _id: string,
+    image: string;
 }
 
 

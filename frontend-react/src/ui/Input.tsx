@@ -13,6 +13,8 @@ interface InputProps<T extends FieldValues> {
   icon?: React.ReactNode;
   autocomplete?: string;
   placeholder: string;
+  min?: number;
+  max?: number;
   type: HTMLInputTypeAttribute;
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
@@ -28,6 +30,8 @@ export default function Input<T extends FieldValues>({
   type,
   register,
   errors,
+  min,
+  max,
   disabled = false,
 }: InputProps<T>) {
   const error = errors[name] as FieldError | undefined;
@@ -50,12 +54,16 @@ export default function Input<T extends FieldValues>({
             </div>
           )}
           <input
-            {...register(name)}
+            {...register(name, {
+              valueAsNumber: type === "number" ? true : false,
+            })}
             type={type}
             disabled={disabled}
             autoComplete={autocomplete ? autocomplete : ""}
             id={name + "Input"}
             placeholder={placeholder}
+            min={min}
+            max={max}
             className={`h-11 min-h-12 w-full appearance-none rounded-md border border-gray-200 bg-white py-2 text-sm opacity-75 transition duration-200 ease-in-out focus:border-primary-600 focus:outline-none focus:ring-0 md:h-12 ${icon ? "px-10" : "px-5"}`}
           />
         </div>

@@ -1,14 +1,16 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FaCirclePlus } from "react-icons/fa6";
 import { LuPencil } from "react-icons/lu";
 import { FaRegTrashAlt } from "react-icons/fa";
 import { Pagination } from "@mui/material";
+import { AxiosError } from "axios";
 
-import { getAllProducts } from "src/services/apiProducts";
+import { deleteProduct, getAllProducts } from "src/services/apiProducts";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import { formatCurrency } from "src/utils/helpers";
+import { toastUI } from "src/utils/toast";
 
 const PER_PAGE = 10;
 
@@ -34,6 +36,22 @@ export default function ProductList() {
       setTotalPages(Math.ceil(products.length / PER_PAGE));
     }
   }, [products]);
+
+  const { mutate: deleteMutate, isPending } = useMutation<
+    unknown,
+    // eslint-disable-next-line
+    AxiosError<any, any>,
+    string
+  >({
+    mutationFn: (id: string) => deleteProduct(id),
+    onSuccess: () => {
+      toastUI("Delete product successfully", "success");
+      queryClient.invalidateQueries({ queryKey: ["allProducts"] });
+    },
+    onError: (err) => {
+      toastUI(err.response?.data.error, "error");
+    },
+  });
 
   return (
     <div>
@@ -95,7 +113,10 @@ export default function ProductList() {
                       <LuPencil className="text-xl text-blue-500" />
                     </Link>
                     <button className="flex items-center">
-                      <FaRegTrashAlt className="text-xl text-red-500" />
+                      <FaRegTrashAlt
+                        className="text-xl text-red-500"
+                        onClick={() => deleteMutate(p._id)}
+                      />
                     </button>
                   </div>
                 </td>

@@ -9,7 +9,7 @@ import {
 interface SelectOptionProps<T extends FieldValues> {
   name: Path<T>;
   label: string;
-  defaultSelect?: string;
+  options: { opt: string; value: string; isDefault: boolean }[];
   register: UseFormRegister<T>;
   errors: FieldErrors<T>;
   disabled?: boolean;
@@ -20,7 +20,7 @@ export default function SelectOption<T extends FieldValues>({
   label,
   register,
   errors,
-  defaultSelect,
+  options,
 }: SelectOptionProps<T>) {
   const error = errors[name] as FieldError | undefined;
 
@@ -39,9 +39,11 @@ export default function SelectOption<T extends FieldValues>({
             id={name + "Input"}
             {...register(name)}
           >
-            {defaultSelect && <option value="none">{defaultSelect}</option>}
-            <option value="{{category._id}}">sádasd</option>
-            <option value="{{category._id}}">sádasd</option>
+            {options.map((opt) => (
+              <option value={opt.value} selected={opt.isDefault}>
+                {opt.opt}
+              </option>
+            ))}
           </select>
           {error && (
             <small className="text-sm text-red-500">{error.message}</small>

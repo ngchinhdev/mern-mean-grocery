@@ -21,7 +21,7 @@ import { createCategorySchema } from "src/zods/category";
 export default function CategoryEditor() {
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
   const [categoryImage, setCategoryImage] = useState<string[]>([]);
-  const [emptyImage, setEmptyImage] = useState("");
+  const [emptyImageMessage, setEmptyImageMessage] = useState("");
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ export default function CategoryEditor() {
       id ? updateCategory(data, id) : createCategory(data),
     onSuccess: () => {
       toastUI(
-        `${id ? "Edit" : "Create new"} category successfully.`,
+        `${id ? "Update" : "Create new"} category successfully.`,
         "success",
       );
       queryClient.invalidateQueries({ queryKey: ["category", id] });
@@ -101,7 +101,7 @@ export default function CategoryEditor() {
 
   const onSubmit = (data: ICreateCategory) => {
     if (!selectedFile.length && !id) {
-      setEmptyImage("(*) Image is required");
+      setEmptyImageMessage("(*) Image is required");
       return;
     }
 
@@ -135,7 +135,7 @@ export default function CategoryEditor() {
               <h2 className="text-xl font-medium">Category Image</h2>
               <p className="mb-2">Add or change image of the category</p>
               <ImagePicker
-                emptyImage={emptyImage}
+                emptyImageMessage={emptyImageMessage}
                 maxLength={1}
                 imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_CATEGORIES}
                 onSetSelectedFile={handleSelectImages}

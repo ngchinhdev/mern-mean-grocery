@@ -1,4 +1,8 @@
-import { ChangeEvent, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AxiosError } from "axios";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
@@ -8,15 +12,98 @@ import Input from "src/ui/Input";
 import SelectOption from "src/ui/SelectOptions";
 import ImagePicker from "src/ui/ImagePicker";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
+import {
+  createProduct,
+  getProductById,
+  updateProduct,
+} from "src/services/apiProducts";
+import { ICreateProduct } from "src/interfaces/product";
+import { createProductSchema } from "src/zods/product";
+import { toastUI } from "src/utils/toast";
+import { getAllCategories } from "src/services/apiCategories";
+import { ICategory } from "src/interfaces/category";
 
 export default function ProductEditor() {
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
   const [productImages, setProductImages] = useState<string[]>([]);
+  const [categoryOptions, setCategoryOptions] = useState<ICategory[]>([]);
+  const [emptyImageMessage, setEmptyImageMessage] = useState("");
+
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const { id } = useParams();
+
+  const {
+    data: product,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["product", id],
+    queryFn: () => getProductById(id as string),
+    enabled: !!id,
+  });
+
+  const { data: categories, error } = useQuery({
+    queryKey: ["allCategories"],
+    queryFn: getAllCategories,
+  });
 
   const {
     register,
+    handleSubmit,
+    setValue,
     formState: { errors },
-  } = useForm();
+  } = useForm<ICreateProduct>({
+    mode: "onSubmit",
+    resolver: zodResolver(createProductSchema),
+    defaultValues: {
+      name: "",
+      description: "",
+      hot: false,
+      orgPrice: 1,
+      price: 1,
+      quantity: 1,
+      categoryId: "",
+    },
+  });
+
+  useEffect(() => {
+    if (product) {
+      setValue("name", product.name);
+      setValue("orgPrice", product.orgPrice);
+      setValue("price", product.price);
+      setValue("quantity", product.quantity);
+      setValue("description", product.description);
+      setValue("categoryId", product.categoryId._id);
+      setProductImages(product.images);
+    }
+
+    if (categories) {
+      setCategoryOptions(categories);
+    }
+  }, [product, setValue, categories]);
+
+  const { mutate: productMutate, isPending } = useMutation<
+    unknown,
+    // eslint-disable-next-line
+    AxiosError<any, any>,
+    ICreateProduct
+  >({
+    mutationFn: (data: ICreateProduct) =>
+      id ? updateProduct(data, id) : createProduct(data),
+    onSuccess: () => {
+      toastUI(
+        `${id ? "Update" : "Create new"} product successfully.`,
+        "success",
+      );
+      queryClient.invalidateQueries({ queryKey: ["product", id] });
+      queryClient.invalidateQueries({ queryKey: ["allProducts"] });
+      navigate("/admin/products/list");
+    },
+    onError: (err) => {
+      toastUI(err.response?.data.error, "error");
+    },
+  });
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
     console.log(e.target.files);
@@ -38,15 +125,31 @@ export default function ProductEditor() {
     setProductImages((prev) => prev.filter((_, i) => i !== index));
   };
 
+  const onSubmit = (data: ICreateProduct) => {
+    if (!selectedFile.length && !id) {
+      setEmptyImageMessage("(*) Images is required");
+      return;
+    }
+
+    productMutate({
+      ...data,
+      images: selectedFile,
+    });
+  };
+
   return (
     <>
       <div>
         <div className="mb-4 items-center justify-between lg:flex">
           <h1 className="mb-4 text-2xl font-medium text-stone-800 lg:mb-0">
-            {0 ? "Edit Product" : "Add New Product"}
+            {id ? "Edit Product" : "Add New Product"}
           </h1>
         </div>
-        <form className="pb-10" encType="multipart/form-data">
+        <form
+          className="pb-10"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit(onSubmit)}
+        >
           <div className="w-full">
             <div className="flex w-full gap-6 pb-16">
               <div className="w-3/5">
@@ -67,6 +170,22 @@ export default function ProductEditor() {
                     </div>
                     <div className="flex-1">
                       <SelectOption
+                        options={[
+                          {
+                            opt: "No",
+                            value: "0",
+                            isDefault: product
+                              ? product.hot === false
+                                ? true
+                                : false
+                              : false,
+                          },
+                          {
+                            opt: "Yes",
+                            value: "1",
+                            isDefault: product ? product.hot : false,
+                          },
+                        ]}
                         label="Hot"
                         name="hot"
                         errors={errors}
@@ -82,24 +201,21 @@ export default function ProductEditor() {
                       Description
                     </label>
                     <CKEditor
-                      editor={ClassicEditor}
                       {...register("description")}
-                      data="<p>Hello from CKEditor&nbsp;5!</p>"
+                      editor={ClassicEditor}
+                      data={product?.description ? product.description : ""}
                       onReady={(editor) => {
                         console.log("Editor is ready to use!", editor);
                       }}
-                      onChange={(event) => {
-                        console.log(event);
+                      onChange={(event, editor) => {
+                        console.log(editor.getData());
+                        setValue("description", editor.getData());
                       }}
-                      onBlur={(event, editor) => {
-                        console.log("Blur.", editor);
-                      }}
-                      onFocus={(event, editor) => {
-                        console.log("Focus.", editor);
-                      }}
+                      onBlur={(event, editor) => {}}
+                      onFocus={(event, editor) => {}}
                     />
                     {errors["description"] && (
-                      <small className="text-sm text-red-500">
+                      <small className="mt-1 inline-block text-sm text-red-500">
                         {errors["description"].message as string}
                       </small>
                     )}
@@ -114,6 +230,7 @@ export default function ProductEditor() {
                         name="price"
                         placeholder="Price of products"
                         type="number"
+                        min={1}
                         errors={errors}
                         register={register}
                       />
@@ -124,6 +241,7 @@ export default function ProductEditor() {
                         name="orgPrice"
                         placeholder="Origin price "
                         type="number"
+                        min={1}
                         errors={errors}
                         register={register}
                       />
@@ -139,18 +257,25 @@ export default function ProductEditor() {
                         name="quantity"
                         placeholder="Remaining quantity"
                         type="number"
+                        min={1}
                         errors={errors}
                         register={register}
                       />
                     </div>
                     <div className="flex-1">
-                      <SelectOption
-                        defaultSelect="Choose Category"
-                        errors={errors}
-                        register={register}
-                        label="Category"
-                        name="category"
-                      />
+                      {categoryOptions.length && (
+                        <SelectOption
+                          options={categoryOptions.map((c) => ({
+                            opt: c.name,
+                            value: c._id,
+                            isDefault: product ? c._id === product?._id : false,
+                          }))}
+                          errors={errors}
+                          register={register}
+                          label="Category"
+                          name="categoryId"
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -159,6 +284,7 @@ export default function ProductEditor() {
                 <h2 className="text-xl font-medium">Product Images</h2>
                 <p className="mb-2">Add or change images of the product</p>
                 <ImagePicker
+                  emptyImageMessage={emptyImageMessage}
                   maxLength={4}
                   imageRootUrl={PUBLIC_ENDPOINTS.IMAGE_PRODUCTS}
                   onSetSelectedFile={handleSelectImages}

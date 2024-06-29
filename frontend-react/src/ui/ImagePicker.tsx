@@ -6,7 +6,7 @@ interface ImagePickerProps {
   imageRootUrl: string;
   maxLength: number;
   images: string[];
-  emptyImage: string;
+  emptyImageMessage: string;
   onSetSelectedFile: (e: ChangeEvent<HTMLInputElement>) => void;
   onDeleteImage: (index: number) => void;
 }
@@ -17,7 +17,7 @@ export default function ImagePicker({
   maxLength,
   onSetSelectedFile,
   onDeleteImage,
-  emptyImage,
+  emptyImageMessage,
 }: ImagePickerProps) {
   return (
     <>
@@ -70,7 +70,7 @@ export default function ImagePicker({
           : ""}
       </div>
       <small className="mt-1 inline-block text-sm text-red-500">
-        {emptyImage}
+        {emptyImageMessage}
       </small>
     </>
   );

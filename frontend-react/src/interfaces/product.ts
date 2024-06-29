@@ -11,11 +11,12 @@ export interface ICreateProduct {
     quantity: number,
     categoryId: string,
     hot: boolean;
-    images: string[],
+    images: File[],
 }
 
-export interface IProduct extends Omit<ICreateProduct, 'categoryId'> {
+export interface IProduct extends Omit<ICreateProduct, 'categoryId' | 'images'> {
     _id: string,
     categoryId: ICategoryId,
+    images: string[],
 }
 

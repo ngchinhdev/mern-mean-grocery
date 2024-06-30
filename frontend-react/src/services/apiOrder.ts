@@ -4,10 +4,11 @@ import { IOrder, type ICreateOrder } from '../interfaces/order';
 
 import { API_ENDPOINTS } from "../constants/url";
 import { axiosInstance } from "src/utils/axiosInstance";
+import { IResponseDataCommon } from "src/interfaces/share";
 
-export const getAllOrder = async (): Promise<IOrder[]> => {
+export const getAllOrders = async (): Promise<IOrder[]> => {
     try {
-        const response = await axiosInstance.get<AxiosResponse<IOrder[]>>(API_ENDPOINTS.ORDER_ENDPOINTS.CREATE_ORDER);
+        const response = await axiosInstance.get<AxiosResponse<IOrder[]>>(API_ENDPOINTS.ORDER_ENDPOINTS.GET_ALL_ORDERS);
 
         console.log(response.data);
         return response.data.data;
@@ -42,9 +43,21 @@ export const getOrdersById = async (id: string): Promise<IOrder> => {
 
 export const createOrder = async (data: ICreateOrder) => {
     try {
-        const response = await axiosInstance.post(API_ENDPOINTS.ORDER_ENDPOINTS.CREATE_ORDER, data);
+        const response = await axiosInstance.post<IResponseDataCommon<IOrder>>(API_ENDPOINTS.ORDER_ENDPOINTS.CREATE_ORDER, data);
 
         console.log(response.data);
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+export const updateOrder = async (id: string, data: any) => {
+    try {
+        const response = await axiosInstance.put<IResponseDataCommon<IOrder>>(API_ENDPOINTS.ORDER_ENDPOINTS.UPDATE_ORDER + '/' + id, data);
+
+        return response.data.data;
     } catch (error) {
         console.log(error);
         throw error;

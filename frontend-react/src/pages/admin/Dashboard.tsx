@@ -1,4 +1,8 @@
+import { GiKiwiFruit } from "react-icons/gi";
+import { IoBagCheckOutline } from "react-icons/io5";
+import { MdOutlineAttachMoney } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { convertToDateString } from "src/utils/helpers";
 
 export default function Dashboard() {
   return (
@@ -20,13 +24,18 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="mb-2 text-2xl font-bold">
-                  <span>ssss</span>
+                  <span>
+                    <MdOutlineAttachMoney className="text-3xl" />
+                  </span>
                 </h3>
                 <p>
-                  Latest update <span className="font-semibold">ádasd</span>
+                  Latest update{" "}
+                  <span className="font-semibold">
+                    {convertToDateString(new Date().toISOString())}
+                  </span>
                 </p>
               </div>
-              <div>adsasd</div>
+              <div>asd</div>
             </div>
           </div>
         </div>
@@ -39,13 +48,18 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="mb-2 text-2xl font-bold">
-                  <span>ádasd</span>
+                  <span>
+                    <IoBagCheckOutline className="text-3xl" />
+                  </span>
                 </h3>
                 <p>
-                  Latest update <span className="font-semibold">ádad</span>
+                  Latest update{" "}
+                  <span className="font-semibold">
+                    {convertToDateString(new Date().toISOString())}
+                  </span>
                 </p>
               </div>
-              <div>ádad</div>
+              <div>asd</div>
             </div>
           </div>
         </div>
@@ -58,10 +72,15 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="mb-2 text-2xl font-bold">
-                  <span>ád</span>
+                  <span>
+                    <GiKiwiFruit className="text-3xl" />
+                  </span>
                 </h3>
                 <p>
-                  Latest update <span className="font-semibold">ádasd</span>
+                  Latest update{" "}
+                  <span className="font-semibold">
+                    {convertToDateString(new Date().toISOString())}
+                  </span>
                 </p>
               </div>
               <div>ádasd</div>

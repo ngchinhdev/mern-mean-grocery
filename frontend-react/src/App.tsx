@@ -30,6 +30,11 @@ import AdminProductEditor from "./features/admin/products/ProductEditor";
 import AdminCategories from "./pages/admin/Categories";
 import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
+import AdminUsers from "./pages/admin/Users";
+import AdminUserList from "./features/admin/users/UserList";
+import AdminOrders from "./pages/admin/Orders";
+import AdminOrderList from "./features/admin/orders/OrderList";
+import AdminOrderDetail from "./features/admin/orders/OrderDetail";
 import NotFoundPage from "./pages/not-found/NotFoundPage";
 import OrderDetail from "./features/app/user/OrderDetail";
 
@@ -160,9 +165,42 @@ const router = createBrowserRouter([
           },
         ],
       },
+      {
+        path: "users",
+        element: <AdminUsers />,
+        children: [
+          {
+            path: "",
+            element: <AdminUserList />,
+          },
+          {
+            path: "list",
+            element: <AdminUserList />,
+          },
+        ],
+      },
+      {
+        path: "orders",
+        element: <AdminOrders />,
+        children: [
+          {
+            path: "",
+            element: <AdminOrderList />,
+          },
+          {
+            path: "list",
+            element: <AdminOrderList />,
+          },
+          {
+            path: "detail/:id",
+            element: <AdminOrderDetail />,
+          },
+        ],
+      },
     ],
   },
 ]);
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

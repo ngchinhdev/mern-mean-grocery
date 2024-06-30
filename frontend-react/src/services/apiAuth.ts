@@ -12,6 +12,17 @@ import {
 import { IResponseDataCommon } from "src/interfaces/share";
 import { axiosInstance } from "src/utils/axiosInstance";
 
+export const getAllUsers = async () => {
+    try {
+        const response = await axiosInstance.get<IResponseDataCommon<IUser[]>>(API_ENDPOINTS.USERS_ENDPOINTS.GET_ALL_USERS);
+
+        return response.data.data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+};
+
 export const getUserProfile = async () => {
     try {
         const response = await axiosInstance.get<IResponseDataCommon<IUser>>(API_ENDPOINTS.USERS_ENDPOINTS.GET_USER_PROFILE);
@@ -64,6 +75,19 @@ export const loginUser = async ({ email, password }: ILoginUser) => {
         return response.data;
     } catch (error) {
         console.error("Error logging in user:", error);
+        throw error;
+    }
+};
+
+export const changeRole = async (id: string, isAdmin: boolean) => {
+    try {
+        const response = await axiosInstance.put(API_ENDPOINTS.USERS_ENDPOINTS.CHANGE_ROLE + '/' + id,
+            { isAdmin },
+        );
+
+        return response.data;
+    } catch (error) {
+        console.error(error);
         throw error;
     }
 };

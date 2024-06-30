@@ -36,6 +36,23 @@ body {
     @apply inline-block
 }
 
+/* orders status classes */
+.pending-st {
+    color: orange;
+}
+
+.confirmed-st {
+    color: blue;
+}
+
+.delivered-st {
+    color: green;
+}
+
+.cancel-st {
+    color: red;
+}
+
 @layer utilities {
 
     /* Hide scrollbar for Chrome, Safari and Opera */

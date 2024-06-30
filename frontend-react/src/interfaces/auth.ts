@@ -17,6 +17,7 @@ export interface IUser extends ICreateUser {
     avatar: string;
     createdAt: string;
     updatedAt: string;
+    isAdmin: boolean;
 }
 
 export interface IUpdateUser extends Pick<IUser, 'name' | 'email'> {

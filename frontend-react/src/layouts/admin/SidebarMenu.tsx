@@ -28,12 +28,12 @@ const items: MenuItem[] = [
     label: "Products",
   },
   {
-    key: "5",
+    key: "/admin/users/list",
     icon: <FaUserGroup className="!text-[18px]" />,
     label: "Users",
   },
   {
-    key: "4",
+    key: "/admin/orders/list",
     icon: <IoBagCheck className="!text-[18px]" />,
     label: "Orders",
   },

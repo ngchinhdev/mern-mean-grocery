@@ -1,10 +1,49 @@
+import { useQuery } from "@tanstack/react-query";
 import { GiKiwiFruit } from "react-icons/gi";
 import { IoBagCheckOutline } from "react-icons/io5";
-import { MdOutlineAttachMoney } from "react-icons/md";
+import { TfiMoney } from "react-icons/tfi";
 import { Link } from "react-router-dom";
-import { convertToDateString } from "src/utils/helpers";
+import { PUBLIC_ENDPOINTS } from "src/constants/url";
+
+import { getAllOrders, getBestSelling } from "src/services/apiOrder";
+import { getAllProducts } from "src/services/apiProducts";
+import Loader from "src/ui/Loader";
+import { convertToDateString, formatCurrency } from "src/utils/helpers";
 
 export default function Dashboard() {
+  const {
+    data: orders,
+    error: orderError,
+    isLoading: orderPending,
+  } = useQuery({
+    queryKey: ["allOrders"],
+    queryFn: getAllOrders,
+  });
+
+  const {
+    data: products,
+    error: productError,
+    isPending: productPending,
+  } = useQuery({
+    queryKey: ["allProducts"],
+    queryFn: getAllProducts,
+  });
+
+  const {
+    data: bestSelling,
+    error: bestSellingError,
+    isPending: bestSellingPending,
+  } = useQuery({
+    queryKey: ["bestSelling"],
+    queryFn: getBestSelling,
+  });
+
+  if (productPending || bestSellingPending || orderPending) {
+    return <Loader />;
+  }
+
+  const revenue = orders?.reduce((total, cur) => (total += cur.totalPrice), 0);
+
   return (
     <div className="flex h-full flex-col gap-4 pb-20">
       <div className="mb-4 items-center justify-between gap-3 lg:flex">
@@ -24,9 +63,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="mb-2 text-2xl font-bold">
-                  <span>
-                    <MdOutlineAttachMoney className="text-3xl" />
-                  </span>
+                  <span>{formatCurrency(orderError ? 0 : revenue || 0)}</span>
                 </h3>
                 <p>
                   Latest update{" "}
@@ -35,7 +72,9 @@ export default function Dashboard() {
                   </span>
                 </p>
               </div>
-              <div>asd</div>
+              <div className="scale-[200%]">
+                <TfiMoney className="text-3xl text-gray-500" />
+              </div>
             </div>
           </div>
         </div>
@@ -48,9 +87,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="mb-2 text-2xl font-bold">
-                  <span>
-                    <IoBagCheckOutline className="text-3xl" />
-                  </span>
+                  <span>{orderError ? 0 : orders?.length || 0}</span>
                 </h3>
                 <p>
                   Latest update{" "}
@@ -59,7 +96,9 @@ export default function Dashboard() {
                   </span>
                 </p>
               </div>
-              <div>asd</div>
+              <div className="scale-[200%]">
+                <IoBagCheckOutline className="text-3xl text-gray-500" />
+              </div>
             </div>
           </div>
         </div>
@@ -72,9 +111,7 @@ export default function Dashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="mb-2 text-2xl font-bold">
-                  <span>
-                    <GiKiwiFruit className="text-3xl" />
-                  </span>
+                  <span>{productError ? 0 : products?.length || 0}</span>
                 </h3>
                 <p>
                   Latest update{" "}
@@ -83,7 +120,9 @@ export default function Dashboard() {
                   </span>
                 </p>
               </div>
-              <div>ádasd</div>
+              <div className="scale-[200%]">
+                <GiKiwiFruit className="text-3xl text-gray-500" />
+              </div>
             </div>
           </div>
         </div>
@@ -101,45 +140,65 @@ export default function Dashboard() {
               </Link>
             </div>
             <div className="w-full">
-              <table className="w-full">
-                <thead className="bg-[#f5f5f5]">
-                  <tr>
-                    <th>Order</th>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Customer</th>
-                    <th>Summary</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <span className="cursor-pointer select-none font-semibold hover:text-indigo-600">
-                        #ádasd
-                      </span>
-                    </td>
-                    <td>
-                      <div className="flex items-center">
-                        <span className="badge-dot bg-primary-600"></span>
-                        <span className="ml-2 font-semibold capitalize text-primary-600 rtl:mr-2">
-                          Paid
-                        </span>
-                        <span className="badge-dot bg-orange-500"></span>
-                        <span className="ml-2 font-semibold capitalize text-orange-500 rtl:mr-2">
-                          Pending
-                        </span>
-                      </div>
-                    </td>
-                    <td>
-                      <span>ádad</span>
-                    </td>
-                    <td>ádad</td>
-                    <td>
-                      <span>ádasd</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              {orderError || !orders?.length ? (
+                "No order found."
+              ) : (
+                <table className="w-full">
+                  <thead className="bg-[#f5f5f5]">
+                    <tr>
+                      <th>Order</th>
+                      <th>Status</th>
+                      <th>Date</th>
+                      <th>Customer</th>
+                      <th>Summary</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orders
+                      ?.sort(
+                        (a, b) =>
+                          new Date(b.createdAt).getTime() -
+                          new Date(a.createdAt).getTime(),
+                      )
+                      .slice(0, 10)
+                      .map((o) => (
+                        <tr key={o._id}>
+                          <td>
+                            <span className="cursor-pointer select-none font-semibold hover:text-indigo-600">
+                              #{o.invoiceNo}
+                            </span>
+                          </td>
+                          <td>
+                            <div className="flex items-center">
+                              {o.paymentInfo.isPaid ? (
+                                <>
+                                  <span className="badge-dot bg-primary-600"></span>
+                                  <span className="ml-2 font-semibold capitalize text-primary-600 rtl:mr-2">
+                                    Paid
+                                  </span>
+                                </>
+                              ) : (
+                                <>
+                                  <span className="badge-dot bg-orange-500"></span>
+                                  <span className="ml-2 font-semibold capitalize text-orange-500 rtl:mr-2">
+                                    Pending
+                                  </span>
+                                </>
+                              )}
+                            </div>
+                          </td>
+                          <td>
+                            <span>{convertToDateString(o.createdAt)}</span>
+                          </td>
+                          <td>{o.customerInfo.firstName}</td>
+                          <td>
+                            <span>{formatCurrency(o.totalPrice)}</span>
+                          </td>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
@@ -158,32 +217,43 @@ export default function Dashboard() {
               </Link>
             </div>
             <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-[#f5f5f5]">
-                  <tr>
-                    <th>Product</th>
-                    <th>Sold</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="flex items-center gap-2">
-                        <span className="avatar avatar-rounded avatar-md w-[100px]">
-                          <img
-                            className="avatar-img avatar-rounded pe-4"
-                            loading="lazy"
-                          />
-                        </span>
-                        <span className="text-lg font-semibold text-gray-500">
-                          ádadds
-                        </span>
-                      </div>
-                    </td>
-                    <td>ádasd</td>
-                  </tr>
-                </tbody>
-              </table>
+              {!bestSelling?.length || bestSellingError ? (
+                "No products found."
+              ) : (
+                <table className="w-full">
+                  <thead className="bg-[#f5f5f5]">
+                    <tr>
+                      <th>Product</th>
+                      <th>Sold</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {bestSelling?.map((bsl) => (
+                      <tr>
+                        <td>
+                          <div className="flex items-center gap-2">
+                            <span className="avatar avatar-rounded avatar-md w-[100px]">
+                              <img
+                                src={
+                                  PUBLIC_ENDPOINTS.IMAGE_PRODUCTS +
+                                  "/" +
+                                  bsl.productDetails.images[0]
+                                }
+                                className="avatar-img avatar-rounded pe-4"
+                                loading="lazy"
+                              />
+                            </span>
+                            <span className="text-lg font-semibold text-gray-500">
+                              {bsl.productDetails.name}
+                            </span>
+                          </div>
+                        </td>
+                        <td>{bsl.totalQuantity}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>

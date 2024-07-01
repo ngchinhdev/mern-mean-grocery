@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { IOrder, type ICreateOrder } from '../interfaces/order';
+import { IBestSelling, IOrder, type ICreateOrder } from '../interfaces/order';
 
 import { API_ENDPOINTS } from "../constants/url";
 import { axiosInstance } from "src/utils/axiosInstance";
@@ -9,6 +9,18 @@ import { IResponseDataCommon } from "src/interfaces/share";
 export const getAllOrders = async (): Promise<IOrder[]> => {
     try {
         const response = await axiosInstance.get<AxiosResponse<IOrder[]>>(API_ENDPOINTS.ORDER_ENDPOINTS.GET_ALL_ORDERS);
+
+        console.log(response.data);
+        return response.data.data;
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+};
+
+export const getBestSelling = async (): Promise<IBestSelling[]> => {
+    try {
+        const response = await axiosInstance.get<AxiosResponse<IBestSelling[]>>(API_ENDPOINTS.ORDER_ENDPOINTS.GET_TOP_SELLING);
 
         console.log(response.data);
         return response.data.data;

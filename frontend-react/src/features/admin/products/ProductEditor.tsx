@@ -22,6 +22,8 @@ import { createProductSchema } from "src/zods/product";
 import { toastUI } from "src/utils/toast";
 import { getAllCategories } from "src/services/apiCategories";
 import { ICategory } from "src/interfaces/category";
+import Loader from "src/ui/Loader";
+import NotFound from "src/ui/NotFound";
 
 export default function ProductEditor() {
   const [selectedFile, setSelectedFile] = useState<File[]>([]);
@@ -43,7 +45,7 @@ export default function ProductEditor() {
     enabled: !!id,
   });
 
-  const { data: categories, error } = useQuery({
+  const { data: categories } = useQuery({
     queryKey: ["allCategories"],
     queryFn: getAllCategories,
   });
@@ -137,6 +139,14 @@ export default function ProductEditor() {
     });
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <NotFound message="Product not found." bigSize={false} />;
+  }
+
   return (
     <>
       <div>
@@ -211,8 +221,8 @@ export default function ProductEditor() {
                         console.log(editor.getData());
                         setValue("description", editor.getData());
                       }}
-                      onBlur={(event, editor) => {}}
-                      onFocus={(event, editor) => {}}
+                      onBlur={() => {}}
+                      onFocus={() => {}}
                     />
                     {errors["description"] && (
                       <small className="mt-1 inline-block text-sm text-red-500">
@@ -304,6 +314,7 @@ export default function ProductEditor() {
                 Discard
               </button>
               <button
+                disabled={isPending}
                 className="button radius-round rounded-md bg-primary-600 px-3 py-2 text-base text-white hover:bg-primary-700 active:bg-primary-700"
                 type="submit"
               >

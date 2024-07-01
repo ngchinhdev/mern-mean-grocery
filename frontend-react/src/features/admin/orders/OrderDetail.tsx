@@ -1,23 +1,21 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-
-import { toastUI } from "src/utils/toast";
-import { getOrdersById, updateOrder } from "src/services/apiOrder";
 import {
   MdDateRange,
   MdOutlineEmail,
   MdOutlineLocalPhone,
   MdOutlineLocationOn,
 } from "react-icons/md";
+
+import { toastUI } from "src/utils/toast";
+import { getOrdersById, updateOrder } from "src/services/apiOrder";
 import NotFound from "src/ui/NotFound";
 import { convertToDateString, formatCurrency } from "src/utils/helpers";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import { TOrderStatus } from "src/interfaces/order";
 
 export default function OrderDetail() {
-  const [curPage, setCurPage] = useState(1);
   const queryClient = useQueryClient();
 
   const { id } = useParams();
@@ -28,7 +26,7 @@ export default function OrderDetail() {
     enabled: !!id,
   });
 
-  const { mutate: updatePaidMutate, isPending } = useMutation<
+  const { mutate: updatePaidMutate, isPending: isPendingPaid } = useMutation<
     unknown,
     // eslint-disable-next-line
     AxiosError<any, any>,
@@ -63,7 +61,7 @@ export default function OrderDetail() {
     },
   });
 
-  if (!order) {
+  if (!order || !isError) {
     return <NotFound message="No order found" bigSize={false} />;
   }
 
@@ -79,6 +77,7 @@ export default function OrderDetail() {
             className="ms-8 w-[160px] cursor-pointer rounded-md border border-primary-600 px-1 py-2"
             name="status"
             id="status"
+            disabled={isPendingStatus || isPendingPaid}
             onChange={(e) =>
               statusMutate({
                 id: order._id,
@@ -256,6 +255,7 @@ export default function OrderDetail() {
                     </span>
                   ) : (
                     <button
+                      disabled={isPendingStatus || isPendingPaid}
                       className="w-full rounded-lg bg-primary-600 py-2 font-semibold text-white transition-all hover:bg-primary-700"
                       onClick={() => updatePaidMutate(order._id)}
                     >

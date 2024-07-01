@@ -1,14 +1,14 @@
 import { Pagination } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { FaRegEye } from "react-icons/fa";
 
-import { toastUI } from "src/utils/toast";
 import NotFound from "src/ui/NotFound";
 import { getAllOrders } from "src/services/apiOrder";
 import { convertToDateString, formatCurrency } from "src/utils/helpers";
 import { TOrderStatus } from "src/interfaces/order";
+import Loader from "src/ui/Loader";
 
 const PER_PAGE = 10;
 
@@ -39,7 +39,11 @@ export default function OrderList() {
     setCurPage(page);
   };
 
-  const { data: orders, error } = useQuery({
+  const {
+    data: orders,
+    isError,
+    isLoading,
+  } = useQuery({
     queryKey: ["allOrders"],
     queryFn: getAllOrders,
   });
@@ -55,6 +59,10 @@ export default function OrderList() {
       );
     }
   }, [orders, filterStatus]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>
@@ -75,7 +83,8 @@ export default function OrderList() {
           <option value="Delivered">Delivered</option>
         </select>
       </div>
-      {!orders?.filter((o) => (filterStatus ? o.status === filterStatus : true))
+      {isError ||
+      !orders?.filter((o) => (filterStatus ? o.status === filterStatus : true))
         .length ? (
         <NotFound message="No orders found." bigSize={false} />
       ) : (

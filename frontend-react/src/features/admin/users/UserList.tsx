@@ -1,13 +1,13 @@
 import { Pagination } from "@mui/material";
 import { ChangeEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import { toastUI } from "src/utils/toast";
-import { AxiosError } from "axios";
 import { changeRole, getAllUsers } from "src/services/apiAuth";
 import NotFound from "src/ui/NotFound";
+import Loader from "src/ui/Loader";
 
 const PER_PAGE = 10;
 
@@ -23,7 +23,7 @@ export default function UserList() {
     setCurPage(page);
   };
 
-  const { data: users, error } = useQuery({
+  const { data: users, isError } = useQuery({
     queryKey: ["allUsers"],
     queryFn: getAllUsers,
   });
@@ -55,7 +55,11 @@ export default function UserList() {
     changeRoleMutate({ id, isAdmin: e.target.value !== "0" });
   };
 
-  if (!users?.length) {
+  if (isPending) {
+    return <Loader />;
+  }
+
+  if (!users?.length || isError) {
     return <NotFound message="No users found." bigSize={false} />;
   }
 

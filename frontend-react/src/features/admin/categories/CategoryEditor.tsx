@@ -7,7 +7,7 @@ import { IoSaveSharp } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
-import { ICategory, ICreateCategory } from "src/interfaces/category";
+import { ICreateCategory } from "src/interfaces/category";
 import {
   createCategory,
   getCategoryById,
@@ -15,6 +15,8 @@ import {
 } from "src/services/apiCategories";
 import ImagePicker from "src/ui/ImagePicker";
 import Input from "src/ui/Input";
+import Loader from "src/ui/Loader";
+import NotFound from "src/ui/NotFound";
 import { toastUI } from "src/utils/toast";
 import { createCategorySchema } from "src/zods/category";
 
@@ -108,6 +110,14 @@ export default function CategoryEditor() {
     categoryMutate({ ...data, image: selectedFile[0] });
   };
 
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <NotFound message="Category not found." bigSize={false} />;
+  }
+
   return (
     <div>
       <div className="mb-4 items-center justify-between lg:flex">
@@ -154,6 +164,7 @@ export default function CategoryEditor() {
                 Discard
               </button>
               <button
+                disabled={isPending}
                 className="button radius-round rounded-md bg-primary-600 px-3 py-2 text-base text-white hover:bg-primary-700 active:bg-primary-700"
                 type="submit"
               >

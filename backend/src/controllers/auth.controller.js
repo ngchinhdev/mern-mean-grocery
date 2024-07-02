@@ -252,12 +252,36 @@ const googleCallback = async (req, res, next) => {
     }
 };
 
+const facebookCallback = async (req, res, next) => {
+    try {
+        const { accessToken, refreshToken } = generateAccessRefreshToken(req.user);
+
+        const user = await UserModel.findOne({
+            email: req.user.email
+        });
+
+        user.refreshToken = {
+            token: refreshToken,
+            expired: Date.now() + 48 * 60 * 60 * 1000
+        };
+
+        await user.save();
+
+        saveRefreshToken(refreshToken, res);
+
+        return res.redirect(`${process.env.CLIENT_URL}?accessToken=${accessToken}`);
+    } catch (error) {
+        next(error);
+    }
+};
+
 module.exports = {
     register,
     login,
     logout,
     refreshToken,
     googleCallback,
+    facebookCallback,
     updateProfile,
     forgotPassword,
     changeRole,

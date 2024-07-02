@@ -30,6 +30,9 @@ import AdminProductEditor from "./features/admin/products/ProductEditor";
 import AdminCategories from "./pages/admin/Categories";
 import AdminCategoryList from "./features/admin/categories/CategoryList";
 import AdminCategoryEditor from "./features/admin/categories/CategoryEditor";
+import AdminCoupons from "./pages/admin/Coupons";
+import AdminCouponList from "./features/admin/coupons/CouponList";
+import AdminCouponEditor from "./features/admin/coupons/CouponEditor";
 import AdminUsers from "./pages/admin/Users";
 import AdminUserList from "./features/admin/users/UserList";
 import AdminOrders from "./pages/admin/Orders";
@@ -166,6 +169,28 @@ const router = createBrowserRouter([
         ],
       },
       {
+        path: "coupons",
+        element: <AdminCoupons />,
+        children: [
+          {
+            path: "",
+            element: <AdminCouponList />,
+          },
+          {
+            path: "list",
+            element: <AdminCouponList />,
+          },
+          {
+            path: "add",
+            element: <AdminCouponEditor />,
+          },
+          {
+            path: "edit/:id",
+            element: <AdminCouponEditor />,
+          },
+        ],
+      },
+      {
         path: "users",
         element: <AdminUsers />,
         children: [
@@ -204,7 +229,7 @@ const router = createBrowserRouter([
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,
+      staleTime: 10 * 1000,
       refetchOnWindowFocus: false,
     },
   },
@@ -213,7 +238,7 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+      <ReactQueryDevtools initialIsOpen={true} />
       <RouterProvider router={router} />
       <ToastContainer className="w-auto min-w-[280px]" />
     </QueryClientProvider>

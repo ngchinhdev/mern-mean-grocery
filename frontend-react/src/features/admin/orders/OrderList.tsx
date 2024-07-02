@@ -108,20 +108,18 @@ export default function OrderList() {
                 )
                 .slice(start, end)
                 .map((o) => (
-                  <tr>
+                  <tr key={o._id}>
                     <td className="flex items-center">#{o.invoiceNo}</td>
                     <td>{convertToDateString(o.createdAt)}</td>
                     <td>
                       {o.customerInfo.firstName + " " + o.customerInfo.lastName}
                     </td>
                     <td>
-                      <td>
-                        <span
-                          className={`rounded-md px-2 py-1 ${getStatusClass(o.status)}`}
-                        >
-                          {o.status}
-                        </span>
-                      </td>
+                      <span
+                        className={`rounded-md px-2 py-1 ${getStatusClass(o.status)}`}
+                      >
+                        {o.status}
+                      </span>
                     </td>
                     <td>{o.paymentInfo.paymentMethod}</td>
                     <td>{formatCurrency(o.totalPrice)}</td>

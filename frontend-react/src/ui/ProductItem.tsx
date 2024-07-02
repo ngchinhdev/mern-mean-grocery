@@ -79,12 +79,16 @@ export default function ProductItem({
                   : ""}
               </del>
             </div>
-            <span
-              className="cursor-pointer rounded-md border border-gray-200 p-2 text-primary-600 hover:bg-primary-600 hover:text-white"
-              onClick={handleAddToCart}
-            >
-              <BsBagPlusFill className="text-lg text-inherit" />
-            </span>
+            {product.quantity > 0 ? (
+              <span
+                className="cursor-pointer rounded-md border border-gray-200 p-2 text-primary-600 hover:bg-primary-600 hover:text-white"
+                onClick={handleAddToCart}
+              >
+                <BsBagPlusFill className="text-lg text-inherit" />
+              </span>
+            ) : (
+              <span></span>
+            )}
           </div>
         </div>
       </div>

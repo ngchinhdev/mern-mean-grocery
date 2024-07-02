@@ -37,6 +37,11 @@ export default function OrderForm({ discount }: OrderFormProps) {
     formState: { errors },
   } = useForm<ICheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
+    defaultValues: {
+      address: currentUser?.address,
+      email: currentUser?.email || "",
+      phone: currentUser?.phone || "",
+    },
   });
 
   const { mutate: createOrderMutate, isPending } = useMutation<
@@ -52,7 +57,11 @@ export default function OrderForm({ discount }: OrderFormProps) {
         "success",
       );
       dispatch(clearCartItems());
-      navigate("/");
+      if (currentUser) {
+        navigate("/user/my-orders");
+      } else {
+        navigate("/");
+      }
     },
     onError: (err) => {
       toastUI(err.response?.data.error, "error");

@@ -1,8 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { AxiosError } from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { useDispatch } from "react-redux";
 
 import Header from "./header";
 import Footer from "./footer/Footer";
@@ -10,30 +7,14 @@ import Cart from "./cart";
 import FooterMobile from "./footer/FooterMobile";
 import MenuMobile from "./menuMobile";
 import MoreInfo from "./footer/MoreInfo";
-import { IUser } from "src/interfaces/auth";
-import { getUserProfile } from "src/services/apiAuth";
-import { AppDispatch } from "src/store/store";
-import { setIsLogged, setUserLogged } from "src/store/auth/authSlice";
-import { getLocalStorage } from "src/utils/helpers";
+import useAuth from "src/hooks/useAuth";
 
 export default function AppLayout() {
   const [openCart, setOpenCart] = useState(false);
   const [openMenuMobile, setOpenMenuMobile] = useState(false);
   const [isOpenedForm, setIsOpenedForm] = useState(false);
-  const dispatch = useDispatch<AppDispatch>();
 
-  const { data: userProfile } = useQuery<unknown, AxiosError, IUser>({
-    queryKey: ["userProfile"],
-    queryFn: getUserProfile,
-    enabled: !!getLocalStorage("accessTokenReact"),
-  });
-
-  useEffect(() => {
-    if (userProfile) {
-      dispatch(setUserLogged(userProfile));
-      dispatch(setIsLogged());
-    }
-  }, [userProfile, dispatch]);
+  useAuth(false);
 
   const handleOpenCart = () => {
     setOpenCart(true);

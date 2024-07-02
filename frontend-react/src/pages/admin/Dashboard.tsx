@@ -229,7 +229,7 @@ export default function Dashboard() {
                   </thead>
                   <tbody>
                     {bestSelling?.map((bsl) => (
-                      <tr>
+                      <tr key={bsl._id}>
                         <td>
                           <div className="flex items-center gap-2">
                             <span className="avatar avatar-rounded avatar-md w-[100px]">

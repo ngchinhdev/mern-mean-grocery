@@ -13,6 +13,7 @@ const productRoutes = require('./src/routes/product.route');
 const userRoutes = require('./src/routes/user.route');
 const orderRoutes = require('./src/routes/order.route');
 const couponRoutes = require('./src/routes/coupon.route');
+const swaggerDocs = require('./swagger');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.static(path.join(__dirname, 'public')));
+swaggerDocs(app, process.env.PORT);
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/categories', categoryRoutes);

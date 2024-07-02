@@ -14,6 +14,7 @@ import ImagePicker from "src/ui/ImagePicker";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import {
   createProduct,
+  getImageAsBlob,
   getProductById,
   updateProduct,
 } from "src/services/apiProducts";
@@ -26,7 +27,7 @@ import Loader from "src/ui/Loader";
 import NotFound from "src/ui/NotFound";
 
 export default function ProductEditor() {
-  const [selectedFile, setSelectedFile] = useState<File[]>([]);
+  const [selectedFile, setSelectedFiles] = useState<File[]>([]);
   const [productImages, setProductImages] = useState<string[]>([]);
   const [categoryOptions, setCategoryOptions] = useState<ICategory[]>([]);
   const [emptyImageMessage, setEmptyImageMessage] = useState("");
@@ -77,11 +78,28 @@ export default function ProductEditor() {
       setValue("quantity", product.quantity);
       setValue("description", product.description);
       setValue("categoryId", product.categoryId._id);
-      setProductImages(product.images);
-    }
 
-    if (categories) {
-      setCategoryOptions(categories);
+      const fetchImages = async () => {
+        const imagePromises = product.images.map(async (image) => {
+          const mimeType = image.split(".").pop()!;
+          const fullImageUrl = `${PUBLIC_ENDPOINTS.IMAGE_PRODUCTS}/${image}`;
+          return await getImageAsBlob(fullImageUrl, mimeType);
+        });
+
+        try {
+          const files = await Promise.all(imagePromises);
+          setSelectedFiles(files);
+          setProductImages(product.images);
+        } catch (error) {
+          console.error("Error fetching images:", error);
+        }
+      };
+
+      fetchImages();
+
+      if (categories) {
+        setCategoryOptions(categories);
+      }
     }
   }, [product, setValue, categories]);
 
@@ -108,8 +126,8 @@ export default function ProductEditor() {
   });
 
   const handleSelectImages = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.files);
     const files = e.target.files;
+    console.log(files);
     if (files && files[0]) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -119,17 +137,23 @@ export default function ProductEditor() {
         ]);
       };
       reader.readAsDataURL(files[0]);
-      setSelectedFile((prevFiles) => [...prevFiles, files[0]]);
+      setSelectedFiles((prevFiles) => [...prevFiles, files[0]]);
     }
   };
 
   const handleDeleteImage = (index: number) => {
     setProductImages((prev) => prev.filter((_, i) => i !== index));
+    setSelectedFiles((prev) => prev.filter((_, i) => i !== index));
   };
 
   const onSubmit = (data: ICreateProduct) => {
     if (!selectedFile.length && !id) {
       setEmptyImageMessage("(*) Images is required");
+      return;
+    }
+
+    if (selectedFile.length < 2) {
+      setEmptyImageMessage("(*) Images is required from 2->4 items");
       return;
     }
 

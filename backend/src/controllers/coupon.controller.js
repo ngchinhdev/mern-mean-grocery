@@ -38,12 +38,12 @@ const getCouponById = async (req, res, next) => {
     try {
         const { id } = req.params;
 
-        const coupon = await CouponModel.find({ _id: id, endTime: { $gt: new Date().toISOString() } });
+        const coupon = await CouponModel.findOne({ _id: id });
 
         if (!coupon) {
             createError(404, 'Coupon not found.');
         }
-
+        console.log(coupon);
         const { __v, isDeleted, ...data } = coupon._doc;
 
         return res.status(200).json({

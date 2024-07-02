@@ -61,7 +61,7 @@ export default function OrderDetail() {
     },
   });
 
-  if (!order || !isError) {
+  if (!order || isError) {
     return <NotFound message="No order found" bigSize={false} />;
   }
 
@@ -129,7 +129,7 @@ export default function OrderDetail() {
                   </thead>
                   <tbody>
                     {order.orderItems.map((item) => (
-                      <tr>
+                      <tr key={item.product.name}>
                         <td>
                           <div className="flex items-center gap-3">
                             <span

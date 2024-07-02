@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { MdOutlinePhoto } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import { IUpdateUser, IUser } from "src/interfaces/auth";
@@ -23,6 +24,7 @@ export default function UpdateProfile() {
   const currentUser = useSelector((state: RootState) => state.auth.user);
   const [avatar, setAvatar] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | undefined>(undefined);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -75,7 +77,7 @@ export default function UpdateProfile() {
       setValue("phone", userProfile.phone);
       setValue("address", userProfile.address);
     }
-  }, [userProfile, dispatch, setValue]);
+  }, [userProfile, dispatch, setValue, navigate]);
 
   const handleSelectAvatar = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {

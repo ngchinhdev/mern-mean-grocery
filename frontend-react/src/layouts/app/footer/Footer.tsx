@@ -72,9 +72,7 @@ export default function Footer() {
             <img width={200} src={logoShop} alt="Logo" className="mb-4" />
             <ul>
               <li className="inline-block w-full text-sm text-gray-600 hover:text-primary-600">
-                <Link to="/">
-                  987 Andre Plain Suite High Street 838, Lake Hestertown, USA
-                </Link>{" "}
+                <Link to="/">333/2/9 Pham Van Dong, Ho Chi Minh, Viet Nam</Link>{" "}
               </li>
               <li className="inline-block w-full text-sm text-gray-600 hover:text-primary-600">
                 <Link to="/">Tel: 02.356.1666</Link>{" "}
@@ -124,7 +122,7 @@ export default function Footer() {
         <div className="py-4 text-center">
           <p className="mx-auto w-1/2 text-sm leading-6 text-gray-500">
             <a href="">Copyright 2024 @ HtmlLover</a>, All rights reserved.
-            <span> Cloned by Nguyen Chinh with love 💖</span>
+            <span> By Nguyen Chinh with love 💖</span>
           </p>
         </div>
       </div>

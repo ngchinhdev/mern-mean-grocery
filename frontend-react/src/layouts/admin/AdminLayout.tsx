@@ -5,8 +5,8 @@ import { FaShoppingBag } from "react-icons/fa";
 
 import HeaderCustom from "./header";
 import SidebarMenu from "./SidebarMenu";
-
 import logoAdmin from "../../assets/logo-no-background.png";
+import useAuth from "src/hooks/useAuth";
 
 const { Sider, Content } = Layout;
 
@@ -17,8 +17,10 @@ export default function AdminLayout() {
     setCollapsed(!collapsed);
   };
 
+  useAuth(true);
+
   return (
-    <Layout className="tb-admin">
+    <Layout className="tb-admin !bg-white">
       <Sider
         trigger={null}
         collapsed={collapsed}

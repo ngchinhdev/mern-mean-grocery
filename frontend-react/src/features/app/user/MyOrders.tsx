@@ -202,7 +202,7 @@ export default function MyOrders() {
       <DialogPopup
         isOpen={isOpen}
         onClose={handleClosePopup}
-        widthSet="450px"
+        widthSet="470px"
         isConfirmation={true}
       >
         <h2 className="mb-4 text-lg font-semibold">

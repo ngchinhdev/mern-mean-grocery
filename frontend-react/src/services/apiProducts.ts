@@ -29,6 +29,16 @@ export const getHotProducts = async (): Promise<IProduct[]> => {
     }
 };
 
+export const getImageAsBlob = async (imageUrl: string, mimeType: string): Promise<File> => {
+    try {
+        const response = await axiosInstance.get(imageUrl, { responseType: 'blob' });
+        return new File([response.data], 'image', { type: `image/${mimeType}` });
+    } catch (error) {
+        console.error('Error fetching image as blob:', error);
+        throw error;
+    }
+};
+
 export const getProductsByCategoryId = async (categoryId: string): Promise<IProduct[]> => {
     try {
         const response = await axiosInstance.get<AxiosResponse<IProduct[]>>(`${API_ENDPOINTS.PRODUCT_ENDPOINTS.GET_ALL_PRODUCTS}/categoryId/${categoryId}`);

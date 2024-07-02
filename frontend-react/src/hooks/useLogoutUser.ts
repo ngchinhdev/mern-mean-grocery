@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+
 import { logout as logoutApi } from "src/services/apiAuth";
 import { logout as logoutState } from "src/store/auth/authSlice";
 import { AppDispatch } from "src/store/store";
@@ -11,8 +12,8 @@ const useLogoutUser = () => {
 
     const logoutUser = async () => {
         dispatch(logoutState());
-        removeItemLocalStorage("accessTokenReact");
         await logoutApi();
+        removeItemLocalStorage("accessTokenReact");
         navigate("/");
     };
 

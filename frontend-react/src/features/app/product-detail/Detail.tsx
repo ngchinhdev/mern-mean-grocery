@@ -83,12 +83,16 @@ export default function Detail({ product }: DetailProps) {
           </span>
           <br />
         </div>
-        <AddToCartControl
-          quantityAddCart={quantityAddCart}
-          onAddToCart={handleAddToCart}
-          onDecreaseQuantity={handleDecreaseQuantity}
-          onIncreaseQuantity={handleIncreaseQuantity}
-        />
+        {product.quantity > 0 ? (
+          <AddToCartControl
+            quantityAddCart={quantityAddCart}
+            onAddToCart={handleAddToCart}
+            onDecreaseQuantity={handleDecreaseQuantity}
+            onIncreaseQuantity={handleIncreaseQuantity}
+          />
+        ) : (
+          <p className="text-red-500">Out of stock</p>
+        )}
         <div className="mt-4 flex flex-col">
           <span className="d-block py-1 text-sm font-semibold">
             <span className="text-gray-800">Category:</span>

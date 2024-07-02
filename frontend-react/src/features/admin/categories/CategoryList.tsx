@@ -11,6 +11,7 @@ import { deleteCategory, getAllCategories } from "src/services/apiCategories";
 import { PUBLIC_ENDPOINTS } from "src/constants/url";
 import { toastUI } from "src/utils/toast";
 import NotFound from "src/ui/NotFound";
+import Loader from "src/ui/Loader";
 
 const PER_PAGE = 10;
 
@@ -26,7 +27,11 @@ export default function CategoryList() {
     setCurPage(page);
   };
 
-  const { data: categories, isError } = useQuery({
+  const {
+    data: categories,
+    isError,
+    isLoading,
+  } = useQuery({
     queryKey: ["allCategories"],
     queryFn: getAllCategories,
   });
@@ -52,6 +57,10 @@ export default function CategoryList() {
       toastUI(err.response?.data.error, "error");
     },
   });
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div

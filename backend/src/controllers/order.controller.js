@@ -144,10 +144,9 @@ const createOrder = async (req, res, next) => {
             await product.save();
         }
 
-        return res.status(200).json({
-            message: 'Order created successfully.',
-            data: newOrder,
-        });
+        req.newOrder = newOrder;
+
+        next();
     } catch (error) {
         next(error);
     }
@@ -169,7 +168,7 @@ const updateOrder = async (req, res, next) => {
         });
 
         return res.status(200).json({
-            message: 'Order created successfully.',
+            message: 'Order updated successfully.',
             data: updatedOrder,
         });
     } catch (error) {
@@ -196,7 +195,7 @@ const cancelOrder = async (req, res, next) => {
 
 const createInvoice = async (req, res, next) => {
     try {
-        const { order } = req.body;
+        const order = req.newOrder;
 
         const invoiceHTML = `
             <!DOCTYPE html>
@@ -321,7 +320,7 @@ const createInvoice = async (req, res, next) => {
 
             try {
                 await sendEmail(
-                    'chinhnguyennn2004@gmail.com',
+                    order.customerInfo.email,
                     'YOUR INVOICE FROM GROCERY SHOP',
                     'Thank you for your order. Visit the following link to view or download your invoice',
                     [
@@ -333,7 +332,10 @@ const createInvoice = async (req, res, next) => {
                     ]
                 );
 
-                res.status(200).send('Email sent successfully');
+                return res.status(200).json({
+                    message: 'Order created successfully.',
+                    data: order,
+                });
             } catch (error) {
                 next(error);
             }

@@ -16,11 +16,11 @@ const options = {
         },
         servers: [
             {
-                url: "http://localhost:3500/",
+                url: process.env.SERVER_LOCAL_URL,
                 description: "Local server"
             },
             {
-                url: "https://cosstewn.io.vn/",
+                url: process.env.SERVER_LIVE_URL,
                 description: "Live server"
             },
         ],

@@ -30,6 +30,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# secret files
-.src/constants/router.tsx
-.src/constants/url.ts
+# hidden files
+src/constants/router.tsx
+src/constants/url.ts

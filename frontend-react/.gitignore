@@ -7,22 +7,35 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Build directories
+dist/
+dist-ssr/
+.bower-cache/
+.tmp/
+out/
 
 # dotenv environment variable files
 .env
-.env.development.local
-.env.test.local
-.env.production.local
+.env.development
+.env.production
+.env.test
 .env.local
+.env.*.local
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
 *.suo
 *.ntvs*
@@ -30,6 +43,11 @@ dist-ssr
 *.sln
 *.sw?
 
-# hidden files
+# OS-generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Hidden files
 src/constants/router.tsx
 src/constants/url.ts

@@ -13,7 +13,7 @@ import { convertToDateString, formatCurrency } from "src/utils/helpers";
 export default function Dashboard() {
   const {
     data: orders,
-    error: orderError,
+    isError: orderError,
     isLoading: orderPending,
   } = useQuery({
     queryKey: ["allOrders"],
@@ -22,7 +22,7 @@ export default function Dashboard() {
 
   const {
     data: products,
-    error: productError,
+    isError: productError,
     isPending: productPending,
   } = useQuery({
     queryKey: ["allProducts"],
@@ -31,14 +31,19 @@ export default function Dashboard() {
 
   const {
     data: bestSelling,
-    error: bestSellingError,
+    isError: bestSellingError,
     isPending: bestSellingPending,
   } = useQuery({
     queryKey: ["bestSelling"],
     queryFn: getBestSelling,
   });
 
-  if (productPending || bestSellingPending || orderPending) {
+  if (
+    (productPending || bestSellingPending || orderPending) &&
+    !orderError &&
+    !productError &&
+    !bestSellingError
+  ) {
     return <Loader />;
   }
 

@@ -21,7 +21,7 @@ export type FormForgotPasswordFields = z.infer<typeof forgotPasswordSchema>;
 
 export const updateUserSchema = authShareSchemaOptional.extend({
     name: z.string().min(1, "Name is required!").trim(),
-    address: z.string().trim(),
+    address: z.string().trim().optional(),
 });
 
 export const changePasswordSchema = z.object({

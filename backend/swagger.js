@@ -79,7 +79,7 @@ const options = {
 const swaggerSpec = swaggerJsdoc(options);
 
 const swaggerDocs = (app, port) => {
-    app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+    app.use('/documentation', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.get('/docs.json', (req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.send(swaggerSpec);

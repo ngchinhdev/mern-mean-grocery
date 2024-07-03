@@ -54,6 +54,12 @@ export default function OrderSummary({
           </div>
         </div>
         <div className="flex w-full items-center py-2 text-sm font-semibold text-gray-500 last:border-b-0 last:pb-0 last:text-base">
+          Total Price
+          <span className="ml-auto flex-shrink-0 font-bold text-gray-800">
+            {formatCurrency(totalPrice)}
+          </span>
+        </div>
+        <div className="flex w-full items-center py-2 text-sm font-semibold text-gray-500 last:border-b-0 last:pb-0 last:text-base">
           Shipping Cost
           <span className="ml-auto flex-shrink-0 font-bold text-gray-800">
             {formatCurrency(10)}

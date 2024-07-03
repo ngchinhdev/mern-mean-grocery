@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
         <div className="py-4 text-center">
           <p className="mx-auto w-1/2 text-sm leading-6 text-gray-500">
-            <a href="">Copyright 2024 @ HtmlLover</a>, All rights reserved.
+            <a href="">Copyright 2024 @ngChinh</a>, All rights reserved.
             <span> By Nguyen Chinh with love 💖</span>
           </p>
         </div>

@@ -15,6 +15,7 @@ const useLogoutUser = () => {
         await logoutApi();
         removeItemLocalStorage("accessTokenReact");
         navigate("/");
+        window.location.reload();
     };
 
     return logoutUser;

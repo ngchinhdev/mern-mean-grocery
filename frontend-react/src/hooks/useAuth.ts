@@ -33,7 +33,7 @@ export default function useAuth(isAdminAuth: boolean) {
             }
         }
 
-        if ((!userProfile || isError) && !isLoading) {
+        if ((!userProfile || isError)) {
             navigate("/");
         }
     }, [userProfile, dispatch, navigate, isError, isAdminAuth, isLoading]);

@@ -70,15 +70,20 @@ export default function Form({ onCloseForm }: FormProps) {
 
   const registerMutation = useMutation<
     IResponseDataCommon<ICreateUser>,
-    Error,
+    AxiosError,
     ICreateUser
   >({
     mutationFn: (data) => createUser(data),
-    onSuccess(data, variables, context) {
-      console.log(data, variables, context);
+    onSuccess() {
+      toastUI("Create account successfully", "success");
+      dispatch(setCurrentFormActive(AuthFormType.LOGIN));
     },
-    onError(error, variables, context) {
-      console.log(error, variables, context);
+    onError(error) {
+      if (error.response?.status === 409) {
+        toastUI("Email is already use", "error");
+      } else {
+        toastUI("Failed to create new account", "error");
+      }
     },
   });
 

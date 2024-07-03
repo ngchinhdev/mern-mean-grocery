@@ -91,7 +91,7 @@ const userRegisterValidator = checkSchema({
         },
         trim: true,
         customSanitizer: {
-            options: userEmailValidator
+            options: (email) => userEmailValidator(email)
         }
     },
     password: {

@@ -225,7 +225,7 @@ const createInvoice = async (req, res, next) => {
                             <div class="lg:text-right text-left">
                                 <h2 class="text-xl font-semibold mt-4 mb-2 lg:mt-0 md:mt-0"><a href="/"><img alt="logo"
                                             loading="lazy" width="110" height="40" decoding="async" data-nimg="1"
-                                            src="https://kachabazar-store-nine.vercel.app/logo/logo-color.svg" style="color: transparent;"></a></h2>
+                                            src="../../public/logo-has-color.png" style="color: transparent;"></a></h2>
                                 <p class="text-xl text-gray-500">59 Station Rd, Purls Bridge, United Kingdom</p>
                             </div>
                         </div>

@@ -16,7 +16,6 @@ import { toastUI } from "src/utils/toast";
 import { ICheckoutForm, ICreateOrder } from "src/interfaces/order";
 import { clearCartItems, getTotalPrice } from "src/store/cart/cartSlice";
 import { createOrder } from "src/services/apiOrder";
-import Loader from "src/ui/Loader";
 
 interface OrderFormProps {
   discount: number;
@@ -276,11 +275,12 @@ export default function OrderForm({ discount }: OrderFormProps) {
             </div>
             <div className="col-span-6 sm:col-span-3">
               <button
+                disabled={isPending}
                 type="submit"
                 className="flex w-full justify-center rounded border border-emerald-500 bg-emerald-500 py-3 text-center text-sm font-medium text-white transition-all hover:bg-emerald-600"
               >
                 {isPending ? (
-                  <Loader type="submit" />
+                  "Loading..."
                 ) : (
                   <span className="flex justify-center text-center">
                     Confirm Order

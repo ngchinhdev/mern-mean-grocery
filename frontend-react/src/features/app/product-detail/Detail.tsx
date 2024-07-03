@@ -39,7 +39,7 @@ export default function Detail({ product }: DetailProps) {
         image: product.images[0],
         name: product.name,
         price: product.price,
-        quantity: 1,
+        quantity: quantityAddCart,
         category: product.categoryId.name,
       }),
     );
